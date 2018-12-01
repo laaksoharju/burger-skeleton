@@ -1,30 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Welcome from './views/welcome.vue'
 import Title from './views/Title.vue'
-import Second from './views/Second.vue'
+import Second from './views/tab.vue'
 import Ordering from './views/Ordering.vue'
 
 Vue.use(Router)
 
 let router = new Router({
   routes: [
-          {
+    {
+      path: '/',
+      meta: {
+        title: 'Welcome',
+      },
+      name: 'welcome',
+      component: Welcome
+    },
+    
+    {
       path: '/first',
       meta: {
-        title: 'Choose your order',
+        title: 'First',
       },
-      name: 'First',
+      name: 'first',
       component: Title
     },
-          {
+    {
       path: '/second',
       meta: {
-        title: 'Your order',
+        title: 'Second',
       },
-      name: 'Second',
+      name: 'second',
       component: Second
     },
-
     {
       path: '/ordering',
       meta: {
@@ -46,6 +55,7 @@ let router = new Router({
     }
   ]
 })
+
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
