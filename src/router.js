@@ -1,29 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Title from './views/Title.vue'
-import Second from './views/tab.vue'
+import Second from './views/Second.vue'
 import Ordering from './views/Ordering.vue'
 
 Vue.use(Router)
 
 let router = new Router({
   routes: [
-    {
+          {
       path: '/first',
       meta: {
-        title: 'First',
+        title: 'Choose your order',
       },
-      name: 'first',
+      name: 'First',
       component: Title
     },
-    {
+          {
       path: '/second',
       meta: {
-        title: 'Second',
+        title: 'Your order',
       },
-      name: 'second',
+      name: 'Second',
       component: Second
     },
+
     {
       path: '/ordering',
       meta: {
