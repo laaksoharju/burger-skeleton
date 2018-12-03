@@ -1,5 +1,5 @@
 <template>
-<div class="page">
+<div class="wrapper">
     <div class="flags">
         <img src="@/assets/sweden.png">
         <img src="@/assets/uk.png">
@@ -26,7 +26,7 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css?family=Roboto');
-    .page {
+    .wrapper {
         display: flex;
         flex-direction: column;
 
