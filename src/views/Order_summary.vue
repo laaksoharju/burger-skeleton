@@ -1,181 +1,295 @@
 <template>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="utf-8">
-        <title>Create Your Menu</title>
-        <link rel="stylesheet" type="text/css" href="main_screen.css">
-    </head>
-
-    <body>
-        <div class="wrapper">
-            
-            <div class="header">
-                <h1>CREATE YOUR MENU</h1>
+<div class="wrapper">
+            <div class="head">
+                <h1>ORDER SUMMARY</h1>
             </div>
-            <div class="tabs">
-                <div class="options">
-                    hola
-                </div>
-                <div class="contents">
-                    chao
+
+            <div class="yellowBox">
+                <div class="item">
+                    <div class="quantity">(2)</div>
+                    <div class="name">Fire Burger</div>
+                    <div class="price">60.00$</div>
+                    <div class="ingredients">lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...</div>
+                    <div class="buttons">
+                        <img id="add" src="Add.png" alt="Add a new burger">
+                        <img id="modify" src="Modify.png" alt="Modify this burger">
+                        <img id="delete" src="Delete.png" alt="Delete one burger">
+                    </div>
                 </div>
             </div>
 
-            <footer class="statusBar">
+            <div class="total">
                 <div class="name">TOTAL</div>
-            </footer>
+                <div class="amount">180.00$</div>
+            </div>
+
+            <a href="main_screen.html">
+                <div class="modify">                
+                    <p>MODIFY</p>
+                </div>
+            </a>
+
+            <a href="order_completed.html">
+                <div href="order_completed.html" class="pay">
+                    <p>PAY</p>
+                </div>
+            </a>
         </div>
-    </body>
 </template>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #2d4739;
-}
-
 h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
     font-family: Roboto, sans-serif;
-    color: #ffffff;
+    color: white;
 }
 
 /* THE BODY OF THE PAGE*/
 .wrapper {
     display: grid;
-    /*    margin-bottom: 160px;*/
-    /*    grid-row-gap: 20px;*/
+    margin-bottom: 160px;
+    grid-row-gap: 20px;
+    grid-column-gap: 10px;
     grid-template-areas:    
-        "header"
-        "tabs"
-        "statusBar";
+        "head"
+        "box"
+        "total";
 }
 /* HEADER */
-.header {
-    grid-area: header;
+.head {
+    grid-area: head;
     position: fixed;
     width: 100%;
-    height: 80px;
+    height: 50px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.16);
     background-color: #416451;
 }
-.header h1 {
+.head h1 {
     text-align: center;
-    line-height: 80px;
+    line-height: 50px;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-    font-size: 50px;
+    font-size: 40px;
 }
 
 /* YELLOW CONTAINER WITH THE ORDERS*/
-.tabs {
-    grid-area: tabs;
-    margin-top: 161px;
-    margin-bottom: 300px;
+.yellowBox {
+    grid-area: box;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+
+    display: grid;
+    grid-row-gap: 30px;
+
+    width: 80vw;
+    max-width: 800px;
+    height: auto;
+    border-radius: 5px;
+    border: 5px solid rgba(27, 41, 34, 0.64);
+    background-color: #ffd23e;
+}
+.item {
+    cursor: pointer;
+    width: 70vw;
+    max-width: 600px;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 
     display: grid;
-
-    width: 1200px;
-    height: 216px;
+    padding: 20px;
+    grid-gap: 20px;
+    grid-auto-columns: 1fr 3fr 1fr;
     grid-template-areas:    
-        "options"
-        "contents";
+        "quantity name price"
+        "ingredients ingredients buttons";
+
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: #ffa801;
 }
-.options {
-    grid-area: options;
+.item .quantity, .name, .price, .ingredients {
+    color: white;
+    font-family: Roboto, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
 }
-.contents {
-    grid-area: contents;
-    width: 1116px;
-    height: 500px;
-    border-radius: 10px;
-    background: #ffa801;
+.item .quantity {
+    grid-area: quantity;
+}
+.item .name {
+    grid-area: name;
+    text-align: center;
+}
+.item .price {
+    grid-area: price;
+    text-align: right;
+}
+.item .ingredients {
+    grid-area: ingredients;
+    font-size: 25px;
+    font-weight: 400;
+}
+.item .buttons{
+    text-align: right;
+    grid-area: buttons;
+}
+/* TOTAL SECTION */
+.total {
+    grid-area: total;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 200px;
-}
+    margin-bottom: 40px;
+    padding: 0px 20px;
 
-/* TOTAL SECTION */
-.statusBar {
-    background: #1e272e;
-    grid-area: statusBar;
-    position: fixed;
-    bottom: 0;
+    color: white;
+    font-family: Roboto, sans-serif;
+    font-size: 40px;
+    font-weight: 700;
 
-    width: 100%;
-    height: 110px;
-}
+    display: grid;
+    grid-template-areas: "name amount"; 
 
-/*
-RESPONSIVE 
-@media screen and (max-width: 1210px) {
-.head {
-height: 40px;
-}
-.head h1 {
-font-size: 25px;
-line-height: 40px;
-}
-.yellowBox {
-grid-area: box;
-width: 600px;
-}
-.item1 {
-width: 500px;
-}
-.item1 .quantity, .name, .price, .ingredients {
-font-size: 25px;
-font-weight: 700;
-}
+    width: 80vw;
+    max-width: 800px;
 
-.item1 .ingredients {
-font-size: 20px;
-font-weight: 400;
-}
-.item2 {
-width: 500px;
-}
-.item2 .quantity, .name, .price, .ingredients {
-font-size: 25px;
-font-weight: 700;
-}
-
-.item2 .ingredients {
-font-size: 20px;
-font-weight: 400;
-}
-.item3 {
-width: 500px;
-}
-.item3 .quantity, .name, .price, .ingredients {
-font-size: 25px;
-font-weight: 700;
-}
-
-.item3 .ingredients {
-font-size: 20px;
-font-weight: 400;
-}
-.total {
-width: 600px;
+    height: 80px;
+    border-radius: 5px;
+    border: 5px solid rgba(27, 41, 34, 0.64);
+    background-color: #ffd23e;
 }
 .total div {
-font-size: 20px;
+    line-height: 80px;
+    font-size: 40px;
+    font-weight: 700;
 }
-*/
 
+.total .name {
+    grid-area: name;
+    text-align: left;
+    margin-left: 50px;
+}
+.total .amount {
+    grid-area: amount;
+    text-align: right;
+    margin-right: 50px;
+}
+
+/* BUTTONS TO MODIFY ORDER OR PAY */
+.modify {    
+    position: fixed;
+    bottom: 104px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+
+
+    grid-area: modify;
+    grid-template-rows: auto;
+    /* Style for "Rectangle" */
+    width: 250px;
+    height: 55px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 1);
+    border-radius: 27.5px;
+    background-color: #05c46b;
+}
+.modify p {
+    text-align: center;
+    line-height: 55px;
+    color: #ffffff;
+    font-family: Roboto, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.pay {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+    grid-area: pay;
+    width: 250px;
+    height: 55px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 1);
+    border-radius: 27.5px;
+    background-color: #0c44d1;
+}
+.pay p {
+    text-align: center;
+    line-height: 55px;
+    color: white;
+    font-family: Roboto, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* RESPONSIVE*/
+@media screen and (max-width: 560px) {
+    .wrapper {
+        margin-bottom: 100px;
+    }
+    .head h1 {
+        font-size: 30px;
+    }
+    .yellowBox {
+        margin-top: 40px;
+        padding: 10px;
+        grid-row-gap: 10px;
+        width: 90vw;
+        max-width: 260px;
+    }
+    .item {
+        width: 85vw;
+        max-width: 240px;
+        padding: 10px;
+
+    }
+    .item .quantity, .name, .price, .ingredients {
+        font-size: 20px;
+    }
+    .item .ingredients {
+        font-size: 18px;
+    }
+    .total {
+        font-size: 20px;
+        padding: 0px 10px;
+        width: 90vw;
+        max-width: 260px;
+        height: 30px;
+    }
+    .total div {
+        font-size: 20px;
+        line-height: 30px;
+    }
+    .modify {    
+        bottom: 75px;
+        width: 150px;
+        height: 40px;
+    }
+    .modify p {
+        line-height: 40px;
+        font-size: 18px;
+    }
+
+    .pay {
+        width: 150px;
+        height: 40px;
+    }
+    .pay p {
+        line-height: 40px;
+        font-size: 18px;
+    }
+    .buttons img {
+        width: 50%;
+    }
 }
 </style>
 
 <script>
     export default {
-        name: 'Summary';
+        name: 'Summary'
     }
 </script>
