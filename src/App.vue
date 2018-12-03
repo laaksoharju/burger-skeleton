@@ -17,8 +17,8 @@ export default {
 
 <style>
 body {
-  height:100vh;
-  background: radial-gradient(white, lightblue);
+  height: 170vh;
+  background: #2d4739;;
   background-size: 200% 200%;
   animation: Gradient 20s linear infinite;
 }
