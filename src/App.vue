@@ -11,6 +11,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
   background-color: #2d4739;
   margin: 0;
