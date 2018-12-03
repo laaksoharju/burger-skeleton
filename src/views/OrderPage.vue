@@ -1,24 +1,27 @@
 <template>
-  <div id="second">
-    <div class='navbar fixed'>
-      <a href="./#/"><button class='backbutton'>◁ START OVER</button></a>
-      CREATE YOUR MENU
-      <a href="./#/OrderSummary"><button class='nextbutton'>FINISH ORDER ▷</button></a>
-    </div>
-    <tabs/>
-    <underbar/>
+  <div id="container">
+    <Navbar :titleProperty="navTitle" />
+    <Tabs/>
+    <Underbar/>
   </div>
 </template>
 
 <script>
-import tabs from '@/components/Tab.vue';
-import underbar from '@/components/Underbar.vue';
+import Tabs from '@/components/Tab.vue';
+import Underbar from '@/components/Underbar.vue';
+import Navbar from '@/components/Navbar.vue';
 
 export default {
-  name: 'Second',
+  name: 'OrderPage',
   components:{
-    tabs,
-    underbar
+    Tabs,
+    Underbar,
+    Navbar
+  },
+  data () {
+    return {
+      navTitle: 'create your menu'
+    }
   }
 }
 </script>
@@ -26,58 +29,10 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-#second{
-  font-size:24pt;
+#container {
+  font-size: 24pt;
   font-family: Roboto;
 }
-
-.navbar {
-width: auto;
-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-background-color: #416451;
-text-align: center;
-color: #ffffff;
-font-size: 70px;
-text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-font-weight: 700;
-margin-bottom: 100px;
-}
-.backbutton {
-
-width: 231px;
-height: 60px;
-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-border-radius: 100px;
-background-color: #ff3f34;
-float: left;
-font-size: 24px;
-color: #ffffff;
-font-weight: 700;
-
-}
-
-.nextbutton{
-
-width: 231px;
-height: 60px;
-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-border-radius: 100px;
-background-color: #05c46b;
-float: right;
-font-size: 24px;
-color: #ffffff;
-font-weight: 700;
-}
-.navbar.fixed {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 110px;
-    z-index: 2;
-}
-
-
 
 .tabs a.tabBurgers {
 float: right;
