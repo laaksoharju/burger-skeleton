@@ -37,10 +37,10 @@ let router = new Router({
         {
             path: '/third',
             meta: {
-                title: 'Order Summary';
+                title: 'Order Summary'
             },
             name: 'third',
-            component: Summary;
+            component: Summary
         },
         {
             path: '/ordering',

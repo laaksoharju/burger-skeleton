@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import io from 'socket.io-client'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import io from 'socket.io-client';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -17,4 +17,4 @@ export default new Vuex.Store({
   actions: {
 
   }
-})
+});

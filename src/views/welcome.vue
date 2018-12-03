@@ -1,8 +1,8 @@
 <template>
-  <div id="bg">
-    <a href="./#/first">
-      <img src=""  alt="">
-    </a>
+  <div>
+    <h1>Welcome to Burger Heavon</h1>
+    <h3>Here are a list of links</h3> 
+    <router-link to="first">Link to first page</router-link>
   </div>
 </template>
 
@@ -13,21 +13,7 @@ export default {
 </script>
 
 <style>
-#bg {
-  position: fixed; 
-  top: -50%; 
-  left: -50%; 
-  width: 200%; 
-  height: 200%;
-}
-#bg img {
-  position: absolute; 
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0; 
-  margin: auto; 
-  min-width: 100%;
-  min-height: 100%;
-}
-<style>
+  h1, h3 {
+    color: white;
+  }
+</style>
