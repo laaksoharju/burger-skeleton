@@ -1,5 +1,5 @@
 <template>
-        <div class="wrapper">
+  <div class="wrapper">
             <div class="head">
                 <h1>ORDER SUMMARY</h1>
             </div>
@@ -11,9 +11,9 @@
                     <div class="price">60.00$</div>
                     <div class="ingredients">lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...</div>
                     <div class="buttons">
-                        <img id="add" src="Add.png" alt="Add a new burger">
-                        <img id="modify" src="Modify.png" alt="Modify this burger">
-                        <img id="delete" src="Delete.png" alt="Delete one burger">
+                        <img id="add" src="@/assets/Add.png" alt="Add a new burger">
+                        <img id="modify" src="@/assets/Modify.png" alt="Modify this burger">
+                        <img id="delete" src="@/assets/Delete.png" alt="Delete one burger">
                     </div>
                 </div>
             </div>
