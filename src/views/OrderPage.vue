@@ -2,21 +2,21 @@
   <div id="container">
     <Navbar :titleProperty="navTitle" />
     <Tabs/>
-    <Underbar/>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import Tabs from '@/components/Tab.vue';
-import Underbar from '@/components/Underbar.vue';
 import Navbar from '@/components/Navbar.vue';
+import Tabs from '@/components/Tab.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'OrderPage',
-  components:{
+  components: {
+    Navbar,
     Tabs,
-    Underbar,
-    Navbar
+    Footer
   },
   data () {
     return {
@@ -27,7 +27,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 #container {
   font-size: 24pt;
