@@ -57,7 +57,7 @@ Well, as everyone said, use -S option. If you use -save-temps option, you can al
 
 <script>
 export default{
-   name: 'tabbs',
+   name: 'tabs',
     data: function(){
         return{
         activetab: 1

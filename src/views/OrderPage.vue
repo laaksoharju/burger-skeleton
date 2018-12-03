@@ -1,38 +1,35 @@
 <template>
-<div id="second">
-<div class='navbar fixed'>
-<a href="./#/first"><button class='backbutton'>◁ START OVER</button></a>
-CREATE YOUR MENU
-<a href="./#/third"><button class='nextbutton'>FINISH ORDER ▷</button></a>
-</div>
-<tabbs/>
-<underbar/>
-</div>
+  <div id="second">
+    <div class='navbar fixed'>
+      <a href="./#/"><button class='backbutton'>◁ START OVER</button></a>
+      CREATE YOUR MENU
+      <a href="./#/OrderSummary"><button class='nextbutton'>FINISH ORDER ▷</button></a>
+    </div>
+    <tabs/>
+    <underbar/>
+  </div>
 </template>
 
 <script>
-import tabbs from './tab1.vue'
-import underbar from './underbar.vue'
+import tabs from '@/components/Tab.vue';
+import underbar from '@/components/Underbar.vue';
 
 export default {
   name: 'Second',
   components:{
-    tabbs,
+    tabs,
     underbar
-  },
-  data: function(){
-    return true;
   }
 }
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-#second{
-    font-size:24pt;
-    font-family: Roboto;
-}
 
+#second{
+  font-size:24pt;
+  font-family: Roboto;
+}
 
 .navbar {
 width: auto;
@@ -43,8 +40,7 @@ color: #ffffff;
 font-size: 70px;
 text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 font-weight: 700;
-margin-down: 100px;
-
+margin-bottom: 100px;
 }
 .backbutton {
 

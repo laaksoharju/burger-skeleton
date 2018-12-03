@@ -1,37 +1,34 @@
 
 <template>
   <div id="title">
-  <img src="@/assets/sweden.png" align="right"><br><br><br>
-  <img src="@/assets/united-kingdom.png" align="right">
-  <div class = "box">
-  Eating Location
+    <img src="@/assets/sweden.png" align="right"><br><br><br>
+    <img src="@/assets/united-kingdom.png" align="right">
+
+    <div class = "box">
+      Eating Location
+    </div>
+    
+    <div id="grid">
+      <a class = "eatin" href="./#/OrderPage">
+        <img class="image_size" src="@/assets/eat_here.png" align="center"><br>
+        <span>EAT IN</span>
+      </a>
+      
+      <a class = "takeout" href="./#/OrderPage">
+        <img class="image_size" src="@/assets/take_out.png" align="center"><br>
+        <span>TAKE OUT</span>
+      </a>
+    </div>
+
   </div>
-  
-  
-  <div id="grid">
-  <a class = "eatin" href="./#/second">
-  <img class="image_size" src="@/assets/eat_here.png" align="center"><br>
-  EAT IN
-  </a>
-  <a class = "takeout" href="./#/second">
-  <img class="image_size" src="@/assets/take_out.png" align="center"><br>
-  TAKE OUT
-  </a>
-  </div>
-  
-
-
-
-</div>
 </template>
+
 <script>
 export default {
-  name: 'Title',
-  data: function(){
-    return true;
-  }
+  name: 'StartPage'
 }
 </script>
+
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 	#title {
@@ -98,5 +95,4 @@ height: 270px;
 box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 border-radius: 5px;
 }
-
 </style>

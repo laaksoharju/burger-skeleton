@@ -1,18 +1,18 @@
 <template>
-<div class="underbar">
-asdfasfs
-<div class="total">Total<br>
-</div>
-</div>
+  <div class="underbar">
+    asdfasfs
+    <div class="total">
+      Total<br>
+    </div>
+  </div>
 </template>
+
 <script>
-export default{
-   name: 'underbar',
-    data: function(){
-        return true;
-    } 
+export default {
+  name: 'underbar'
 }
 </script>
+
 <style>
 .underbar{
 width: 110%;
