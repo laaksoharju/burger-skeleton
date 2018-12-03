@@ -31,6 +31,7 @@
     .wrapper {
         display: flex;
         flex-direction: column;
+        margin-bottom: 0px;
     }
     .container {
         display: flex;
