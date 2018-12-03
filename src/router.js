@@ -17,7 +17,6 @@ let router = new Router({
       name: 'welcome',
       component: Welcome
     },
-    
     {
       path: '/first',
       meta: {
@@ -55,6 +54,30 @@ let router = new Router({
     }
   ]
 })
+
+// let router = new Router({
+//   routes: [
+//     {
+//       path: '/',
+//       meta: {
+//         title: 'Kraft Burgers',
+//       },
+//       name: 'ordering',
+//       component: Ordering
+//     },
+//     {
+//       path: '/kitchen',
+//       meta: {
+//         title: 'Kitchen',
+//       },
+//       name: 'kitchen',
+//       // route level code-splitting
+//       // this generates a separate chunk (read.[hash].js) for this route
+//       // which is lazy-loaded when the route is visited.
+//       component: () => import(/* webpackChunkName: "read" */ './views/Kitchen.vue')
+//     }
+//   ]
+// })
 
 
 router.beforeEach((to, from, next) => {
