@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper">
+        <div class="wrapper">
             <div class="head">
                 <h1>ORDER SUMMARY</h1>
             </div>
@@ -36,6 +36,12 @@
             </a>
         </div>
 </template>
+
+<script>
+  export default {
+    name: 'Summary'
+  }
+</script>
 
 <style>
 h1, h2, h3, h4, h5, h6, p {
@@ -286,10 +292,5 @@ h1, h2, h3, h4, h5, h6, p {
         width: 50%;
     }
 }
-</style>
 
-<script>
-    export default {
-        name: 'Summary'
-    }
-</script>
+</style>

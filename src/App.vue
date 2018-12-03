@@ -5,12 +5,14 @@
 </template>
 
 <script>
-import Ordering from "./views/Ordering.vue"
+
+import Welcome from './views/welcome.vue';
 
 export default {
   name: 'app',
   components: {
-    Ordering
+    // Ordering
+    Welcome
   }
 }
 </script>
