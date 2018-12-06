@@ -11,7 +11,7 @@
 
       <div v-if="activetab === 'burgers'" class="contentTab" id="burgerContent">
         <a href ="./#/create" class="createBox">
-          CREATE YOUR OWN PERSONALISED BURGER!
+          <img src="@/assets/CreateBurger.png" alt="CREATE YOUR OWN BURGER">
         </a>
         <div class="Beef">
           BEEF
@@ -27,7 +27,7 @@
       </div>
 
     </div>
-    
+
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
     return{
       activetab: 'burgers'
     }
-  } 
+  }
 }
 </script>
 
@@ -46,6 +46,11 @@ export default {
 .tabContainer {
   background-color: #ffa801;
   margin: -50px 0 0 10%;
+}
+
+.tabContainer img{
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .tab {
@@ -80,7 +85,7 @@ export default {
 
 .contentTab {
   font-family: Roboto;
-  overflow: scroll; 
+  overflow: scroll;
   width: 80%;
   margin-top: 250px;
   border-radius: 10px;
@@ -109,5 +114,10 @@ export default {
   font-size: 60px;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+
+.createBox{
+  display: inline-block;
 }
 </style>

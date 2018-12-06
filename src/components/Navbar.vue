@@ -1,16 +1,25 @@
 <template>
   <div class='navbar fixed'>
-    <ul>
+      <a href="./#/"><img src="@/assets/Back.png" alt="Back"></a>
+    <div class="">
+      <h1>{{ titleProperty }}</h1>
+    </div>
+      <a href="./#/OrderSummary"><img src="@/assets/Next.png" alt="Next"></a>
+    <!-- <ul>
       <li style="float:left">
         <a href="./#/"><button id="backbutton" class='button'>◁ START OVER</button></a>
+        <a href="./#/"><img src="@/assets/Back.png" alt="Back"></a>
+
       </li>
       <li style="float:right">
         <a href="./#/OrderSummary"><button id="nextbutton" class='button'>FINISH ORDER ▷</button></a>
+        <a href="./#/OrderSummary"><img src="@/assets/Next.png" alt="Next"></a>
+
       </li>
       <li>
         <h1>{{ titleProperty }}</h1>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -23,6 +32,20 @@ export default {
 </script>
 
 <style>
+
+
+
+.navbar a{
+  display: inline-block;
+  height: 80px;
+}
+
+.navbar img{
+  max-width: 100%;
+  max-height: 100%;
+  margin:10px 20px;
+}
+
 .fixed {
   position: fixed;
   left: 0;
@@ -32,8 +55,10 @@ export default {
   z-index: 2;
 }
 
+
 .navbar {
   width: auto;
+  height: 80px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
   background-color: #416451;
   text-align: center;
@@ -41,12 +66,16 @@ export default {
   font-size: 70px;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
   font-weight: 700;
-  margin-bottom: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
+
 .navbar h1 {
-  font-size: 40px;
-  line-height: 100px;
+  font-size: 50px;
+  line-height: 80px;
   text-transform: uppercase;
 }
 
@@ -55,6 +84,7 @@ export default {
   margin: 0px;
   padding: 0px;
 }
+
 
 .button {
   width: 231px;
