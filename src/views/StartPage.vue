@@ -1,5 +1,4 @@
 <template>
-  <div class="wrapper">
     <div class="container">
 
       <div class="flags">
@@ -21,7 +20,6 @@
       </div>
       
     </div>
-  </div>
 </template>
 
 <script>
@@ -33,18 +31,9 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0px;
-}
-
 .container {
   display: flex;
   flex-direction: column;
-  background-color: #2d4739;
-  margin: 0;
-  padding: 0;
 }
 
 a {
@@ -52,7 +41,6 @@ a {
 }
 
 .flags {
-  display: flex;
   margin-top: 10px;
   margin-right: 10px;
   align-self: flex-end;
@@ -66,7 +54,7 @@ a {
   font-size: 60px;
   text-align: center;
   color: #fff;
-  text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.7);
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
 }
 
 .buttons {
