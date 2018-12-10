@@ -1,20 +1,20 @@
 <template>
     <div class="container">
-        <Navbar :backAddressProperty='"./#/OrderPage"' :backTextProperty='"MAIN PAGE"' :titleProperty='"BREAD"'/>
+        <Navbar2 :backAddressProperty='"./#/OrderPage"' :backTextProperty='"MAIN PAGE"' :titleProperty='"BREAD"'/>
         <div class="boxes">
             <div class="option">HOLA</div>
         </div>
-    
+
     </div>
 </template>
 
 <script>
-    import Navbar from '@/components/Navbar.vue';
-    
+    import Navbar2 from '@/components/Navbar2.vue';
+
     export default {
         name: 'BurgerConstruction',
         components: {
-            Navbar
+            Navbar2
         }
     }
 </script>
@@ -32,13 +32,8 @@
         grid-gap: 60px;
         justify-content: center;
     }
-    
     .option {
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
-
-    /* h1 > .navbar{
-        margin-right: 165px;
-    } */
 </style>

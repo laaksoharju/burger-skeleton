@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :titleProperty='"ORDER SUMMARY"'/>
+        <Navbar :titleProperty='"ORDER SUMMARY"' :displayButtons='null'/>
 
         <div class="boxes">
             <div class="item">
@@ -25,7 +25,7 @@
                     <p>The list of ingredients should be here:</p>
                     <p>- First the bread with a menu in case you want to change it</p>
                     <p>- Then all the ingredients as a list...</p>
-                    
+
                 </div>
 
                 <div class="bottom">
