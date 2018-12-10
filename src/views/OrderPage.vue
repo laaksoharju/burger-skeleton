@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <Navbar :titleProperty="navTitle" />
+    <Navbar :backAppears='1' :backAddressProperty='"./#/"' :backTextProperty='"START OVER"' :titleProperty='"CREATE YOUR MENU"' :nextAppears='1' :nextAddressProperty='"./#/OrderSummary"' :nextTextProperty='"FINISH ORDER"'/>
     <Tabs/>
     <Footer/>
   </div>
@@ -17,11 +17,6 @@ export default {
     Navbar,
     Tabs,
     Footer
-  },
-  data () {
-    return {
-      navTitle: 'create your menu'
-    }
   }
 }
 </script>

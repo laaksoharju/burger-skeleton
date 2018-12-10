@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Navbar :titleProperty="navTitle" />
+        <Navbar :backAppears='1' :backAddressProperty='"./#/OrderPage"' :backTextProperty='"MAIN PAGE"' :titleProperty='"BREAD"' :nextAppears='0'/>
         <div class="boxes">
           <div class="option">HOLA</div>
         </div>
@@ -15,11 +15,6 @@ export default {
   name: 'BurgerConstruction',
   components: {
       Navbar
-  },
-data () {
-    return {
-        navTitle: 'Bread'
-    }
   }
 }
 </script>

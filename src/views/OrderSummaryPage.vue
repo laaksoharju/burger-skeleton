@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div class="header">
-            <h1>ORDER SUMMARY</h1>
-        </div>
+        <Navbar :backAppears='0' :titleProperty='"ORDER SUMMARY"' :nextAppears='0'/>
         <div class="boxes">
             <div class="item">
                 <div class="top">
@@ -20,10 +18,10 @@
                     <p>The list of ingredients should be here:</p>
                     <p>- First the bread with a menu in case you want to change it</p>
                     <p>- Then all the ingredients as a list...</p>
-                                        <p>The list of ingredients should be here:</p>
+                    <p>The list of ingredients should be here:</p>
                     <p>- First the bread with a menu in case you want to change it</p>
                     <p>- Then all the ingredients as a list...</p>
-                                        <p>The list of ingredients should be here:</p>
+                    <p>The list of ingredients should be here:</p>
                     <p>- First the bread with a menu in case you want to change it</p>
                     <p>- Then all the ingredients as a list...</p>
                     
@@ -48,9 +46,14 @@
 </template>
 
 <script>
-    export default {
-        name: 'Summary'
+import Navbar from '@/components/Navbar.vue';
+
+export default {
+    name: 'Summary',
+    components: {
+      Navbar
     }
+}
 </script>
 
 <style>
