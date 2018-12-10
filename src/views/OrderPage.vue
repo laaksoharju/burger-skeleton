@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <Navbar :backAppears='1' :backAddressProperty='"./#/"' :backTextProperty='"START OVER"' :titleProperty='"CREATE YOUR MENU"' :nextAppears='1' :nextAddressProperty='"./#/OrderSummary"' :nextTextProperty='"FINISH ORDER"'/>
+    <Navbar :backAddressProperty='"./#/"' :backTextProperty='"START OVER"' :titleProperty='"CREATE YOUR MENU"' :nextAddressProperty='"./#/OrderSummary"' :nextTextProperty='"FINISH ORDER"'/>
     <Tabs/>
     <Footer/>
   </div>

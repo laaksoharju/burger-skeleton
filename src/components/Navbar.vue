@@ -1,31 +1,25 @@
 <template>
   <div class='fixed navbar'>
-    <div style="width: 165px; height: 40px">
-      <a :href="backAddressProperty" v-if="backAppears">
+      <a :href="backAddressProperty">
         <div class="button" id="backButton"> {{ backTextProperty }} </div>
       </a>
-    </div>
-    
+  
     <h1>{{ titleProperty }}</h1>
-    
-    <div style="width: 165px; height: 40px">
-      <a :href="nextAddressProperty" v-if="nextAppears">
+  
+      <a :href="nextAddressProperty">
         <div class="button" id="nextButton"> {{ nextTextProperty }} </div>
       </a>
-    </div>
   </div>
 </template>
 
 <script>
   export default {
     props: [
-      'backAppears',
       'backAddressProperty',
       'backTextProperty',
   
       'titleProperty',
   
-      'nextAppears',
       'nextAddressProperty',
       'nextTextProperty'
     ]
@@ -36,12 +30,15 @@
   a {
     text-decoration: none;
   }
+  * {
+      box-sizing: border-box;
+  }
   
   .fixed {
     position: fixed;
     /* NOT NECESSARY BECAUSE THE WIDTH IS 100% */
     /* left: 0;
-        right: 0; */
+          right: 0; */
     top: 0;
     z-index: 2;
   }
@@ -55,13 +52,11 @@
     align-items: center;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
     background-color: #416451;
-    margin-bottom: 100px;
   }
   
   .navbar h1 {
     grid-area: b;
-    margin-left: -15px;
-    margin-right: -15px;
+    color: white;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
     font-size: 40px;
     text-transform: uppercase;
@@ -73,7 +68,6 @@
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
     border-radius: 100px;
     align-self: center;
-
     /* Text content */
     color: white;
     font-size: 15px;
@@ -92,5 +86,13 @@
   #nextButton {
     margin-right: 15px;
     background-color: #05c46b;
+  }
+  
+  
+  /* Queries */
+  @media only screen and (max-width: 480px) {
+    .navbar h1 {
+      font-size: 30px;
+    }
   }
 </style>

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Navbar :backAppears='0' :titleProperty='"ORDER SUMMARY"' :nextAppears='0'/>
+        <Navbar :titleProperty='"ORDER SUMMARY"'/>
+
         <div class="boxes">
             <div class="item">
                 <div class="top">
@@ -32,10 +33,12 @@
                 </div>
             </div>
         </div>
+
         <a href="./#/OrderPage">
             <div class="modify">
                 <p>MODIFY</p>
             </div>
+
         </a>
         <a href="./#/OrderCompleted">
             <div class="pay">
@@ -57,14 +60,6 @@ export default {
 </script>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
     h1, h2, h3, h4, h5, p {
         margin: 0;
         padding: 0;
@@ -76,16 +71,6 @@ export default {
         font-family: Roboto, sans-serif;
     }
 
-    h1 {
-        text-align: center;
-        line-height: 60px;
-        font-size: 40px;
-        font-weight: bold;
-        color: white;
-        text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
-
-    }
-
     h2 {
         font-size: 20px;
         font-weight: bold;
@@ -94,18 +79,6 @@ export default {
     h3 {
         font-size: 20px;
         font-weight: normal;
-    }
-
-    /* The body is composed by: header, boxes and the buttons (modify and pay). */
-    .header {
-        top: 0;
-        position: fixed;
-        width: 100%;
-        height: 60px;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.16);
-
-        background-color: #416451;
-        z-index: 1;
     }
 
     .boxes {
@@ -217,18 +190,10 @@ export default {
         background-color: #0C44D1;
     }
 
-    .pay p,
-    .modify p {
+    .pay p, .modify p {
         text-align: center;
         line-height: 40px;
         color: white;
         font-size: 20px;
-    }
-
-    /* Queries */
-    @media only screen and (max-width: 480px) {
-        h1 {
-            font-size: 30px;
-        }
     }
 </style>
