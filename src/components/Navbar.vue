@@ -1,6 +1,6 @@
 <template>
   <div class='navbar fixed'>
-    <a href="./#/"><div id="backbutton"class="button" ><p>START OVER</p></div></a>
+    <a href="./#/"><div id="backbutton" class="button" ><p>START OVER</p></div></a>
     <h1>{{ titleProperty }}</h1>
     <a href="./#/OrderSummary"><div id="nextbutton" class='button'><p>FINISH ORDER</p></div></a>
   </div>
