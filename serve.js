@@ -1,4 +1,3 @@
-// Inspired by https://gist.github.com/icebob/0dda386fceb8e14b91d84d057fac676f
 "use strict";
 
 // Generate webpack config with CLI service
@@ -14,18 +13,20 @@ var io = require('socket.io')(http);
 const webpack = require("webpack");
 
 webpackConfig.entry.app.unshift('webpack-hot-middleware/client');
+
 const compiler = webpack(webpackConfig);
 const devMiddleware = require('webpack-dev-middleware'); // eslint-disable-line
+
 app.use(devMiddleware(compiler, {
-    noInfo: false,
-    publicPath: webpackConfig.output.publicPath,
-    headers: { "Access-Control-Allow-Origin": "*" },
-    stats: {colors: true}
+  noInfo: false,
+  publicPath: webpackConfig.output.publicPath,
+  headers: { "Access-Control-Allow-Origin": "*" },
+  stats: { colors: true } 
 }));
 
 const hotMiddleware = require('webpack-hot-middleware'); // eslint-disable-line
 app.use(hotMiddleware(compiler, {
-    log: console.log
+  log: console.log
 }));
 
 // Read in the "class" to store all our data on the server side
@@ -37,22 +38,28 @@ data.initializeData();
 
 io.on('connection', function (socket) {
   // Send list of orders and text labels when a client connects
-  socket.emit('initialize', { orders: data.getAllOrders(),
-                          uiLabels: data.getUILabels(),
-                          ingredients: data.getIngredients() });
+  socket.emit('initialize', { 
+    orders: data.getAllOrders(),
+    uiLabels: data.getUILabels(),
+    ingredients: data.getIngredients() 
+  });
 
   // When someone orders something
   socket.on('order', function (order) {
     var orderIdAndName = data.addOrder(order);
     // send updated info to all connected clients, note the use of io instead of socket
     socket.emit('orderNumber', orderIdAndName);
-    io.emit('currentQueue', { orders: data.getAllOrders(),
-                          ingredients: data.getIngredients() });
+    io.emit('currentQueue', { 
+      orders: data.getAllOrders(),
+      ingredients: data.getIngredients()
+    });
   });
+
   // send UI labels in the chosen language
   socket.on('switchLang', function (lang) {
     socket.emit('switchLang', data.getUILabels(lang));
   });
+
   // when order is marked as done, send updated queue to all connected clients
   socket.on('orderDone', function (orderId) {
     data.markOrderDone(orderId);
@@ -77,5 +84,5 @@ io.on('connection', function (socket) {
 
 const port = 8080;
 http.listen(port, function() {
-    console.log("Developer server running on http://localhost:" + port);
+  console.log("Developer server running on http://localhost:" + port);
 });

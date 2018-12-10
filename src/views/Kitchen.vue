@@ -1,6 +1,7 @@
 <template>
 <div id="orders">
   <h1>{{ uiLabels.ordersInQueue }}</h1>
+  <h1>Horry Shit</h1>
   <div>
     <OrderItemToPrepare
       v-for="(order, key) in orders"
@@ -27,6 +28,7 @@
   </div>
 </div>	
 </template>
+
 <script>
 import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
@@ -55,9 +57,10 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 	#orders {
-    font-size:24pt;
+    font-size: 24pt;
   }
 
   h1 {

@@ -14,7 +14,7 @@ let router = new Router({
     {
       path: '/',
       meta: {
-          title: 'Welcome to Burger Heaven',
+        title: 'Welcome to Burger Heaven',
       },
       name: 'Start',
       component: StartPage
@@ -22,7 +22,7 @@ let router = new Router({
     {
       path: '/OrderPage',
       meta: {
-          title: 'Order Screen',
+        title: 'Order Screen',
       },
       name: 'OrderPage',
       component: OrderPage
@@ -30,7 +30,7 @@ let router = new Router({
     {
       path: '/OrderSummary',
       meta: {
-          title: 'Order Summary'
+        title: 'Order Summary'
       },
       name: 'Summary',
       component: OrderSummaryPage
@@ -38,7 +38,7 @@ let router = new Router({
     {
       path: '/OrderCompleted',
       meta: {
-          title: 'Order Completed',
+        title: 'Order Completed',
       },
       name: 'Completed',
       component: OrderCompletedPage
@@ -46,13 +46,10 @@ let router = new Router({
     {
       path: '/kitchen',
       meta: {
-          title: 'Kitchen',
+        title: 'Kitchen',
       },
       name: 'kitchen',
-      // route level code-splitting
-      // this generates a separate chunk (read.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "read" */ './views/Kitchen.vue')
+      component: () => import('./views/Kitchen.vue')
     }
   ]
 });

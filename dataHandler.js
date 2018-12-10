@@ -8,15 +8,17 @@ let defaultLanguage = "en";
 
 // Store data in an object to keep the global namespace clean
 function Data() {
+
   this.data = {};
   this.orders = {};
   this.currentOrderNumber = 0;
-}
 
-Data.prototype.getUILabels = function (lang) {
-  var ui = require("./data/ui_" + (lang || defaultLanguage) + ".json");
-  return ui;
-};
+  this.getUILabels = function(lang) {
+    var ui = require("./data/ui_" + (lang || defaultLanguage) + ".json");
+    return ui;
+  }
+
+}
 
 /*
   Returns a JSON object array of ingredients with the fields from
@@ -41,7 +43,7 @@ Data.prototype.getIngredients = function () {
   Function to load initial data from CSV files into the object
 */
 Data.prototype.initializeTable = function (table) {
-  csv({checkType: true})
+  csv({ checkType: true })
     .fromFile("./data/" + table + ".csv")
     .then((jsonObj) => {
       //console.log("JSON object", jsonObj, "done");
@@ -56,12 +58,12 @@ Data.prototype.initializeData = function() {
   // Load initial stock. Make alterations in the CSV file.
   this.initializeTable(transactionsDataName);
 }
+
 /*
   Adds an order to to the queue and makes an withdrawal from the
   stock. If you have time, you should think a bit about whether
   this is the right moment to do this.
 */
-
 Data.prototype.getOrderNumber = function () {
   this.currentOrderNumber += 1;
   return this.currentOrderNumber;
@@ -77,21 +79,27 @@ Data.prototype.addOrder = function (order) {
     transId =  transactions[transactions.length - 1].transaction_id,
     i = order.order.ingredients,
     k;
+
   for (k = 0; k < i.length; k += 1) {
     transId += 1;
-    transactions.push({transaction_id: transId,
-                       ingredient_id: i[k].ingredient_id,
-                       change: - 2});
+    transactions.push({
+      transaction_id: transId,
+      ingredient_id: i[k].ingredient_id,
+      change: - 2
+    });
   }
-    return orderId;
+    
+  return orderId;
 };
 
 Data.prototype.changeStock = function (item, saldo) {
-  var transactions = this.data[transactionsDataName]
-  var transId = transactions[transactions.length - 1].transaction_id
-  transactions.push({transaction_id: transId,
-                     ingredient_id: item.ingredient.ingredient_id,
-                     change: saldo - item.ingredient.stock});
+  var transactions = this.data[transactionsDataName];
+  var transId = transactions[transactions.length - 1].transaction_id;
+  transactions.push({
+    transaction_id: transId,
+    ingredient_id: item.ingredient.ingredient_id,
+    change: saldo - item.ingredient.stock
+  });
 };
 
 Data.prototype.getAllOrders = function () {
@@ -111,6 +119,4 @@ Data.prototype.markOrderNotStarted = function (orderId) {
 };
 
 module.exports = Data;
-
-
 
