@@ -1,25 +1,8 @@
 <template>
   <div class='navbar fixed'>
-      <a href="./#/"><img src="@/assets/Back.png" alt="Back"></a>
-    <div class="">
-      <h1>{{ titleProperty }}</h1>
-    </div>
-      <a href="./#/OrderSummary"><img src="@/assets/Next.png" alt="Next"></a>
-    <!-- <ul>
-      <li style="float:left">
-        <a href="./#/"><button id="backbutton" class='button'>◁ START OVER</button></a>
-        <a href="./#/"><img src="@/assets/Back.png" alt="Back"></a>
-
-      </li>
-      <li style="float:right">
-        <a href="./#/OrderSummary"><button id="nextbutton" class='button'>FINISH ORDER ▷</button></a>
-        <a href="./#/OrderSummary"><img src="@/assets/Next.png" alt="Next"></a>
-
-      </li>
-      <li>
-        <h1>{{ titleProperty }}</h1>
-      </li>
-    </ul> -->
+    <a href="./#/"><div id="backbutton"class="button" ><p>START OVER</p></div></a>
+    <h1>{{ titleProperty }}</h1>
+    <a href="./#/OrderSummary"><div id="nextbutton" class='button'><p>FINISH ORDER</p></div></a>
   </div>
 </template>
 
@@ -33,74 +16,66 @@ export default {
 
 <style>
 
-
-
-.navbar a{
-  display: inline-block;
-  height: 80px;
+a {
+  text-decoration: none;
 }
 
-.navbar img{
-  max-width: 100%;
-  max-height: 100%;
-  margin:10px 20px;
-}
 
 .fixed {
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  height: 100px;
+  height: 60px;
   z-index: 2;
 }
 
-
 .navbar {
-  width: auto;
-  height: 80px;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-  background-color: #416451;
-  text-align: center;
-  color: #ffffff;
-  font-size: 70px;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-  font-weight: 700;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
+  background-color: #416451;
+  margin-bottom: 100px;
 }
 
-
 .navbar h1 {
-  font-size: 50px;
-  line-height: 80px;
+  margin-left: -15px;
+    margin-right: -15px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  font-size: 40px;
+  line-height: 60px;
   text-transform: uppercase;
 }
 
-.navbar ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-}
-
-
-.button {
-  width: 231px;
-  height: 60px;
+.navbar .button {
+  color: white;
+  width: 150px;
+  height: 40px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
   border-radius: 100px;
-  font-size: 24px;
-  color: #ffffff;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  align-self: center;
+}
+.button p{
+  text-align: center;
+  line-height: 40px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 #backbutton {
+  margin-left: 15px;
   background-color: #ff3f34;
 }
 
 #nextbutton {
+  margin-right: 15px;
   background-color: #05c46b;
 }
 </style>
