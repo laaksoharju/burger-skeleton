@@ -10,7 +10,7 @@
     <div class="content">
 
       <div v-if="activetab === 'burgers'" class="contentTab" id="burgerContent">
-        <a href ="./#/create" class="createBox">
+        <a href ="./#/BurgerConstruction" class="createBox">
           <img src="@/assets/CreateBurger.png" alt="CREATE YOUR OWN BURGER">
         </a>
         <div class="Beef">
