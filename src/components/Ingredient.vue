@@ -2,7 +2,7 @@
   <div class="ingredient">
     <label>
       <button v-on:click="incrementCounter">{{ counter }}</button>
-      {{item["ingredient_"+ lang]}}, {{item.selling_price}}:-, {{item.stock}} pcs
+      {{item["ingredient_"+ lang]}}, {{item.selling_price}}:-
     </label>
   </div>
 </template>
@@ -27,10 +27,20 @@ export default {
     },
     resetCounter: function () {
       this.counter = 0;
+    },
+    getImage: function (image) {
+      if (image !== "") {
+        let img = require('../assets/' + image);
+        return img;
+      }
+      else
+        return require('../assets/exampleImage.jpg');
     }
   }
 }
 </script>
 <style scoped>
-  
+  .ingredient {
+    font-weight: bold;
+  }
 </style>

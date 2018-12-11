@@ -2,7 +2,7 @@
 
 let csv = require("csvtojson");
 
-let ingredientsDataName = "ingredients";
+let ingredientsDataName = "ingredients2";
 let transactionsDataName = "transactions";
 let defaultLanguage = "en";
 

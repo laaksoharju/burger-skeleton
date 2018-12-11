@@ -4,23 +4,29 @@
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
     <h1>{{ uiLabels.ingredients }}</h1>
+    <div class="grid-wrapper">
+      <Ingredient
+        ref="ingredient"
+        v-for="item in ingredients"
+        v-if="item.category===category"
+        v-on:increment="addToOrder(item)"  
+        v-bind:item="item" 
+        :lang="lang"
+        :key="item.ingredient_id">
+      </Ingredient>
+    </div>
 
-    <Ingredient
-      ref="ingredient"
-      v-for="item in ingredients"
-      v-on:increment="addToOrder(item)"  
-      :item="item" 
-      :lang="lang"
-      :key="item.ingredient_id">
-    </Ingredient>
-
-    <h1>{{ uiLabels.order }}</h1>
-    {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
-    <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    <div class="footer">
+      <h1>{{ uiLabels.order }}</h1>
+      {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
+      <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+      <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
+    </div>
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
-    <div>
-      <OrderItem 
+    <div class="relative">
+      <OrderItem
+        class="order-item"
         v-for="(order, key) in orders"
         v-if="order.status !== 'done'"
         :order-id="key"
@@ -58,6 +64,7 @@ export default {
       chosenIngredients: [],
       price: 0,
       orderNumber: "",
+      category: 1
     }
   },
   created: function () {
@@ -85,6 +92,9 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+    },
+    nextCategory: function() {
+      this.category += 1;
     }
   }
 }
@@ -93,7 +103,8 @@ export default {
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 #ordering {
   margin:auto;
-  width: 40em;
+  max-width: 40em;
+  padding-bottom: 20em;
 }
 
 .example-panel {
@@ -102,10 +113,52 @@ export default {
   top:0;
   z-index: -2;
 }
+
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, calc(7em + 12px));
+  grid-gap: 1em;
+}
+
 .ingredient {
+  width: 7em;
+  height: 7em;
   border: 1px solid #ccd;
-  padding: 1em;
+  padding: 5px;
   background-image: url('~@/assets/exampleImage.jpg');
   color: white;
 }
+
+.relative {
+}
+
+.next-button {
+  float:right;
+  margin:2em;
+}
+.order-item {
+  left:0;
+  border:1px solid red;
+  top:0;
+}
+
+.footer {
+  position: fixed;
+  width:100%;
+  left:0;
+  bottom: 0;
+  padding: 1em;
+  background-image: url('~@/assets/exampleImage.jpg');
+}
+
+@media (max-width: 420px) {
+  .grid-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient {
+    width: calc(100% - 2em);
+  }
+}
+
 </style>

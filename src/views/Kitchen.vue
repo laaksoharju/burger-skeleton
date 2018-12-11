@@ -1,6 +1,13 @@
 <template>
 <div id="orders">
+  <div v-for="countIng in countAllIngredients" 
+      v-if="countIng.count>0"
+      :key="countAllIngredients.indexOf(countIng)">
+    {{countIng.name}}: {{countIng.count}}
+  </div>
+
   <h1>{{ uiLabels.ordersInQueue }}</h1>
+  {{$store.state.hello}}
   <div>
     <OrderItemToPrepare
       v-for="(order, key) in orders"
@@ -48,9 +55,34 @@ export default {
       price: 0
     }
   },
+  computed: {
+    countBeef100: function() {
+      return this.countNumberOfIngredients(2)
+    },
+    countAllIngredients: function() {
+      let ingredientTuples = []
+      for (let i = 0; i < this.ingredients.length; i += 1) {
+        ingredientTuples[i] = {};
+        ingredientTuples[i].name = this.ingredients[i]['ingredient_' + this.lang];
+        ingredientTuples[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id);
+      }
+      return ingredientTuples;
+    }
+  },
   methods: {
     markDone: function (orderid) {
       this.$store.state.socket.emit("orderDone", orderid);
+    },
+    countNumberOfIngredients: function (id) {
+      let counter = 0;
+      for (let order in this.orders) {
+        for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
+          if (this.orders[order].ingredients[i].ingredient_id === id) {
+            counter +=1;
+          }
+        }
+      }
+      return counter;
     }
   }
 }

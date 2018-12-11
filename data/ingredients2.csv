@@ -1,0 +1,62 @@
+ingredient_id,ingredient_sv,ingredient_en,category,milk_free,gluten_free,vegan,selling_price,image
+1,bönburgare,bean patty,1,1,1,1,40,beanburger.jpg
+2,nötfärsburgare 100g,beef patty 100g,1,1,1,0,40,beefpatty-small.png
+3,nötfärsburgare 200g,beef patty 200g,1,1,1,0,60,beefpatty-small.png
+4,kycklingburgare,chicken patty,1,1,0,0,40,beefpatty-small.png
+5,friterad halloumi,deep-fried halloumi,1,0,0,0,40,beefpatty-small.png
+6,fiskfilé,fish filet,1,1,0,0,40,beefpatty-small.png
+7,grillad aubergine,grilled eggplant,1,1,1,1,30,beefpatty-small.png
+8,hummer,lobster,1,1,1,0,80,beefpatty-small.png
+9,pulled jackfruit,pulled jackfruit,1,1,1,1,40,beefpatty-small.png
+10,pulled pork,pulled pork,1,1,1,0,40,beefpatty-small.png
+11,avocado,avocado,2,1,1,1,10,beefpatty-small.png
+12,bacon,bacon,2,1,1,0,10,beefpatty-small.png
+13,banan,banana,2,1,1,1,5,beefpatty-small.png
+14,löjrom,bleak caviar,2,1,1,0,50,beefpatty-small.png
+15,karamelliserad lök,candied onions,2,1,1,1,5,beefpatty-small.png
+16,cheddar,cheddar cheese,2,0,1,0,10,beefpatty-small.png
+17,koriander,cilantro,2,1,1,1,5,beefpatty-small.png
+18,coleslaw,coleslaw,2,1,1,0,5,beefpatty-small.png
+19,friterade lökringar,deep-fried onion rings,2,1,0,1,15,beefpatty-small.png
+20,stekt ägg,fried egg,2,1,1,0,10,beefpatty-small.png
+21,chèvre,goat cheese,2,0,1,0,10,beefpatty-small.png
+22,jalapeño,jalapeño,2,1,1,1,5,beefpatty-small.png
+23,kimchi,kimchi,2,1,1,1,10,beefpatty-small.png
+24,krispsallad,lettuce,2,1,1,1,5,beefpatty-small.png
+25,svampstuvning,mushroom stew,2,0,1,0,15,beefpatty-small.png
+26,pepper jack-ost,pepper jack cheese,2,0,1,0,10,beefpatty-small.png
+27,inlagd gurka,pickled cucumber,2,1,1,1,5,beefpatty-small.png
+28,inlagd rödlök,pickled red onion,2,1,1,1,5,beefpatty-small.png
+29,rå rödlök,raw red onion,2,1,1,1,5,beefpatty-small.png
+30,rå gul lök,raw yellow onion,2,1,1,1,5,beefpatty-small.png
+31,salami,salami,2,1,1,0,10,beefpatty-small.png
+32,surkål,sauerkraut,2,1,1,1,5,beefpatty-small.png
+33,tomat,tomato,2,1,1,1,5,beefpatty-small.png
+34,vegansk ost,vegan cheese,2,1,1,1,10,beefpatty-small.png
+35,aioli,aioli,3,1,1,0,5,beefpatty-small.png
+36,ajvar,ajvar,3,1,1,1,5,beefpatty-small.png
+37,barbecuesås,barbecue sauce,3,1,1,1,0,beefpatty-small.png
+38,klassisk hamburgarsås,classic hamburger dressing,3,1,1,0,5,beefpatty-small.png
+39,dijonsås,dijon sauce,3,1,1,0,5,beefpatty-small.png
+40,guacamole,guacamole,3,1,1,1,10,beefpatty-small.png
+41,hot salsa,hot salsa,3,1,1,1,5,beefpatty-small.png
+42,hummus,hummus,3,1,1,1,10,beefpatty-small.png
+43,ketchup,ketchup,3,1,1,1,0,beefpatty-small.png
+44,majonnäs,mayonnaise,3,1,1,0,5,beefpatty-small.png
+45,senap,mustard,3,1,1,1,0,beefpatty-small.png
+46,sriracha,sriracha,3,1,1,1,0,beefpatty-small.png
+47,teriyakisås,teriyaki sauce,3,1,1,1,5,beefpatty-small.png
+48,tryffelmajonnäs,truffle mayonnaise,3,1,1,0,5,beefpatty-small.png
+49,tzatziki,tzatziki,3,0,1,0,5,beefpatty-small.png
+50,brioche,brioche,4,0,0,0,10,beefpatty-small.png
+51,glutenfritt bröd,gluten free bread,4,1,1,1,10,beefpatty-small.png
+52,veganskt bröd,vegan bun,4,0,0,1,10,beefpatty-small.png
+53,fullkornsbrioche,whole wheat brioche,4,0,0,0,10,beefpatty-small.png
+54,nachochips,nachos,5,1,0,1,20,beefpatty-small.png
+55,potatisstrips,potato fries,5,1,1,1,20,beefpatty-small.png
+56,sötpotatisstrips,sweet potato fries,5,1,1,1,30,beefpatty-small.png
+57,chokladmilkshake,chocolate milk shake,6,0,1,0,40,beefpatty-small.png
+58,pucko,pucko,6,0,1,0,25,beefpatty-small.png
+59,läsk,soda,6,1,1,1,20,beefpatty-small.png
+60,jordgubbsmilkshake,strawberry milk shake,6,0,1,0,40,beefpatty-small.png
+61,vegansk mango lassi,vegan mango lassi,6,1,1,1,40,beefpatty-small.png

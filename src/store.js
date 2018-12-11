@@ -6,12 +6,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    socket: io()
+    socket: io(),
+    uiLabels: {},
+    lang: "en"
   },
   getters: {
     getSocket: state => state.socket
   },
   mutations: {
+    setUiLabels: function (store, labels) {
+      store.uiLabels = labels;
+    },
+    switchLang: function (store, lang) {
+      store.lang = lang;
+    }
 
   },
   actions: {

@@ -36,10 +36,22 @@ var data = new Data();
 data.initializeData();
 
 io.on('connection', function (socket) {
+  // TO FIX THE LANGUAGE ISSUE we declare a scoped variable
+  // to remember which language was chosen. Note that each new
+  // connection will be handled separately so there is no risk
+  // that the language preference from one connection leaks to
+  // others
+  let uiLang = "en";
+
   // Send list of orders and text labels when a client connects
-  socket.emit('initialize', { orders: data.getAllOrders(),
-                          uiLabels: data.getUILabels(),
-                          ingredients: data.getIngredients() });
+  // UPDATE: send it when a client has sent a message that it is
+  // ready to receive the data. Note also that getUILabels now
+  // uses the chosen language as an argument
+  socket.on('pageLoaded', function() {
+    socket.emit('initialize', { orders: data.getAllOrders(),
+                            uiLabels: data.getUILabels(uiLang),
+                            ingredients: data.getIngredients() });
+  });
 
   // When someone orders something
   socket.on('order', function (order) {
@@ -51,6 +63,7 @@ io.on('connection', function (socket) {
   });
   // send UI labels in the chosen language
   socket.on('switchLang', function (lang) {
+    uiLang = lang; // set the scoped language variable
     socket.emit('switchLang', data.getUILabels(lang));
   });
   // when order is marked as done, send updated queue to all connected clients
