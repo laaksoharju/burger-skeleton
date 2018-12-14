@@ -12,6 +12,7 @@
   "ordersInQueue" : "Order queue",
   "ordersTrending" : "Trending orders",
   "placeOrder" : "Place order",
+  "addToOrder" : "Add to order",
   "sideorders" : "Side orders",
   "ingredients" : "Ingredients",
   "ready" : "Done",

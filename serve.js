@@ -36,11 +36,12 @@ var data = new Data();
 data.initializeData();
 
 io.on('connection', function (socket) {
-  // Send list of orders and text labels when a client connects
-  socket.emit('initialize', { orders: data.getAllOrders(),
-                          uiLabels: data.getUILabels(),
-                          ingredients: data.getIngredients() });
-
+  // Send list of orders and text labels when a client is ready
+  socket.on('pageLoaded', function() {
+    socket.emit('initialize', { orders: data.getAllOrders(),
+                                uiLabels: data.getUILabels(),
+                                ingredients: data.getIngredients() });
+  });
   // When someone orders something
   socket.on('order', function (order) {
     var orderIdAndName = data.addOrder(order);

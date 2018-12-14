@@ -15,9 +15,11 @@
     </Ingredient>
 
     <h1>{{ uiLabels.order }}</h1>
-    {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
+    {{ burgersInOrder() }}
+    <hr>
+    {{ currentBurger() }}, {{ price }} kr
+    <button v-on:click="addBurger()">{{ uiLabels.addToOrder }}</button>
     <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
-
     <h1>{{ uiLabels.ordersInQueue }}</h1>
     <div>
       <OrderItem 
@@ -58,6 +60,7 @@ export default {
       chosenIngredients: [],
       price: 0,
       orderNumber: "",
+      burgerCount: 1
     }
   },
   created: function () {
@@ -70,19 +73,44 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
     },
+    addBurger: function () {
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        if (typeof this.chosenIngredients[i].burgerCount === 'undefined') {
+          this.$set(this.chosenIngredients[i], 'burgerCount', this.burgerCount);
+        }
+      }
+      this.burgerCount += 1;
+      this.clearIngredients();
+    },
+    currentBurger: function () {
+      return this.chosenIngredients.map(function (item) {
+        if (typeof item.burgerCount === 'undefined') {
+          return item["ingredient_" + this.lang];
+        }
+      }.bind(this)).join(', ');
+    },
+    burgersInOrder: function () {
+      return this.chosenIngredients.map(function (item) {
+        if (typeof item.burgerCount !== 'undefined') {
+          return item.burgerCount + ": " + item["ingredient_" + this.lang];
+        }
+      }.bind(this)).join(', ');
+    },
+    clearIngredients: function () {
+      //set all counters to 0. Notice the use of $refs
+      for (let i = 0; i < this.$refs.ingredient.length; i += 1) {
+        this.$refs.ingredient[i].resetCounter();
+      }
+    },
     placeOrder: function () {
-      var i,
       //Wrap the order in an object
-        order = {
+      let order = {
           ingredients: this.chosenIngredients,
           price: this.price
         };
       // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
       this.$store.state.socket.emit('order', {order: order});
-      //set all counters to 0. Notice the use of $refs
-      for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-        this.$refs.ingredient[i].resetCounter();
-      }
+      this.clearIngredients();
       this.price = 0;
       this.chosenIngredients = [];
     }
