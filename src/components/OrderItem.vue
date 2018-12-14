@@ -1,6 +1,9 @@
 <template>
 	<div>
-		{{orderId}} {{order.type}} {{uiLabels.ingredients}}: {{ order.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
+		{{order.orderId}}
+    <div v-for="(burger, key) in order.burgers" :key="key">
+      {{uiLabels.ingredients}}: {{ burger.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
+    </div>
 	</div>
 </template>
 <script>
@@ -9,7 +12,6 @@ export default {
   props: {
     uiLabels: Object,
     order: Object,
-    orderId: String,
     lang: String
   }
 }

@@ -4,7 +4,6 @@
   <OrderItem
     :ui-labels="uiLabels"
     :lang="lang"
-    :order-id="orderId"
     :order="order">
   </OrderItem>
   <button v-on:click="orderDone">

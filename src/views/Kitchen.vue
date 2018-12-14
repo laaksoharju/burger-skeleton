@@ -49,10 +49,8 @@ export default {
   },
   mixins: [sharedVueStuff], // include stuff that is used in both 
                             //the ordering system and the kitchen
-  data: function(){
+  data: function() {
     return {
-      chosenIngredients: [],
-      price: 0
     }
   },
   computed: {
@@ -76,9 +74,14 @@ export default {
     countNumberOfIngredients: function (id) {
       let counter = 0;
       for (let order in this.orders) {
-        for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id) {
-            counter +=1;
+        //Now we have an array of burgers in an order so we need to add a loop
+        let burgers = this.orders[order].burgers;
+        for (let j = 0; j < burgers.length; j += 1) {
+          for (let i = 0; i < burgers[j].ingredients.length; i += 1) {
+            if (this.orders[order].status !== "done" && 
+                burgers[j].ingredients[i].ingredient_id === id) {
+              counter +=1;
+            }
           }
         }
       }
