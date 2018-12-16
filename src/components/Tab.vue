@@ -1,9 +1,12 @@
 <script>
+  import menu from '@/components/menu.js';
+
   export default {
     name: 'Tabs',
     data: function() {
       return {
-        activetab: 'burgers'
+        activetab: 'burgers',
+        burgers: menu.burgers
       }
     }
   }
@@ -25,103 +28,15 @@
             <p>CREATE YOUR OWN PERSONALISED BURGER!</p>
           </div>
         </a>
-        <br>
-        <hr class="divider">
-        <div class="grid-container">
-          <div class="categoryName">BEEF</div>
-          <div class="scrollable">
-            <div class="burger1">
-              <div class="burgerPic"><img src="@/assets/Burgers/Beef/beef1.png"></div>
-              <div class="burgerTitle">Double Beef</div>
-            </div>
-            <div class="burger2">
-              <div class="burgerPic"><img src="@/assets/Burgers/Beef/beef2.png"></div>
-              <div class="burgerTitle">Bacon Deli</div>
-            </div>
-            <div class="burger3">
-              <div class="burgerPic"><img src="@/assets/Burgers/Beef/beef3.png"></div>
-              <div class="burgerTitle">Chili Burger</div>
-            </div>
-            <div class="burger4">
-              <div class="burgerPic"><img src="@/assets/Burgers/Beef/beef4.png"></div>
-              <div class="burgerTitle">Big Beef</div>
-            </div>
-            <div class="burger5">
-              <div class="burgerPic"><img src="@/assets/Burgers/Beef/beef5.png"></div>
-              <div class="burgerTitle">Double Meat</div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <hr class="divider">
-        <div class="grid-container">
-          <div class="categoryName">CHICKEN</div>
-          <div class="scrollable">
-            <div class="burger1">
-              <div class="burgerPic"><img src="@/assets/Burgers/Chicken/chicken1.png"></div>
-              <div class="burgerTitle">Chicken Basic</div>
-            </div>
-            <div class="burger2">
-              <div class="burgerPic"><img src="@/assets/Burgers/Chicken/chicken2.png"></div>
-              <div class="burgerTitle">Chicken Deli</div>
-            </div>
-            <div class="burger3">
-              <div class="burgerPic"><img src="@/assets/Burgers/Chicken/chicken3.png"></div>
-              <div class="burgerTitle">Crispy Chicken</div>
-            </div>
-            <div class="burger4">
-              <div class="burgerPic"><img src="@/assets/Burgers/Chicken/chicken4.png"></div>
-              <div class="burgerTitle">Large Chicken</div>
-            </div>
-            <div class="burger5">
-              <div class="burgerPic"><img src="@/assets/Burgers/Chicken/chicken5.png"></div>
-              <div class="burgerTitle">Chicken BBQ</div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <hr class="divider">
-        <div class="grid-container">
-          <div class="categoryName">FISH</div>
-          <div class="scrollable">
-            <div class="burger1">
-              <div class="burgerPic"><img src="@/assets/Burgers/Fish/fish1.png"></div>
-              <div class="burgerTitle">Fish Burger</div>
-            </div>
-            <div class="burger2">
-              <div class="burgerPic"><img src="@/assets/Burgers/Fish/fish2.png"></div>
-              <div class="burgerTitle">Integral Fish</div>
-            </div>
-            <div class="burger3">
-              <div class="burgerPic"><img src="@/assets/Burgers/Fish/fish3.png"></div>
-              <div class="burgerTitle">Long Fish</div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <hr class="divider">
-        <div class="grid-container">
-          <div class="categoryName">VEGETARIAN</div>
-          <div class="scrollable">
-            <div class="burger1">
-              <div class="burgerPic"><img src="@/assets/Burgers/Veggie/veggie1.png"></div>
-              <div class="burgerTitle">Classic Veggie</div>
-            </div>
-            <div class="burger2">
-              <div class="burgerPic"><img src="@/assets/Burgers/Veggie/veggie2.png"></div>
-              <div class="burgerTitle">Pink Veggie</div>
-            </div>
-            <div class="burger3">
-              <div class="burgerPic"><img src="@/assets/Burgers/Veggie/veggie3.png"></div>
-              <div class="burgerTitle">Crispy Veggie</div>
-            </div>
-            <div class="burger4">
-              <div class="burgerPic"><img src="@/assets/Burgers/Veggie/veggie4.png"></div>
-              <div class="burgerTitle">Typical Veg</div>
-            </div>
-            <div class="burger5">
-              <div class="burgerPic"><img src="@/assets/Burgers/Veggie/veggie5.png"></div>
-              <div class="burgerTitle">Veggie Cool</div>
+        <div v-for="(burgerItems, burgerType) in burgers" :key="burgerType">
+          <br>
+          <div class="grid-container">
+            <div class="categoryName">{{ burgerType }}</div>
+            <div class="scrollable">
+              <div class="burger" v-for="(item, index) in burgerItems" :key="index">
+                <div class="burgerPic"><img :src="item.imgSrc"></div>
+                <div class="burgerTitle">{{ item.title }}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -272,107 +187,14 @@
     /* Firefox */
     column-gap: 30px;
   }
-  
-  .burger1 {
-    display: grid;
-    grid-template-rows: 140px 40px;
-    grid-template-areas: "burgerPic" "burgerTitle";
-    grid-area: burger1;
-  }
-  
-  .burger1:hover {
+
+  .burger:hover {
     cursor: pointer;
-    width: 202px;
-    height: 180px;
     box-shadow: 0px 0px 0px 1px white inset;
     border-radius: 10px;
   }
-  
-  .burger1:active {
-    background-color: white;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .burger2 {
-    cursor: pointer;
-    display: grid;
-    grid-template-rows: 140px 40px;
-    grid-template-areas: "burgerPic" "burgerTitle";
-    grid-area: burger2;
-  }
-  
-  .burger2:hover {
-    cursor: pointer;
-    width: 202px;
-    height: 180px;
-    box-shadow: 0px 0px 0px 1px white inset;
-    border-radius: 10px;
-  }
-  
-  .burger2:active {
-    background-color: white;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .burger3 {
-    cursor: pointer;
-    display: grid;
-    grid-template-rows: 140px 40px;
-    grid-template-areas: "burgerPic" "burgerTitle";
-    grid-area: burger3;
-  }
-  
-  .burger3:hover {
-    cursor: pointer;
-    width: 202px;
-    height: 180px;
-    box-shadow: 0px 0px 0px 1px white inset;
-    border-radius: 10px;
-  }
-  
-  .burger3:active {
-    background-color: white;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .burger4 {
-    cursor: pointer;
-    display: grid;
-    grid-template-rows: 140px 40px;
-    grid-template-areas: "burgerPic" "burgerTitle";
-    grid-area: burger4;
-  }
-  
-  .burger4:hover {
-    cursor: pointer;
-    width: 202px;
-    height: 180px;
-    box-shadow: 0px 0px 0px 1px white inset;
-    border-radius: 10px;
-  }
-  
-  .burger4:active {
-    background-color: white;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .burger5 {
-    cursor: pointer;
-    display: grid;
-    grid-template-rows: 140px 40px;
-    grid-template-areas: "burgerPic" "burgerTitle";
-    grid-area: burger5;
-  }
-  
-  .burger5:hover {
-    cursor: pointer;
-    width: 202px;
-    height: 180px;
-    box-shadow: 0px 0px 0px 1px white inset;
-    border-radius: 10px;
-  }
-  
-  .burger5:active {
+
+  .burger:active {
     background-color: white;
     background: rgba(0, 0, 0, 0.5);
   }
