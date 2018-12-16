@@ -15,7 +15,7 @@ let router = new Router({
     {
       path: '/',
       meta: {
-          title: 'Welcome to Burger Heaven',
+        title: 'Welcome to Burger Heaven',
       },
       name: 'Start',
       component: StartPage
@@ -23,7 +23,7 @@ let router = new Router({
     {
       path: '/OrderPage',
       meta: {
-          title: 'Order Screen',
+        title: 'Order Screen',
       },
       name: 'OrderPage',
       component: OrderPage
@@ -31,7 +31,7 @@ let router = new Router({
     {
       path: '/OrderSummary',
       meta: {
-          title: 'Order Summary'
+        title: 'Order Summary'
       },
       name: 'Summary',
       component: OrderSummaryPage
@@ -39,7 +39,7 @@ let router = new Router({
     {
       path: '/OrderCompleted',
       meta: {
-          title: 'Order Completed',
+        title: 'Order Completed',
       },
       name: 'Completed',
       component: OrderCompletedPage
@@ -47,7 +47,7 @@ let router = new Router({
     {
       path: '/BurgerConstruction',
       meta: {
-          title: 'Create your own burger',
+        title: 'Create your own burger',
       },
       name: 'BurgerConstruction',
       component: BurgerConstructionPage
@@ -55,7 +55,7 @@ let router = new Router({
     {
       path: '/kitchen',
       meta: {
-          title: 'Kitchen',
+        title: 'Kitchen',
       },
       name: 'kitchen',
       // route level code-splitting

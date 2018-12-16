@@ -1,20 +1,16 @@
 <template>
   <div class='fixed navbar'>
+
       <a :href="backAddressProperty" v-if="displayButtons" >
         <div class="button" id="backButton"> {{ backTextProperty }} </div>
       </a>
-      <!-- <a :href="backAddressProperty" v-else >
-        <div class="blank"> </div>
-      </a> -->
 
-    <h1>{{ titleProperty }}</h1>
+      <h1>{{ titleProperty }}</h1>
 
       <a :href="nextAddressProperty" v-if="displayButtons">
         <div class="button" id="nextButton"> {{ nextTextProperty }} </div>
       </a>
-      <!-- <a :href="nextAddressProperty" v-else>
-        <div class="blank"></div>
-      </a> -->
+      
   </div>
 </template>
 
