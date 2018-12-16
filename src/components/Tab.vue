@@ -95,7 +95,7 @@
   
   .content {
     margin-top: 90px;
-    margin-bottom: 110px;
+    margin-bottom: 80px;
   }
   
   .contentItem {
@@ -160,7 +160,7 @@
   .grid-container {
     margin-top: 10px;
     display: grid;
-    grid-template-rows: 40px 180px;
+    grid-template-rows: 40px 200px;
     grid-template-areas: "categoryName" "burgers";
   }
   

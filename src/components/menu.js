@@ -48,17 +48,14 @@ var menu = {
       title: 'Classic Veggie',
       imgSrc: require('@/assets/Burgers/Veggie/veggie1.png')
     }, {
-      title: 'Pink Veggie',
+      title: 'Cripsy Veggie',
       imgSrc: require('@/assets/Burgers/Veggie/veggie2.png')
     }, {
-      title: 'Cripsy Veggie',
+      title: 'Typical Veg',
       imgSrc: require('@/assets/Burgers/Veggie/veggie3.png')
     }, {
-      title: 'Typical Veg',
-      imgSrc: require('@/assets/Burgers/Veggie/veggie4.png')
-    }, {
       title: 'Veggie Cool',
-      imgSrc: require('@/assets/Burgers/Veggie/veggie5.png')
+      imgSrc: require('@/assets/Burgers/Veggie/veggie4.png')
     }]
   },
   drinks: {
