@@ -59,7 +59,50 @@ var menu = {
     }]
   },
   drinks: {
-
+    sodas: [
+      {
+        title: 'Coca-Cola',
+        imgSrc: require('@/assets/Drinks/Sodas/coke.png')
+      },
+      {
+        title: 'Coca-Cola Zero',
+        imgSrc: require('@/assets/Drinks/Sodas/coke-zero.png')
+      },
+      {
+        title: 'Coca-Cola Light',
+        imgSrc: require('@/assets/Drinks/Sodas/coke-light.png')   
+      },
+      {
+        title: 'Fanta',
+        imgSrc: require('@/assets/Drinks/Sodas/fanta.png')   
+      },
+      {
+        title: 'Sprite',
+        imgSrc: require('@/assets/Drinks/Sodas/sprite.png')   
+      }
+    ],
+    beers: [
+      {
+        title: 'Norrlands',
+        imgSrc: require('@/assets/Drinks/Beers/norrlands.png') 
+      },
+      {
+        title: 'Falcon',
+        imgSrc: require('@/assets/Drinks/Beers/falcon.png') 
+      },
+      {
+        title: 'Heineken',
+        imgSrc: require('@/assets/Drinks/Beers/heineken.png') 
+      },
+      {
+        title: 'Mahou',
+        imgSrc: require('@/assets/Drinks/Beers/mahou-gf.png') 
+      },
+      {
+        title: 'Estrella Galicia',
+        imgSrc: require('@/assets/Drinks/Beers/eg.png') 
+      }
+    ]
   },
   sides: {
     
