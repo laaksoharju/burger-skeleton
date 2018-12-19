@@ -59,6 +59,24 @@ var menu = {
     }]
   },
   drinks: {
+    water: [
+      {
+        title: 'Evian',
+        imgSrc: require('@/assets/Drinks/Water/evian.png') 
+      },
+      {
+        title: 'Fiji',
+        imgSrc: require('@/assets/Drinks/Water/fiji.png') 
+      },
+      {
+        title: 'Solan de Cabras',
+        imgSrc: require('@/assets/Drinks/Water/solan.png') 
+      },
+      {
+        title: 'Vichy Catalan',
+        imgSrc: require('@/assets/Drinks/Water/vichy.png') 
+      }
+    ],
     sodas: [
       {
         title: 'Coca-Cola',

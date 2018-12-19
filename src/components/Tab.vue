@@ -35,7 +35,7 @@
             <div class="categoryName">{{ burgerType }}</div>
             <div class="scrollable">
               <div class="burger" v-for="(item, index) in burgerItems" :key="index">
-                <div class="burgerPic"><img :src="item.imgSrc"></div>
+                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
                 <div class="burgerTitle">{{ item.title }}</div>
               </div>
             </div>
@@ -59,7 +59,18 @@
       </div>
   
       <div class="contentItem" id="sidesContent" v-if="activetab === 'sides'">
-        <div>Side Content</div>
+        <div v-for="(drinkItems, drinkType) in drinks" :key="drinkType">
+          <br>
+          <div class="grid-container">
+            <div class="categoryName">{{ drinkType }}</div>
+            <div class="scrollable">
+              <div class="burger" v-for="(item, index) in drinkItems" :key="index">
+                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="burgerTitle">{{ item.title }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   
@@ -67,168 +78,168 @@
 </template>
 
 <style>
-      .flaps {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 45px;
-        justify-content: center;
-      }
-      
-      .flap {
-        /* Visual properties */
-        height: 45px;
-        width: 220px;
-        border-radius: 10px 10px 0 0;
-        cursor: pointer;
-        margin-top: 90px;
-        /* Text inside*/
-        font-size: 30px;
-        color: white;
-        text-transform: uppercase;
-        text-align: center;
-        line-height: 45px;
-      }
-      
-      #burgersFlap {
-        order: 0;
-        background-color: #ffa801;
-      }
-      
-      #drinksFlap {
-        order: 1;
-        background-color: black;
-      }
-      
-      #sidesFlap {
-        order: 2;
-        background-color: #3c40c6;
-      }
-      
-      .content {
-        margin-top: 90px;
-        margin-bottom: 80px;
-      }
-      
-      .contentItem {
-        width: 100%;
-        min-height: 100vh;
-        padding: 20px;
-      }
-      
-      #burgersContent {
-        background-color: #ffa801;
-      }
-      
-      #drinksContent {
-        background-color: #000000;
-      }
-      
-      #sidesContent {
-        background-color: #3c40c6;
-      }
-      /* CONTENT INSIDE TABS, THIS COULD BE MINIMISED BUT MY BRAIN CANT COME WITH SOMETHING */
-      
-      hr.divider {
-        overflow: visible;
-        /* For IE */
-        height: 30px;
-        border-style: solid;
-        border-color: white;
-        border-width: 1px 0 0 0;
-      }
-      
-      .personalisedBurger {
-        background-color: #485460;
-        height: 202px;
-        border-radius: 10px;
-        padding-left: 15%;
-        padding-right: 15%;
-        /* Text */
-        color: white;
-        font-size: 50px;
-        font-weight: bold;
-        text-align: center;
-        text-transform: uppercase;
-        line-height: 202px;
-      }
-      
-      .personalisedBurger:hover {
-        cursor: pointer;
-        box-shadow: 0px 0px 0px 1px white inset;
-      }
-      
-      .personalisedBurger:active {
-        background-color: #2D353C;
-      }
-      
-      .personalisedBurger p {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 60px;
-      }
-      
-      .grid-container {
-        margin-top: 10px;
-        display: grid;
-        grid-template-rows: 40px 200px;
-        grid-template-areas: "categoryName" "burgers";
-      }
-      
-      .categoryName {
-        grid-area: categoryName;
-        color: white;
-        line-height: 40px;
-        font-size: 40px;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-      
-      .scrollable {
-        grid-area: burgers;
-        overflow: auto;
-        white-space: nowrap;
-        display: grid;
-        grid-template-columns: 202px 202px 202px 202px 202px;
-        grid-template-areas: "burger1 burger2 burger3 burger4 burger5";
-        -webkit-column-gap: 30px;
-        /* Chrome, Safari, Opera */
-        -moz-column-gap: 30px;
-        /* Firefox */
-        column-gap: 30px;
-      }
-      
-      .burger:hover {
-        cursor: pointer;
-        box-shadow: 0px 0px 0px 1px white inset;
-        border-radius: 10px;
-      }
-      
-      .burger:active {
-        background-color: white;
-        background: rgba(0, 0, 0, 0.5);
-      }
-      
-      .burgerPic {
-        grid-area: burgerPic;
-      }
-      
-      .burgerPic img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-        max-height: 100%;
-      }
-      
-      .burgerTitle {
-        grid-area: burgerTitle;
-        color: white;
-        text-align: center;
-        line-height: 40px;
-        font-size: 20px;
-        /* font-weight: bold; */
-        /* text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); */
-        text-transform: uppercase;
-      }
+  .flaps {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 45px;
+    justify-content: center;
+  }
+  
+  .flap {
+    /* Visual properties */
+    height: 45px;
+    width: 220px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    margin-top: 90px;
+    /* Text inside*/
+    font-size: 30px;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 45px;
+  }
+  
+  #burgersFlap {
+    order: 0;
+    background-color: #ffa801;
+  }
+  
+  #drinksFlap {
+    order: 1;
+    background-color: black;
+  }
+  
+  #sidesFlap {
+    order: 2;
+    background-color: #3c40c6;
+  }
+  
+  .content {
+    margin-top: 90px;
+    margin-bottom: 80px;
+  }
+  
+  .contentItem {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  #burgersContent {
+    background-color: #ffa801;
+  }
+  
+  #drinksContent {
+    background-color: #000000;
+  }
+  
+  #sidesContent {
+    background-color: #3c40c6;
+  }
+  
+  
+  /* CONTENT INSIDE TABS, THIS COULD BE MINIMISED BUT MY BRAIN CANT COME WITH SOMETHING */
+  
+  hr.divider {
+    overflow: visible;
+    /* For IE */
+    height: 30px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px 0 0 0;
+  }
+  
+  .personalisedBurger {
+    background-color: #485460;
+    height: 202px;
+    border-radius: 10px;
+    padding-left: 15%;
+    padding-right: 15%;
+    /* Text */
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 202px;
+  }
+  
+  .personalisedBurger:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 0px 1px white inset;
+  }
+  
+  .personalisedBurger:active {
+    background-color: #2D353C;
+  }
+  
+  .personalisedBurger p {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 60px;
+  }
+  
+  .grid-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-rows: 40px 200px;
+    grid-template-areas: "categoryName" "burgers";
+  }
+  
+  .categoryName {
+    grid-area: categoryName;
+    color: white;
+    line-height: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .scrollable {
+    grid-area: burgers;
+    overflow: auto;
+    white-space: nowrap;
+    display: grid;
+    grid-template-columns: 202px 202px 202px 202px 202px;
+    grid-template-areas: "burger1 burger2 burger3 burger4 burger5";
+    -webkit-column-gap: 0px;
+    /* Chrome, Safari, Opera */
+    -moz-column-gap: 0px;
+    /* Firefox */
+    column-gap: 0px;
+  }
+  
+  .burger:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 0px 1px white inset;
+    border-radius: 10px;
+  }
+  
+  .burger:active {
+    background-color: white;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .burgerPic {
+    grid-area: burgerPic;
+  }
+  
+  .burgerPic img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .burgerTitle {
+    grid-area: burgerTitle;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    /* font-weight: bold; */
+    /* text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); */
+    text-transform: uppercase;
+  }
 </style>
