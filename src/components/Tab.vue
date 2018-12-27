@@ -92,7 +92,7 @@
     width: 220px;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
-    margin-top: 90px;
+    margin-top: 80px;
     /* Text inside*/
     font-size: 30px;
     color: white;
@@ -103,7 +103,7 @@
   
   #burgersFlap {
     order: 0;
-    background-color: #ffa801;
+    background-color: #ffc500;
   }
   
   #drinksFlap {
@@ -117,8 +117,8 @@
   }
   
   .content {
-    margin-top: 90px;
-    margin-bottom: 80px;
+    margin-top: 80px;
+    margin-bottom: 100px;
   }
   
   .contentItem {
@@ -128,7 +128,7 @@
   }
   
   #burgersContent {
-    background-color: #ffa801;
+    background-color: #ffc500;
   }
   
   #drinksContent {
@@ -138,32 +138,20 @@
   #sidesContent {
     background-color: #3c40c6;
   }
-  
-  
-  /* CONTENT INSIDE TABS, THIS COULD BE MINIMISED BUT MY BRAIN CANT COME WITH SOMETHING */
-  
-  hr.divider {
-    overflow: visible;
-    /* For IE */
-    height: 30px;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px 0 0 0;
-  }
-  
+
   .personalisedBurger {
     background-color: #485460;
-    height: 202px;
+    height: 150px;
     border-radius: 10px;
     padding-left: 15%;
     padding-right: 15%;
     /* Text */
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
-    line-height: 202px;
+    line-height: 150px;
   }
   
   .personalisedBurger:hover {
@@ -204,11 +192,6 @@
     display: grid;
     grid-template-columns: 202px 202px 202px 202px 202px;
     grid-template-areas: "burger1 burger2 burger3 burger4 burger5";
-    -webkit-column-gap: 0px;
-    /* Chrome, Safari, Opera */
-    -moz-column-gap: 0px;
-    /* Firefox */
-    column-gap: 0px;
   }
   
   .burger:hover {
