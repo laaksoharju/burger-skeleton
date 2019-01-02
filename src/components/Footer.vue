@@ -7,7 +7,7 @@ export default {
   ],
   methods: {
     removeItem: function(itemIndex) {
-      this.$emit('removeItemFromOrder', itemIndex);
+      this.$emit('removeItemFromOrder', itemIndex); //talking to orderpage
     }
   }
 }
@@ -17,15 +17,18 @@ export default {
   <div class="footer">
     <div class="currentOrder">
       <div class="orderItem" v-for="(item, index) of currentOrder" :key="index" @click="removeItem(index)">
+        <div class="removeItem">
+          <img src="@/assets/redX.png" />
+        </div>
         <img :src="item.imgSrc">
         <p>{{ item.title }}</p>
       </div>
     </div>
 
     <div class="total">
-      <span>TOTAL </span>
+      <span>TOTAL:</span>
       <p class="totalValue">
-        ${{ orderTotal[0] }}
+        ${{ orderTotal[0].toFixed(2) }}
       </p>
     </div>
   </div>
@@ -54,6 +57,7 @@ export default {
 .orderItem {
   display: inline-block;
   height: 110px;
+  width: 110px;
 }
 
 .orderItem:hover {
@@ -71,18 +75,31 @@ export default {
   font-size: 12px;
 }
 
+.removeItem {
+  position: fixed;
+  height: 30px;
+  width: 30px;
+  z-index: 2;
+  margin-left: 79px;
+}
+
+.removeItem img {
+  max-width: 70%;
+  margin-right: 15px;
+}
+
 .total { 
-  width: 100%;
-  height: 100%;
+  padding: 5px;
   background-color: #416451;
   color: #ffffff;
   display: inline-block;
 }
 
 .totalValue {
-  line-height: 30px;
+  line-height: 80px;
   vertical-align: center;
   text-align: center;
   font-weight: bold;
+  font-size: 25px;
 }
 </style>

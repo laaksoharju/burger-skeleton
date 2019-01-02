@@ -12,7 +12,7 @@
     },
     methods: {
       addItem: function(item) {
-        this.$emit('addedItemToOrder', item);
+        this.$emit('addedItemToOrder', item); // talking to order page
       }
     }
   }

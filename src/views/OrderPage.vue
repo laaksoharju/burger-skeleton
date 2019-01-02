@@ -44,7 +44,8 @@ export default {
       // add order to order list
       runningOrder.push({
         title: item.title,
-        imgSrc: item.imgSrc
+        imgSrc: item.imgSrc,
+        price: item.price
       });
 
       // update total price, have to use an array unfortunately
@@ -52,6 +53,9 @@ export default {
       runningTotal.splice(0, 1);
     },
     removeItem: function(itemIndex) {
+      runningTotal.push(runningTotal[0] - runningOrder[itemIndex].price);
+      runningTotal.splice(0, 1);
+
       runningOrder.splice(itemIndex, 1);
     }
   }

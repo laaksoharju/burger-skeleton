@@ -5,11 +5,11 @@ var menu = {
     beef: [{
       title: 'Double Beef',
       imgSrc: require('@/assets/Burgers/Beef/beef1.png'),
-      price: 1.50
+      price: 1.51
     }, {
       title: 'Bacon Deli',
       imgSrc: require('@/assets/Burgers/Beef/beef2.png'),
-      price: 1.50
+      price: 1.51
     }, {
       title: 'Chili Burger',
       imgSrc: require('@/assets/Burgers/Beef/beef3.png'),
