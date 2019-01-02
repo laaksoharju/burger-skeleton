@@ -1,21 +1,24 @@
 <script>
-// import sharedOrder from '@/components/sharedOrder.js';
-
-
 export default {
   name: 'Footer',
   props: [
     'currentOrder',
     'orderTotal'
-  ]
+  ],
+  methods: {
+    removeItem: function(itemIndex) {
+      this.$emit('removeItemFromOrder', itemIndex);
+    }
+  }
 }
 </script>
 
 <template>
   <div class="footer">
     <div class="currentOrder">
-      <div class="orderItem" v-for="(item, index) of currentOrder" :key="index">
+      <div class="orderItem" v-for="(item, index) of currentOrder" :key="index" @click="removeItem(index)">
         <img :src="item.imgSrc">
+        <p>{{ item.title }}</p>
       </div>
     </div>
 
@@ -32,7 +35,6 @@ export default {
 .footer {
   position: fixed;
   bottom: 0;
-  /* overflow: hidden; */
   height: 110px;
   width: 100%;
   background-color: #1e272e;
@@ -46,10 +48,6 @@ export default {
 
 .currentOrder {
   grid-area: a;
-  /* position: fixed;
-  bottom: 10px;
-  left: 2%; */
-  /* width: 85%; */
   height: 110px;
 }
 
@@ -58,23 +56,24 @@ export default {
   height: 110px;
 }
 
-.orderItem img {
-  max-height: 85%;
-  margin: 5% 0 0 5px;
-}
-
 .orderItem:hover {
   cursor: pointer;
 }
 
+.orderItem img {
+  max-height: 75%;
+  margin: 5% 10px 0 10px;
+}
+
+.orderItem p {
+  color: white;
+  text-align: center;
+  font-size: 12px;
+}
+
 .total { 
-  grid-area: b;
-  /* position: fixed;
-  /* bottom: 10px;
-  left: 90%; */
   width: 100%;
   height: 100%;
-  /* border-radius: 5px; */
   background-color: #416451;
   color: #ffffff;
   display: inline-block;

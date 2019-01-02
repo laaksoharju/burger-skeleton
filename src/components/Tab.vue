@@ -11,11 +11,7 @@
       }
     },
     methods: {
-      test: function () {
-        this.$store.state.socket.emit("test");
-      },
-      clickedItem: function(item) {
-        // alert('item clicked');
+      addItem: function(item) {
         this.$emit('addedItemToOrder', item);
       }
     }
@@ -44,9 +40,9 @@
           <div class="grid-container">
             <div class="categoryName">{{ burgerType }}</div>
             <div class="scrollable">
-              <div class="burger" v-for="(item, index) in burgerItems" :key="index" @click="clickedItem(item)">
-                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
-                <div class="burgerTitle">{{ item.title }}</div>
+              <div class="menuItem" v-for="(item, index) in burgerItems" :key="index" @click="addItem(item)">
+                <div class="menuPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="menuTitle">{{ item.title }}</div>
               </div>
             </div>
           </div>
@@ -59,9 +55,9 @@
           <div class="grid-container">
             <div class="categoryName">{{ drinkType }}</div>
             <div class="scrollable">
-              <div class="burger" v-for="(item, index) in drinkItems" :key="index">
-                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
-                <div class="burgerTitle">{{ item.title }}</div>
+              <div class="menuItem" v-for="(item, index) in drinkItems" :key="index" @click="addItem(item)">
+                <div class="menuPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="menuTitle">{{ item.title }}</div>
               </div>
             </div>
           </div>
@@ -74,9 +70,9 @@
           <div class="grid-container">
             <div class="categoryName">{{ drinkType }}</div>
             <div class="scrollable">
-              <div class="burger" v-for="(item, index) in drinkItems" :key="index">
-                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
-                <div class="burgerTitle">{{ item.title }}</div>
+              <div class="menuItem" v-for="(item, index) in drinkItems" :key="index">
+                <div class="menuPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="menuTitle">{{ item.title }}</div>
               </div>
             </div>
           </div>
@@ -204,29 +200,29 @@
     grid-template-areas: "burger1 burger2 burger3 burger4 burger5";
   }
   
-  .burger:hover {
+  .menuItem:hover {
     cursor: pointer;
     box-shadow: 0px 0px 0px 1px white inset;
     border-radius: 10px;
   }
   
-  .burger:active {
+  .menuItem:active {
     background-color: white;
     background: rgba(0, 0, 0, 0.5);
   }
   
-  .burgerPic {
-    grid-area: burgerPic;
+  .menuPic {
+    grid-area: menuPic;
   }
   
-  .burgerPic img {
+  .menuPic img {
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
   
-  .burgerTitle {
-    grid-area: burgerTitle;
+  .menuTitle {
+    grid-area: menuTitle;
     color: white;
     text-align: center;
     line-height: 40px;

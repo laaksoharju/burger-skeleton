@@ -6,11 +6,14 @@
       :backTextProperty='"START OVER"' 
       :titleProperty='"CREATE YOUR MENU"' 
       :nextAddressProperty='"./#/OrderSummary"' 
-      :nextTextProperty='"FINISH ORDER"'/>
-    <Tabs @addedItemToOrder="test" />
+      :nextTextProperty='"FINISH ORDER"'
+      />
+    <Tabs @addedItemToOrder="addItem" />
     <Footer 
       :currentOrder='currentOrder' 
-      :orderTotal='orderTotal' />
+      :orderTotal='orderTotal' 
+      @removeItemFromOrder="removeItem"
+      />
   </div>
 </template>
 
@@ -20,14 +23,8 @@ import Tabs from '@/components/Tab.vue';
 import Footer from '@/components/Footer.vue';
 
 // using array because vue live updated array values
-var runningTotal = [12.18];
-
-var exampleItem = {
-  name: "Bacon Deli",
-  imgSrc: require('@/assets/Burgers/Beef/beef2.png')
-};
-
-var runningOrder = [ exampleItem, exampleItem ];
+var runningTotal = [ 0.00 ];
+var runningOrder = [];
 
 export default {
   name: 'OrderPage',
@@ -43,23 +40,22 @@ export default {
     }
   },
   methods: {
-    test: function(item) {
-      
+    addItem: function(item) {
+      // add order to order list
       runningOrder.push({
-        name: item.title,
+        title: item.title,
         imgSrc: item.imgSrc
       });
 
+      // update total price, have to use an array unfortunately
       runningTotal.push(runningTotal[0] + item.price);
       runningTotal.splice(0, 1);
-
-      alert('Order size: ' + runningOrder.length + ' & total = ' + runningTotal[0]);
-
+    },
+    removeItem: function(itemIndex) {
+      runningOrder.splice(itemIndex, 1);
     }
   }
 }
-
-
 </script>
 
 <style scoped>
