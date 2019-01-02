@@ -5,11 +5,12 @@
       :backAddressProperty='"./#/"' 
       :backTextProperty='"START OVER"' 
       :titleProperty='"CREATE YOUR MENU"' 
-      :nextAddressProperty='"./#/OrderSummary"' 
+      :nextAddressProperty='"./#/OrderSummary/"' 
       :nextTextProperty='"FINISH ORDER"'
+      :order='currentOrder'
       />
     <Tabs @addedItemToOrder="addItem" />
-    <Footer 
+    <Footer
       :currentOrder='currentOrder' 
       :orderTotal='orderTotal' 
       @removeItemFromOrder="removeItem"

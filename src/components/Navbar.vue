@@ -1,19 +1,3 @@
-<template>
-  <div class='fixed navbar'>
-
-      <a :href="backAddressProperty" v-if="displayButtons" >
-        <div class="button" id="backButton"> {{ backTextProperty }} </div>
-      </a>
-
-      <h1>{{ titleProperty }}</h1>
-
-      <a :href="nextAddressProperty" v-if="displayButtons">
-        <div class="button" id="nextButton"> {{ nextTextProperty }} </div>
-      </a>
-      
-  </div>
-</template>
-
 <script>
   export default {
     props: [
@@ -25,10 +9,36 @@
       'titleProperty',
 
       'nextAddressProperty',
-      'nextTextProperty'
-    ]
+      'nextTextProperty',
+
+      'order'
+    ],
+    methods: {
+      convertOrdersToString() {
+        var truncatedOrderString = JSON.stringify(this.order);
+        // regex expression for removing the imgSrc property of the string
+        // vue doesn't like this property being passed
+        return truncatedOrderString.replace(/,"imgSrc":"\/img\/[a-zA-Z0-9,-]*.[a-zA-Z0-9]*.png"/g,'');
+      }
+    }
   }
 </script>
+
+<template>
+  <div class='fixed navbar'>
+
+      <a :href="backAddressProperty" v-if="displayButtons" >
+        <div class="button" id="backButton"> {{ backTextProperty }} </div>
+      </a>
+
+      <h1>{{ titleProperty }}</h1>
+
+      <a :href="nextAddressProperty + convertOrdersToString()" v-if="displayButtons">
+        <div class="button" id="nextButton"> {{ nextTextProperty }} </div>
+      </a>
+      
+  </div>
+</template>
 
 <style>
   a {

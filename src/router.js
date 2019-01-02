@@ -29,7 +29,7 @@ let router = new Router({
       component: OrderPage
     },
     {
-      path: '/OrderSummary',
+      path: '/OrderSummary/:orderString',
       meta: {
         title: 'Order Summary'
       },
