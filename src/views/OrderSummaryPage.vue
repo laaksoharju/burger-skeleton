@@ -1,314 +1,199 @@
 <template>
-<div class="wrapper">
-    <div class="head">
-        <h1>ORDER SUMMARY</h1>
-    </div>
+    <div>
+        <Navbar :titleProperty='"ORDER SUMMARY"' :displayButtons='null'/>
 
-    <div class="yellowBox">
-        <div class="item">
-            <div class="quantity">(2)</div>
-            <div class="name">Fire Burger</div>
-            <div class="price">60.00$</div>
-            <div class="ingredients">lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...</div>
-            <div class="buttons">
-                <img id="add" src="@/assets/Add.png" alt="Add a new burger">
-                <img id="modify" src="@/assets/Modify.png" alt="Modify this burger">
-                <img id="delete" src="@/assets/Delete.png" alt="Delete one burger">
-    </div>
-    </div>
-        <div class="item">
-            <div class="quantity">(2)</div>
-            <div class="name">Fire Burger</div>
-            <div class="price">60.00$</div>
-            <div class="ingredients">lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...lettuce, onions, tomatoes, bacon, bread, this, that, one, two, three, four, five...</div>
-            <div class="buttons">
-                <img id="add" src="@/assets/Add.png" alt="Add a new burger">
-                <img id="modify" src="@/assets/Modify.png" alt="Modify this burger">
-                <img id="delete" src="@/assets/Delete.png" alt="Delete one burger">
-    </div>
-    </div>
-    </div>
+        <div class="boxes">
+            <div class="item">
+                <div class="top">
+                    <img src="@/assets/minus.png" id="minus" width="30px" height="30px">
 
-    <div class="total">
-        <div class="name">TOTAL</div>
-        <div class="amount">180.00$</div>
-    </div>
+                    <div id="name">
+                        <h2>BURGER'S NAME</h2>
+                        <h3>(QUANTITY)</h3>
+                    </div>
 
-    <a href="./#/OrderPage">
-        <div class="modify">                
-            <p>MODIFY</p>
-    </div>
-    </a>
+                    <img src="@/assets/plus.png" id="plus" width="30px" height="30px">
+                </div>
 
-    <a href="./#/OrderCompleted">
-        <div class="pay">
-            <p>PAY</p>
-    </div>
-    </a>
+                <div class="middle">
+                    <p>The list of ingredients should be here:</p>
+                    <p>- First the bread with a menu in case you want to change it</p>
+                    <p>- Then all the ingredients as a list...</p>
+                    <p>The list of ingredients should be here:</p>
+                    <p>- First the bread with a menu in case you want to change it</p>
+                    <p>- Then all the ingredients as a list...</p>
+                    <p>The list of ingredients should be here:</p>
+                    <p>- First the bread with a menu in case you want to change it</p>
+                    <p>- Then all the ingredients as a list...</p>
+
+                </div>
+
+                <div class="bottom">
+                    BURGER'S PRICE
+                </div>
+            </div>
+        </div>
+
+        <a href="./#/OrderPage">
+            <div class="modify">
+                <p>MODIFY</p>
+            </div>
+
+        </a>
+        <a href="./#/OrderCompleted">
+            <div class="pay">
+                <p>PAY</p>
+            </div>
+        </a>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Summary'
+import Navbar from '@/components/Navbar.vue';
+
+export default {
+    name: 'Summary',
+    components: {
+      Navbar
     }
+}
 </script>
 
 <style>
-    h1, h2, h3, h4, h5, h6, p {
+    h1, h2, h3, h4, h5, p {
         margin: 0;
         padding: 0;
-        font-family: Roboto, sans-serif;
-        color: white;
     }
 
-    /* THE BODY OF THE PAGE*/
-    .wrapper {
-        display: grid;
-        margin-bottom: 120px;
-        grid-row-gap: 20px;
-        grid-column-gap: 10px;
-        grid-template-areas:    
-            "box"
-            "total";
+    body {
+        margin: 0;
+        background-color: #2D4739;
+        font-family: Roboto, sans-serif;
     }
-    /* HEADER */
-    .head {
+
+    h2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: normal;
+    }
+
+    .boxes {
+        margin-top: 90px;
+        margin-bottom: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(0px, 279.52px));
+        grid-gap: 20px;
+        justify-content: center;
+    }
+
+    /* Boxes is the group of boxes, formed by items */
+    .item {
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+        background-color: #FFA801;
+        /* The colour depends, all the options are, i think we'd need JS for this:
+        Gray: #485460
+        Black: #000000
+        Purple: #3C40C6 */
+    }
+
+    /* Items are divided into three parts: top, middle and bottom */
+    .item .top {
+        display: flex;
+        justify-content: space-between;
+        height: 58px;
+        border-radius: 5px 5px 0px 0px;
+
+        background-color: #EF9D00;
+        /* Options:
+        Gray: #333C45
+        Black: #171717
+        Purple: #303398
+        */
+
+    }
+
+    #minus {
+        cursor: pointer;
+        margin-left: 10px;
+        margin-top: 14px;
+
+        filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
+    }
+
+    #name {
+        margin-top: 8px;
+        margin-left: -10px;
+        margin-right: -10px;
+        color: white;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #plus {
+        cursor: pointer;
+        margin-right: 10px;
+        margin-top: 14px;
+
+        filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
+    }
+
+    .item .middle {
+        overflow: auto;
+        height: 187px;
+        padding: 5px 10px;
+    }
+
+    .item .bottom {
+        height: 38px;
+        border-radius: 0px 0px 5px 5px;
+
+        color: white;
+        line-height: 38px;
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+
+        background-color: #EF9D00;
+        /* Options:
+        Gray: #333C45
+        Black: #171717
+        Purple: #303398
+        */
+    }
+
+    /* Modify and Pay buttons */
+    .modify {
+        cursor: pointer;
+        bottom: 40px;
         position: fixed;
         width: 100%;
-        height: 50px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.16);
-        background-color: #416451;
-    }
-    .head h1 {
-        text-align: center;
-        line-height: 50px;
-        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-        font-size: 40px;
-    }
-
-    /* YELLOW CONTAINER WITH THE ORDERS*/
-    .yellowBox {
-        grid-area: box;
-        margin-top: 80px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 20px;
-
-        display: flex;
-        flex-direction: column;
-
-        width: 80vw;
-        height: auto;
-        max-width: 800px;
-        border-radius: 5px;
-        border: 5px solid rgba(27, 41, 34, 0.64);
-        background-color: #ffd23e;
-    }
-    .yellowBox>* {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-    .item {
-        width: 70vw;
-        max-width: 600px;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
-
-        display: grid;
-        padding: 20px;
-        grid-gap: 20px;
-        grid-auto-columns: 1fr 3fr 1fr;
-        grid-template-areas:    
-            "quantity name price"
-            "ingredients ingredients buttons";
-
-        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        background-color: #ffa801;
-    }
-    .item .quantity, .name, .price, .ingredients {
-        color: white;
-        font-family: Roboto, sans-serif;
-        font-size: 30px;
-        font-weight: 700;
-    }
-    .item .quantity {
-        grid-area: quantity;
-    }
-    .item .name {
-        grid-area: name;
-        text-align: center;
-    }
-    .item .price {
-        grid-area: price;
-        text-align: right;
-    }
-    .item .ingredients {
-        grid-area: ingredients;
-        font-size: 25px;
-        font-weight: 400;
-    }
-    .item .buttons{
-        cursor: pointer;
-        text-align: right;
-        grid-area: buttons;
-    }
-    /* TOTAL SECTION */
-    .total {
-        z-index: -1;
-        grid-area: total;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 40px;
-        padding: 0px 20px;
-
-        color: white;
-        font-family: Roboto, sans-serif;
-        font-size: 40px;
-        font-weight: 700;
-
-        display: grid;
-        grid-template-areas: "a b"; 
-
-        width: 80vw;
-        max-width: 800px;
-
-        height: 80px;
-        border-radius: 5px;
-        border: 5px solid rgba(27, 41, 34, 0.64);
-        background-color: #ffd23e;
-    }
-    .total div {
-        line-height: 80px;
-        font-size: 40px;
-        font-weight: 700;
-    }
-
-    .total .name {
-        grid-area: a;
-        text-align: left;
-        margin-left: 50px;
-    }
-    .total .amount {
-        grid-area: b;
-        text-align: right;
-        margin-right: 50px;
-    }
-
-    /* BUTTONS TO MODIFY ORDER OR PAY */
-    .modify {    
-        position: fixed;
-        bottom: 104px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        cursor: pointer;
-
-
-        grid-area: modify;
-        grid-template-rows: auto;
-        /* Style for "Rectangle" */
-        width: 250px;
-        height: 55px;
-        box-shadow: 0 1px 10px rgba(0, 0, 0, 1);
-        border-radius: 27.5px;
-        background-color: #05c46b;
-    }
-    .modify p {
-        text-align: center;
-        line-height: 55px;
-        color: #ffffff;
-        font-family: Roboto, sans-serif;
-        font-size: 30px;
-        font-weight: 700;
+        height: 40px;
+        background-color: #05C46B;
     }
 
     .pay {
-        position: fixed;
-        bottom: 28px;
-        left: 50%;
-        transform: translate(-50%, 0);
         cursor: pointer;
-        grid-area: pay;
-        width: 250px;
-        height: 55px;
-        box-shadow: 0 1px 10px rgba(0, 0, 0, 1);
-        border-radius: 27.5px;
-        background-color: #0c44d1;
+        bottom: 0px;
+        position: fixed;
+        width: 100%;
+        height: 40px;
+        background-color: #0C44D1;
     }
-    .pay p {
+
+    .pay p, .modify p {
         text-align: center;
-        line-height: 55px;
+        line-height: 40px;
         color: white;
-        font-family: Roboto, sans-serif;
-        font-size: 30px;
-        font-weight: 700;
+        font-size: 20px;
     }
-
-    /* RESPONSIVE*/
-    @media screen and (max-width: 560px) {
-        .wrapper {
-            margin-bottom: 70px;
-        }
-        .head h1 {
-            font-size: 30px;
-        }
-        .yellowBox {
-            margin-top: 65px;
-            padding: 10px;
-            grid-row-gap: 10px;
-            width: 90vw;
-            max-width: 260px;
-        }
-        .yellowBox>* {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-        .item {
-            width: 85vw;
-            max-width: 240px;
-            padding: 10px;
-
-        }
-        .item .quantity, .name, .price, .ingredients {
-            font-size: 20px;
-        }
-        .item .ingredients {
-            font-size: 18px;
-        }
-        .total {
-            font-size: 20px;
-            padding: 0px 10px;
-            width: 90vw;
-            max-width: 260px;
-            height: 30px;
-        }
-        .total div {
-            font-size: 20px;
-            line-height: 30px;
-        }
-        .modify {    
-            bottom: 75px;
-            width: 150px;
-            height: 40px;
-        }
-        .modify p {
-            line-height: 40px;
-            font-size: 18px;
-        }
-
-        .pay {
-            width: 150px;
-            height: 40px;
-        }
-        .pay p {
-            line-height: 40px;
-            font-size: 18px;
-        }
-        .buttons img {
-            width: 50%;
-        }
-    }
-
 </style>

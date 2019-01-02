@@ -1,123 +1,228 @@
+<script>
+  import menu from '@/components/menu.js';
+  
+  export default {
+    name: 'Tabs',
+    data: function() {
+      return {
+        activetab: 'burgers',
+        burgers: menu.burgers,
+        drinks: menu.drinks
+      }
+    }
+  }
+</script>
+
 <template>
-  <div class="tabContainer">
-
-    <div>
-      <a v-on:click="activetab='burgers'" class="tab" id="burgersTab">Burgers</a>
-      <a v-on:click="activetab='drinks'" class="tab" id="drinksTab">Drinks</a>
-      <a v-on:click="activetab='sides'" class="tab" id="sidesTab">Sides</a>
+  <div class="wrapper">
+  
+    <div class="flaps">
+      <a class="flap" id="burgersFlap" v-on:click="activetab='burgers'"> BURGERS </a>
+      <a class="flap" id="drinksFlap" v-on:click="activetab='drinks'"> DRINKS </a>
+      <a class="flap" id="sidesFlap" v-on:click="activetab='sides'"> SIDES </a>
     </div>
-
+  
     <div class="content">
-
-      <div v-if="activetab === 'burgers'" class="contentTab" id="burgerContent">
-        <a href ="./#/create" class="createBox">
-          <img src="@/assets/CreateBurger.png" alt="CREATE YOUR OWN BURGER">
+      <div class="contentItem" id="burgersContent" v-if="activetab === 'burgers'">
+        <a href="./#/BurgerConstruction">
+          <div class="personalisedBurger">
+            <p>CREATE YOUR OWN PERSONALISED BURGER!</p>
+          </div>
         </a>
-        <div class="Beef">
-          BEEF
+        <div v-for="(burgerItems, burgerType) in burgers" :key="burgerType">
+          <br>
+          <div class="grid-container">
+            <div class="categoryName">{{ burgerType }}</div>
+            <div class="scrollable">
+              <div class="burger" v-for="(item, index) in burgerItems" :key="index">
+                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="burgerTitle">{{ item.title }}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div v-if="activetab === 'drinks'" class="contentTab" id="drinkContent">
-        <h1>Drink Content</h1>
+  
+      <div class="contentItem" id="drinksContent" v-if="activetab === 'drinks'">
+        <div v-for="(drinkItems, drinkType) in drinks" :key="drinkType">
+          <br>
+          <div class="grid-container">
+            <div class="categoryName">{{ drinkType }}</div>
+            <div class="scrollable">
+              <div class="burger" v-for="(item, index) in drinkItems" :key="index">
+                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="burgerTitle">{{ item.title }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div v-if="activetab === 'sides'" class="contentTab" id="sideContent">
-        <h1>Side Content</h1>
+  
+      <div class="contentItem" id="sidesContent" v-if="activetab === 'sides'">
+        <div v-for="(drinkItems, drinkType) in drinks" :key="drinkType">
+          <br>
+          <div class="grid-container">
+            <div class="categoryName">{{ drinkType }}</div>
+            <div class="scrollable">
+              <div class="burger" v-for="(item, index) in drinkItems" :key="index">
+                <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
+                <div class="burgerTitle">{{ item.title }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
     </div>
-
+  
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Tabs',
-  data: function(){
-    return{
-      activetab: 'burgers'
-    }
-  }
-}
-</script>
-
 <style>
-.tabContainer {
-  background-color: #ffa801;
-  margin: -50px 0 0 10%;
-}
+  .flaps {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 45px;
+    justify-content: center;
+  }
+  
+  .flap {
+    /* Visual properties */
+    height: 45px;
+    width: 220px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    margin-top: 80px;
+    /* Text inside*/
+    font-size: 30px;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 45px;
+  }
+  
+  #burgersFlap {
+    order: 0;
+    background-color: #ffc500;
+  }
+  
+  #drinksFlap {
+    order: 1;
+    background-color: black;
+  }
+  
+  #sidesFlap {
+    order: 2;
+    background-color: #3c40c6;
+  }
+  
+  .content {
+    margin-top: 80px;
+    margin-bottom: 100px;
+  }
+  
+  .contentItem {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  #burgersContent {
+    background-color: #ffc500;
+  }
+  
+  #drinksContent {
+    background-color: #000000;
+  }
+  
+  #sidesContent {
+    background-color: #3c40c6;
+  }
 
-.tabContainer img{
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.tab {
-  overflow: hidden;
-  float: left;
-  position: relative;
-  width: 230px;
-  height: 60px;
-  cursor: pointer;
-  border-radius: 10px 10px 0 0;
-  font-family: Roboto;
-  font-size: 40px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-align: center;
-  top: 200px;
-  z-index: 1;
-}
-
-#burgersTab {
-  background-color: #ffa801;
-}
-
-#drinksTab {
-  background-color: #000000;
-}
-
-#sidesTab {
-  background-color: #3c40c6;
-}
-
-.contentTab {
-  font-family: Roboto;
-  overflow: scroll;
-  width: 80%;
-  margin-top: 250px;
-  border-radius: 10px;
-  position: absolute;
-  z-index: 1;
-  color: #ffffff;
-}
-
-#burgerContent {
-  background-color: #ffa801;
-}
-
-#drinkContent {
-  background-color: #000000;
-}
-
-#sideContent {
-  background-color: #3c40c6;
-}
-
-.Beef {
-  width: 139px;
-  height: 71px;
-  color: #ffffff;
-  font-family: Roboto;
-  font-size: 60px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-
-.createBox{
-  display: inline-block;
-}
+  .personalisedBurger {
+    background-color: #485460;
+    height: 150px;
+    border-radius: 10px;
+    padding-left: 15%;
+    padding-right: 15%;
+    /* Text */
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 150px;
+  }
+  
+  .personalisedBurger:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 0px 1px white inset;
+  }
+  
+  .personalisedBurger:active {
+    background-color: #2D353C;
+  }
+  
+  .personalisedBurger p {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 60px;
+  }
+  
+  .grid-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-rows: 40px 200px;
+    grid-template-areas: "categoryName" "burgers";
+  }
+  
+  .categoryName {
+    grid-area: categoryName;
+    color: white;
+    line-height: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .scrollable {
+    grid-area: burgers;
+    overflow: auto;
+    white-space: nowrap;
+    display: grid;
+    grid-template-columns: 202px 202px 202px 202px 202px;
+    grid-template-areas: "burger1 burger2 burger3 burger4 burger5";
+  }
+  
+  .burger:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 0px 1px white inset;
+    border-radius: 10px;
+  }
+  
+  .burger:active {
+    background-color: white;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .burgerPic {
+    grid-area: burgerPic;
+  }
+  
+  .burgerPic img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .burgerTitle {
+    grid-area: burgerTitle;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    /* font-weight: bold; */
+    /* text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); */
+    text-transform: uppercase;
+  }
 </style>
