@@ -9,8 +9,18 @@
         burgers: menu.burgers,
         drinks: menu.drinks
       }
+    },
+    methods: {
+      test: function () {
+        this.$store.state.socket.emit("test");
+      },
+      clickedItem: function(item) {
+        // alert('item clicked');
+        this.$emit('addedItemToOrder', item);
+      }
     }
   }
+
 </script>
 
 <template>
@@ -34,7 +44,7 @@
           <div class="grid-container">
             <div class="categoryName">{{ burgerType }}</div>
             <div class="scrollable">
-              <div class="burger" v-for="(item, index) in burgerItems" :key="index">
+              <div class="burger" v-for="(item, index) in burgerItems" :key="index" @click="clickedItem(item)">
                 <div class="burgerPic"><img :src="item.imgSrc" height="70%" width="70%" style="margin-top: 15px;"></div>
                 <div class="burgerTitle">{{ item.title }}</div>
               </div>

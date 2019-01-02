@@ -1,4 +1,7 @@
 <script>
+// import sharedOrder from '@/components/sharedOrder.js';
+
+
 export default {
   name: 'Footer',
   props: [
@@ -19,7 +22,7 @@ export default {
     <div class="total">
       <span>TOTAL </span>
       <p class="totalValue">
-        ${{ orderTotal }}
+        ${{ orderTotal[0] }}
       </p>
     </div>
   </div>
@@ -48,16 +51,16 @@ export default {
   left: 2%; */
   /* width: 85%; */
   height: 110px;
-
 }
 
 .orderItem {
   display: inline-block;
+  height: 110px;
 }
 
 .orderItem img {
-  max-height: 90%;
-  /* margin-left: 5px; */
+  max-height: 85%;
+  margin: 5% 0 0 5px;
 }
 
 .orderItem:hover {
@@ -68,7 +71,7 @@ export default {
   grid-area: b;
   /* position: fixed;
   /* bottom: 10px;
-  left: 90%; */ */
+  left: 90%; */
   width: 100%;
   height: 100%;
   /* border-radius: 5px; */
