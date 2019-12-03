@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Cancel order",
   "next" : "Next",
+  "previous" : "Previous",
   "changeIng" : "Change ingredient",
   "content" : "Content",
   "thankOrder" : "Thank you for your order!",
