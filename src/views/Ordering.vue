@@ -5,11 +5,23 @@
 
     <h1>{{ uiLabels.ingredients }}</h1>
 
+<!-- jag-->
+    <topMenu
+    <ul id="meny">
+<li><a href="#">Bröd</a></li>
+<li><a href="#">Burgare</a></li>
+<li><a href="#">Pålägg</a></li>
+<li><a href="#">Sås</a></li>
+
+</ul>
+
+</topMenu>  <!--jag-->
+
     <Ingredient
       ref="ingredient"
       v-for="item in ingredients"
-      v-on:increment="addToOrder(item)"  
-      :item="item" 
+      v-on:increment="addToOrder(item)"
+      :item="item"
       :lang="lang"
       :key="item.ingredient_id">
     </Ingredient>
@@ -20,11 +32,11 @@
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
     <div>
-      <OrderItem 
+      <OrderItem
         v-for="(order, key) in orders"
         v-if="order.status !== 'done'"
         :order-id="key"
-        :order="order" 
+        :order="order"
         :ui-labels="uiLabels"
         :lang="lang"
         :key="key">
@@ -43,7 +55,7 @@ import OrderItem from '@/components/OrderItem.vue'
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 
-/* instead of defining a Vue instance, export default allows the only 
+/* instead of defining a Vue instance, export default allows the only
 necessary Vue instance (found in main.js) to import your data and methods */
 export default {
   name: 'Ordering',
@@ -51,7 +63,7 @@ export default {
     Ingredient,
     OrderItem
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both 
+  mixins: [sharedVueStuff], // include stuff that is used in both
                             // the ordering system and the kitchen
   data: function() { //Not that data is a function!
     return {
@@ -108,4 +120,56 @@ export default {
   background-image: url('~@/assets/exampleImage.jpg');
   color: white;
 }
+
+
+
+/*allt nedan gäller menyn "burgare bröd osv"*/
+ul {
+margin: 50px 0 30px 0;
+padding: 0;
+}
+
+/* Listelementen <LI> med knapparna */
+#meny li {
+display: inline;
+list-style: none;
+}
+
+#meny li a {
+margin: 0 10px 0 0;
+padding: 30px 20px 5px 20px;
+text-align: center;
+white-space: nowrap;
+line-height: 10px;
+font-family: Helvetica, Arial, sans-serif;
+font-size: 1.8em;
+color: #ffffff;
+border-radius: 5px;
+background: #ffcc99;
+
+}
+/*ändrar text när man drar musen över knappen*/
+#meny li a:hover {
+cursor: pointer;
+background: #e69900;
+color: #000000;
+font-weight: bold;
+}
+
+/*textfärg*/
+#meny a:link, #meny a:visited {
+color: #000000;
+text-decoration: none;
+
+}
+
+/*textfärg*/
+#meny a:active {
+color: #000000;
+}
+
+#meny a#current {
+background: #ffffff;
+}
+
 </style>
