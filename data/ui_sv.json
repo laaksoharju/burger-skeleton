@@ -17,5 +17,9 @@
   "ingredients" : "Ingredienser",
   "ready" : "Klart",
   "order" : "Min burgare",
-  "language" : "English"
+  "language" : "English",
+  "bread": "Bröd",
+  "burger": "Burgare",
+  "topping": "Pålägg",
+  "sauce": "Sås"
 }

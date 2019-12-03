@@ -3,12 +3,12 @@
   <img class="example-panel" src="@/assets/exampleImage.jpg">
   <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
-  <topMenu
+  <topMenu>
 <ul id="meny">
-<li><a href="#">Bröd</a></li>
-<li><a href="#">Burgare</a></li>
-<li><a href="#">Pålägg</a></li>
-<li><a href="#">Sås</a></li>
+<li><a href="#">{{uiLabels.bread}}</a></li>
+<li><a href="#">{{uiLabels.burger}}</a></li>
+<li><a href="#">{{uiLabels.topping}}</a></li>
+<li><a href="#">{{uiLabels.sauce}}</a></li>
 
 </ul>
 
@@ -105,7 +105,7 @@ export default {
   display: grid;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fit,10em);
+  grid-template-columns: repeat(auto-fill,10em);
   text-align: center;
 }
 .example-panel {
