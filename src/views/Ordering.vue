@@ -8,8 +8,9 @@
     <Ingredient
       ref="ingredient"
       v-for="item in ingredients"
-      v-on:increment="addToOrder(item)"  
-      :item="item" 
+      v-on:increment="addToOrder(item)"
+      v-show="item.category===category"
+      :item="item"
       :lang="lang"
       :key="item.ingredient_id">
     </Ingredient>
@@ -17,14 +18,15 @@
     <h1>{{ uiLabels.order }}</h1>
     {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
     <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
     <div>
-      <OrderItem 
+      <OrderItem
         v-for="(order, key) in orders"
         v-if="order.status !== 'done'"
         :order-id="key"
-        :order="order" 
+        :order="order"
         :ui-labels="uiLabels"
         :lang="lang"
         :key="key">
@@ -43,7 +45,7 @@ import OrderItem from '@/components/OrderItem.vue'
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 
-/* instead of defining a Vue instance, export default allows the only 
+/* instead of defining a Vue instance, export default allows the only
 necessary Vue instance (found in main.js) to import your data and methods */
 export default {
   name: 'Ordering',
@@ -51,12 +53,13 @@ export default {
     Ingredient,
     OrderItem
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both 
+  mixins: [sharedVueStuff], // include stuff that is used in both
                             // the ordering system and the kitchen
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
       price: 0,
+      category: 1,
       orderNumber: "",
     }
   },
@@ -85,6 +88,9 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+    },
+    nextCategory: function() {
+      this.category += 1;
     }
   }
 }
