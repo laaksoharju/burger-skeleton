@@ -1,5 +1,8 @@
 <template>
+
 <div id="orders">
+  <img class="example-panel" src= "@/assets/kitchen2.jpeg">
+
   <div>
     <h1>{{uiLabels.cook}}</h1>
   </div>
@@ -98,16 +101,30 @@ export default {
 
 h1 {
   text-transform: uppercase;
-  font-size: 1.5em;
-
-
+  font-size: 2.0em;
+/*  border: 5px outset black;
+	width: 450px;
+  margin: 2px;
+  border-radius: 5px;
+  background-color: dimgray;*/
+  text-decoration: underline;
+}
+h3{
+  text-decoration: underline;
 }
 .orderitems{
-	border: 5px outset cornflowerblue;
+	border: 5px outset lightcoral;
 	display: table;
   margin: 2px;
   border-radius: 5px;
   background-color: floralwhite;
-  
+
+}
+.example-panel{
+  position:fixed;
+  z-index:-2;
+  left:0;
+  top:0;
+  opacity: 0.2;
 }
 </style>
