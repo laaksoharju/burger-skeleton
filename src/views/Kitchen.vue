@@ -90,13 +90,17 @@ export default {
 }
 </script>
 <style scoped>
+@import 'https://fonts.googleapis.com/css?family=Questrial&display=swap';
 #orders {
   font-size: 24pt;
+  font-family: 'Questrial', sans-serif;
 }
 
 h1 {
   text-transform: uppercase;
-  font-size: 1.4em;
+  font-size: 1.5em;
+
+
 }
 .orderitems{
 	border: 5px outset cornflowerblue;
@@ -104,5 +108,6 @@ h1 {
   margin: 2px;
   border-radius: 5px;
   background-color: floralwhite;
+  
 }
 </style>
