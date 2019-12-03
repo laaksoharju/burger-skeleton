@@ -79,8 +79,9 @@ export default {
       let counter2 = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done') {
+          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].ingredients[i].category !== 6 ) {
             counter1 +=1;
+
           }
           if (this.orders[order].ingredients[i].ingredient_id === id) {
             counter2 +=1;
