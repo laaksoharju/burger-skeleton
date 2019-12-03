@@ -1,22 +1,38 @@
 <template>
+
 <div id="orders">
-  <div v-for="countIng in countAllIngredients" v-if="countIng.count>0" :key="countAllIngredients.indexOf(countIng)">
+  <img class="example-panel" src= "@/assets/kitchen2.jpeg">
+
+  <div>
+    <h1>{{uiLabels.cook}}</h1>
+  </div>
+  <div v-for="countIng in countAllIngredients[0]" v-if="countIng.count>0" :key="countAllIngredients[0].indexOf(countIng)">
     {{countIng.name}}: {{countIng.count}}
   </div>
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
-    <OrderItemToPrepare v-for="(order, key) in orders" v-if="order.status !== 'done'" v-on:done="markDone(key)" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
+    <OrderItemToPrepare class="orderitems" v-for="(order, key) in orders" v-if="order.status !== 'done'" v-on:done="markDone(key)" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
     </OrderItemToPrepare>
   </div>
 
   <h1>{{ uiLabels.ordersFinished }}</h1>
   {{$store.state.hello}}
   <div>
-    <OrderItem v-for="(order, key) in orders" v-if="order.status === 'done'" :order-id="key" :order="order" :lang="lang" :ui-labels="uiLabels" :key="key">
+    <OrderItem class="orderitems" v-for="(order, key) in orders" v-if="order.status === 'done'" :order-id="key" :order="order" :lang="lang" :ui-labels="uiLabels" :key="key">
     </OrderItem>
   </div>
+<br>
+<hr>
+<h3>{{uiLabels.usedingredients}}</h3>
+<div v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
+  {{countIng.name}}: {{countIng.count}}
+</div>
 </div>
 </template>
+
+
+
+
 <script>
 import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
@@ -41,13 +57,17 @@ export default {
       return this.countNumberOfIngredients(2)
     },
     countAllIngredients: function() {
-      let ingredientTuples = []
+      let ingredientTuples1 = []
+      let ingredientTuples2 = []
       for (let i = 0; i < this.ingredients.length; i += 1) {
-        ingredientTuples[i] = {};
-        ingredientTuples[i].name = this.ingredients[i]['ingredient_' + this.lang];
-        ingredientTuples[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id);
+        ingredientTuples1[i] = {};
+        ingredientTuples1[i].name = this.ingredients[i]['ingredient_' + this.lang];
+        ingredientTuples1[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[0];
+        ingredientTuples2[i] = {};
+        ingredientTuples2[i].name = this.ingredients[i]['ingredient_' + this.lang];
+        ingredientTuples2[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[1];
       }
-      return ingredientTuples;
+      return [ingredientTuples1,ingredientTuples2];
     }
   },
   methods: {
@@ -55,26 +75,57 @@ export default {
       this.$store.state.socket.emit("orderDone", orderid);
     },
     countNumberOfIngredients: function (id) {
-      let counter = 0;
+      let counter1 = 0;
+      let counter2 = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
+          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].ingredients[i].category !== 6 ) {
+            counter1 +=1;
+
+          }
           if (this.orders[order].ingredients[i].ingredient_id === id) {
-            counter +=1;
+            counter2 +=1;
           }
         }
       }
-      return counter;
+      return [counter1, counter2];
     }
   }
 }
 </script>
 <style scoped>
+@import 'https://fonts.googleapis.com/css?family=Questrial&display=swap';
 #orders {
   font-size: 24pt;
+  font-family: 'Questrial', sans-serif;
 }
 
 h1 {
   text-transform: uppercase;
-  font-size: 1.4em;
+  font-size: 2.0em;
+/*  border: 5px outset black;
+	width: 450px;
+  margin: 2px;
+  border-radius: 5px;
+  background-color: dimgray;*/
+  text-decoration: underline;
+}
+h3{
+  text-decoration: underline;
+}
+.orderitems{
+	border: 5px outset lightcoral;
+	display: table;
+  margin: 2px;
+  border-radius: 5px;
+  background-color: floralwhite;
+
+}
+.example-panel{
+  position:fixed;
+  z-index:-2;
+  left:0;
+  top:0;
+  opacity: 0.2;
 }
 </style>
