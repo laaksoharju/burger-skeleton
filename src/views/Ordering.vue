@@ -18,6 +18,7 @@
     <h1>{{ uiLabels.order }}</h1>
     {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
     <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
@@ -91,6 +92,9 @@ export default {
     },
     nextCategory: function() {
       this.category += 1;
+    },
+    previousCategory: function() {
+      this.category -= 1;
     }
   }
 }
