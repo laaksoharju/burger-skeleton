@@ -111,6 +111,3 @@ Data.prototype.markOrderNotStarted = function (orderId) {
 };
 
 module.exports = Data;
-
-
-
