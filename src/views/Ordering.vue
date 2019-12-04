@@ -3,25 +3,39 @@
   <img class="example-panel" src="@/assets/exampleImage.jpg">
   <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
-  <topMenu>
-<ul id="meny">
-<li><a href="#">{{uiLabels.bread}}</a></li>
-<li><a href="#">{{uiLabels.burger}}</a></li>
-<li><a href="#">{{uiLabels.topping}}</a></li>
-<li><a href="#">{{uiLabels.sauce}}</a></li>
 
-</ul>
+  <div id="huvudmeny">
+    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect1()">{{uiLabels.burger}}</button>
+    <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect2()">{{uiLabels.bread}}</button>
+    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect3()">{{uiLabels.topping}}</button>
+    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
+  </div>
 
-</topMenu>
+  <div class="orderSummary">
+    <h1>{{ uiLabels.yourOrder }}</h1>
+    <ul>
+      <li v-for="item in chosenIngredients">
+        {{item["ingredient_"+lang]}}
+      </li>
+    </ul>
+    <p v-if="chosenIngredients.length>0">
+    {{ price }} :-
+  </p>
+  </div>
+
 
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
-    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+    <Ingredient ref="ingredient"
+    v-for="item in ingredients"
+    v-on:increment="addToOrder(item)"
+    v-show="item.category===category"
+    :item="item"
+    :lang="lang"
+    :key="item.ingredient_id">
     </Ingredient>
   </div>
-
-
 
   <h1>{{ uiLabels.order }}</h1>
   {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
@@ -31,7 +45,13 @@
 
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
-    <OrderItem v-for="(order, key) in orders" v-if="order.status !== 'done'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
+    <OrderItem v-for="(order, key) in orders"
+    v-if="order.status !== 'done'"
+    :order-id="key"
+    :order="order"
+    :ui-labels="uiLabels"
+    :lang="lang"
+    :key="key">
     </OrderItem>
   </div>
 </div>
@@ -92,10 +112,44 @@ export default {
     },
     nextCategory: function() {
       this.category += 1;
+      var btns = document.getElementsByClassName("btn");
+      for (var i = btns.length-1; i >= 0; i--)
+      if (btns[i].className==="btn active"){
+        btns[i].className = "btn";
+        btns[i+1].className+= " active";
+      }
     },
     previousCategory: function() {
       this.category -= 1;
+      var btns = document.getElementsByClassName("btn");
+      for (var i = 1; i < btns.length; i++)
+      if (btns[i].className==="btn active"){
+        btns[i].className = "btn";
+        btns[i-1].className+= " active";
     }
+  },
+    highlightButton: function() {
+      var btns = document.getElementsByClassName("btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+          var current = document.getElementsByClassName("active");
+          current[0].className = "btn";
+          this.className += " active";
+        });
+      }
+    },
+    redirect1: function() {
+      this.category = 1;
+    },
+    redirect2: function() {
+      this.category = 2;
+    },
+    redirect3: function() {
+      this.category = 3;
+    },
+    redirect4: function() {
+      this.category = 4;
+    },
   }
 }
 </script>
@@ -105,15 +159,17 @@ export default {
   display: grid;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fill,10em);
+  grid-template-columns: repeat(auto-fill, 10em);
   text-align: center;
 }
+
 .example-panel {
   position: fixed;
   left: 0;
   top: 0;
   z-index: -2;
 }
+
 .ingredient {
   border: 1px solid #ccd;
   padding: 1em;
@@ -121,57 +177,44 @@ export default {
   color: white;
 }
 
-
-
 /*allt nedan gäller menyn "burgare bröd osv"*/
 ul {
-margin: 50px 0 30px 0;
-padding: 0;
+  margin: 50px 0 30px 0;
+  padding: 0;
 }
 
-/* Listelementen <LI> med knapparna */
-#meny li {
-display: inline;
-list-style: none;
+#huvudmeny {
+  display: grid;
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0.5em;
+  grid-template-columns: repeat(auto-fill, 10em);
 }
 
-#meny li a {
-margin: 0 10px 0 0;
-padding: 30px 20px 5px 20px;
-text-align: center;
-white-space: nowrap;
-line-height: 10px;
-font-family: Helvetica, Arial, sans-serif;
-font-size: 1.8em;
-color: #ffffff;
-border-radius: 5px;
-background: #ffcc99;
-
-}
-/*ändrar text när man drar musen över knappen*/
-#meny li a:hover {
-cursor: pointer;
-background: #e69900;
-color: #000000;
-font-weight: bold;
+.btn {
+  padding: 2em;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
-/*textfärg*/
-#meny a:link, #meny a:visited {
-color: #000000;
-text-decoration: none;
-
+/* Style the active class, and buttons on mouse-over */
+.active,
+.btn:hover {
+  background-color: #666;
+  color: white;
 }
 
-/*textfärg*/
-#meny a:active {
-color: #000000;
+.orderSummary {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 15em; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  background-color: pink;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
-
-#meny a#current {
-background: #ffffff;
-}
-
-
-
 </style>
