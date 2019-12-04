@@ -33,7 +33,7 @@
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
-    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
     </Ingredient>
   </div>
 
@@ -41,8 +41,11 @@
   <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
   <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
-
-</section>
+  <h1>{{ uiLabels.ordersInQueue }}</h1>
+  <div>
+    <OrderItem v-for="(order, key) in orders" v-if="order.status === 'not-started'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
+    </OrderItem>
+  </div>
 </div>
 </template>
 <script>
@@ -174,6 +177,7 @@ export default {
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 10em);
   text-align: center;
+  font-size:18px
 }
 
 .example-panel {
