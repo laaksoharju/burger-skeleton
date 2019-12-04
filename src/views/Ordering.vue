@@ -11,6 +11,18 @@
     <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
   </div>
 
+  <div class="orderSummary">
+    <h1>{{ uiLabels.yourOrder }}</h1>
+    <ul>
+      <li v-for="item in chosenIngredients">
+        {{item["ingredient_"+lang]}}
+      </li>
+    </ul>
+    <p v-if="chosenIngredients.length>0">
+    {{ price }} :-
+  </p>
+  </div>
+
 
   <h1>{{ uiLabels.ingredients }}</h1>
 
@@ -171,13 +183,20 @@ ul {
   padding: 0;
 }
 
+#huvudmeny {
+  display: grid;
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0.5em;
+  grid-template-columns: repeat(auto-fill, 10em);
+}
+
 .btn {
-  border: none;
-  outline: none;
-  padding: 2em 4em;
+  padding: 2em;
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 18px;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
 /* Style the active class, and buttons on mouse-over */
@@ -185,5 +204,17 @@ ul {
 .btn:hover {
   background-color: #666;
   color: white;
+}
+
+.orderSummary {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 15em; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  background-color: pink;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
 </style>
