@@ -1,6 +1,6 @@
 <template>
 <div id="ordering">
-  <img class="example-panel" src= "@/assets/kitchen2.jpeg">
+  <img class="example-panel" src="@/assets/kitchen2.jpeg">
   <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
 
@@ -12,32 +12,28 @@
   </div>
 
   <div class="orderSummary">
-    <h1>{{ uiLabels.yourOrder }}</h1>
-    <table style="width:100%">
-    <tr v-for="item in chosenIngredients">
-      <td>{{item["ingredient_"+lang]}}</td>
-        <td>{{item.selling_price}}:-</td>
-    </tr>
-  </table>
-
+    <div id="order-table">
+      <h1>{{ uiLabels.yourOrder }}</h1>
+      <table style="width:100%">
+        <tr v-for="item in chosenIngredients">
+          <td>{{item["ingredient_"+lang]}}</td>
+          <td>{{item.selling_price}}:-</td>
+        </tr>
+      </table>
+      <hr>
+    </div>
 
     <div id="price-summary" v-if="chosenIngredients.length>0">
       <h3>{{uiLabels.total}}</h3>
-    {{ price }} :-
-  </div>
+      {{ price }} :-
+    </div>
   </div>
 
 
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
-    <Ingredient ref="ingredient"
-    v-for="item in ingredients"
-    v-on:increment="addToOrder(item)"
-    v-show="item.category===category"
-    :item="item"
-    :lang="lang"
-    :key="item.ingredient_id">
+    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
     </Ingredient>
   </div>
 
@@ -49,13 +45,7 @@
 
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
-    <OrderItem v-for="(order, key) in orders"
-    v-if="order.status !== 'done'"
-    :order-id="key"
-    :order="order"
-    :ui-labels="uiLabels"
-    :lang="lang"
-    :key="key">
+    <OrderItem v-for="(order, key) in orders" v-if="order.status !== 'done'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
     </OrderItem>
   </div>
 </div>
@@ -117,21 +107,21 @@ export default {
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
-      for (var i = btns.length-1; i >= 0; i--)
-      if (btns[i].className==="btn active"){
-        btns[i].className = "btn";
-        btns[i+1].className+= " active";
-      }
+      for (var i = btns.length - 1; i >= 0; i--)
+        if (btns[i].className === "btn active") {
+          btns[i].className = "btn";
+          btns[i + 1].className += " active";
+        }
     },
     previousCategory: function() {
       this.category -= 1;
       var btns = document.getElementsByClassName("btn");
       for (var i = 1; i < btns.length; i++)
-      if (btns[i].className==="btn active"){
-        btns[i].className = "btn";
-        btns[i-1].className+= " active";
-    }
-  },
+        if (btns[i].className === "btn active") {
+          btns[i].className = "btn";
+          btns[i - 1].className += " active";
+        }
+    },
     highlightButton: function() {
       var btns = document.getElementsByClassName("btn");
       for (var i = 0; i < btns.length; i++) {
@@ -196,8 +186,13 @@ ul {
 }
 
 #price-summary {
-  position:fixed;
-  bottom:0;
+  width: 100%;
+  z-index: 2;
+  margin:0.5em;
+  position: fixed;
+  bottom: 1em;
+  background-color: pink;
+  border: 0.2em dashed black;
 }
 
 .btn {
@@ -212,19 +207,30 @@ ul {
 /* Style the active class, and buttons on mouse-over */
 .active,
 .btn:hover {
-  background-color: #666;
-  color: white;
+  background-color: #bfbfbf;
+
 }
 
 .orderSummary {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 15em; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  /* Full-height: remove this if you want "auto" height */
+  width: 15em;
+  /* Set the width of the sidebar */
+  position: fixed;
+  /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
   right: 0;
+  border: 0.2em solid black;
   background-color: pink;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+}
+
+#order-table {
+  width: 100%;
+  padding: 1.5em;
 }
 </style>
