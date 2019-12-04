@@ -22,5 +22,9 @@
   "burger": "Burgare",
   "topping": "Pålägg",
   "sauce": "Sås",
-  "total": "Totalt:"
+  "total": "Totalt:",
+  "welcome": "Välkommen till hamburgartjänsten",
+  "name": "Burger bidness",
+  "goToOrdering":"Skapa din burgare",
+  "goToRandomBurger": "Slumpa hamburgare"
 }
