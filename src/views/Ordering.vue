@@ -29,7 +29,7 @@
     </div>
   </div>
 
-<section class=menuDisplay>
+<div class=menuDisplay>
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
@@ -41,13 +41,11 @@
   <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
   <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
-</section>
-  <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
     <OrderItem v-for="(order, key) in orders" v-if="order.status === 'not-started'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
     </OrderItem>
   </div>
-
+</div>
 </div>
 </template>
 <script>
@@ -242,7 +240,6 @@ ul {
   grid-area:side;
   border: 0.2em solid black;
   background-color: pink;
-  /* Disable horizontal scroll */
 }
 
 #order-table {
