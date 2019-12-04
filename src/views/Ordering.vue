@@ -41,10 +41,6 @@
   <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
   <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
-  <div>
-    <OrderItem v-for="(order, key) in orders" v-if="order.status === 'not-started'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
-    </OrderItem>
-  </div>
 </div>
 </div>
 </template>
