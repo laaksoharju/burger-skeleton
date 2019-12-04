@@ -33,7 +33,7 @@
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
-    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
     </Ingredient>
   </div>
 
