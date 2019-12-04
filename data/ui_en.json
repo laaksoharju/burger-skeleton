@@ -23,6 +23,6 @@
   "topping": "Topping",
   "sauce": "Sauce",
   "cook": "Cook now",
-  "usedingredients": "All ingredients used"
-
+  "usedingredients": "All ingredients used",
+  "total": "Total:"
 }

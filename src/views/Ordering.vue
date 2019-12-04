@@ -1,6 +1,6 @@
 <template>
 <div id="ordering">
-  <img class="example-panel" src="@/assets/exampleImage.jpg">
+  <img class="example-panel" src= "@/assets/kitchen2.jpeg">
   <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
 
@@ -13,14 +13,18 @@
 
   <div class="orderSummary">
     <h1>{{ uiLabels.yourOrder }}</h1>
-    <ul>
-      <li v-for="item in chosenIngredients">
-        {{item["ingredient_"+lang]}}
-      </li>
-    </ul>
-    <p v-if="chosenIngredients.length>0">
+    <table style="width:100%">
+    <tr v-for="item in chosenIngredients">
+      <td>{{item["ingredient_"+lang]}}</td>
+        <td>{{item.selling_price}}:-</td>
+    </tr>
+  </table>
+
+
+    <div id="price-summary" v-if="chosenIngredients.length>0">
+      <h3>{{uiLabels.total}}</h3>
     {{ price }} :-
-  </p>
+  </div>
   </div>
 
 
@@ -168,13 +172,14 @@ export default {
   left: 0;
   top: 0;
   z-index: -2;
+  opacity: 0.2;
 }
 
 .ingredient {
-  border: 1px solid #ccd;
+  border: 0.2em solid black;
   padding: 1em;
-  background-image: url('~@/assets/exampleImage.jpg');
-  color: white;
+  background-color: pink;
+  color: black;
 }
 
 /*allt nedan gäller menyn "burgare bröd osv"*/
@@ -188,6 +193,11 @@ ul {
   grid-column-gap: 0.5em;
   grid-row-gap: 0.5em;
   grid-template-columns: repeat(auto-fill, 10em);
+}
+
+#price-summary {
+  position:fixed;
+  bottom:0;
 }
 
 .btn {
