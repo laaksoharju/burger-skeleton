@@ -24,5 +24,9 @@
   "sauce": "Sauce",
   "cook": "Cook now",
   "usedingredients": "All ingredients used",
-  "total": "Total:"
+  "total": "Total:",
+  "welcome": "Welcome to burger ordering service",
+  "name": "Burger bidness",
+  "goToOrdering":"Create your burger",
+  "goToRandomBurger": "Order a random burger"
 }

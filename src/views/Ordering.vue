@@ -160,6 +160,7 @@ export default {
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 10em);
   text-align: center;
+  font-size:18px
 }
 
 .example-panel {
