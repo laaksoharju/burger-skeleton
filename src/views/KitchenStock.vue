@@ -4,10 +4,13 @@
   <img class="example-panel" src= "@/assets/kitchen2.jpeg">
   {{$store.state.hello}}
 
-<h3>{{uiLabels.usedingredients}}</h3>
-<div v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
+<h1>{{uiLabels.usedingredients}}</h1>
+<div id="ingredientsused" v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
   {{countIng.name}}: {{countIng.count}}
-  
+<br>
+add {{countIng.name}}
+<input type="number" id="antalsaker" name="antalsaker">
+<input type="button" id="laggtill" name="laggtill" value="add">
 </div>
 </div>
 </template>
@@ -80,5 +83,10 @@ export default {
   left:0;
   top:0;
   opacity: 0.2;
+}
+#ingredientsused{
+  border: outset firebrick;
+  margin: 0.5em;
+  display: table;
 }
 </style>
