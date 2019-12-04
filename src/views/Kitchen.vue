@@ -11,15 +11,15 @@
   </div>
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
-    <OrderItemToPrepare class="orderitems" v-for="(order, key) in orders" v-if="order.status !== 'done'" v-on:done="markDone(key)" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
+    <OrderItemToPrepare class="orderitems" v-for="(order, key) in orders" v-if="order.status === 'not-started'" v-on:done="markDone(key)" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
     </OrderItemToPrepare>
   </div>
 
   <h1>{{ uiLabels.ordersFinished }}</h1>
   {{$store.state.hello}}
   <div>
-    <OrderItem class="orderitems" v-for="(order, key) in orders" v-if="order.status === 'done'" :order-id="key" :order="order" :lang="lang" :ui-labels="uiLabels" :key="key">
-    </OrderItem>
+    <OrderItemToBePickedUp class="orderitems" v-for="(order, key) in orders" v-if="order.status === 'done'" v-on:picked-up="markPickedUp(key)" :order-id="key" :order="order" :lang="lang" :ui-labels="uiLabels" :key="key">
+    </OrderItemToBePickedUp>
   </div>
 <br>
 <hr>
@@ -36,13 +36,15 @@
 <script>
 import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
+import OrderItemToBePickedUp from '@/components/OrderItemToBePickedUp.vue'
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 export default {
   name: 'Ordering',
   components: {
     OrderItem,
-    OrderItemToPrepare
+    OrderItemToPrepare,
+    OrderItemToBePickedUp
   },
   mixins: [sharedVueStuff], // include stuff that is used in both
                             //the ordering system and the kitchen
@@ -74,12 +76,15 @@ export default {
     markDone: function (orderid) {
       this.$store.state.socket.emit("orderDone", orderid);
     },
+    markPickedUp: function (orderid) {
+      this.$store.state.socket.emit("orderPickedUp", orderid);
+    },
     countNumberOfIngredients: function (id) {
       let counter1 = 0;
       let counter2 = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].ingredients[i].category !== 6 ) {
+          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' && this.orders[order].ingredients[i].category !== 6 ) {
             counter1 +=1;
 
           }

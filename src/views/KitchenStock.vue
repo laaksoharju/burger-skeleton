@@ -8,7 +8,7 @@
 <div id="ingredientsused" v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
   {{countIng.name}}: {{countIng.count}}
 <br>
-add {{countIng.name}}
+add {{countIng.name}} to stock
 <input type="number" id="antalsaker" name="antalsaker">
 <input type="button" id="laggtill" name="laggtill" value="add">
 </div>
