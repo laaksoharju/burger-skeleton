@@ -1,6 +1,8 @@
 <template>
   <div>
-
+    <div>
+    <img class="example-panel" src= "https://newevolutiondesigns.com/images/freebies/white-wallpaper-18.jpg">
+    </div>
 
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
     <h1>{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
@@ -17,11 +19,15 @@
     <br>
     <br>
     <hr>
-
+    <hr>
     <div id = "hamburgerGif">
-      <img src= "https://media2.giphy.com/media/3o7TKUGccxlaQqdgRO/giphy.gif">
+      <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif">
+      <br>
+      <h4>*I am hungry / Jag är hungrig </h4>
     </div>
-
+    <br>
+    <hr>
+    <footer> A nice website production </footer>
   </div>
 
 </template>
@@ -55,17 +61,29 @@ export default {
 </script>
 <style scoped>
 #buttonArea{
+  /* padding-left:350px; */
+
+
+  min-height: 100vh;
+  align-items:center;
   font-size: 40px;
   border: 5px solid;
 	display: table;
   margin: 2px;
   border-radius: 5px;
-  background-color: MediumSlateBlue;
+  background-color: coral;
   padding: 1em;
 
 }
 #button{
   color: white;
+}
+.example-panel{
+  position:fixed;
+  z-index:-2;
+  left:0;
+  top:0;
+  opacity: 0.35;
 }
 
 </style>
