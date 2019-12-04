@@ -30,6 +30,7 @@
     <Ingredient ref="ingredient"
     v-for="item in ingredients"
     v-on:increment="addToOrder(item)"
+    v-on:decrement="removeFromOrder(item)"
     v-show="item.category===category"
     :item="item"
     :lang="lang"
@@ -92,6 +93,11 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
     },
+
+      removeFromOrder: function(item) {
+        this.chosenIngredients.pop(item);
+        this.price += -item.selling_price;
+      },
     placeOrder: function() {
       var i,
         //Wrap the order in an object
