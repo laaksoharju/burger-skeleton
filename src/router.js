@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Startingpage from './views/Startingpage.vue'
 import Ordering from './views/Ordering.vue'
 import Kitchen from './views/Kitchen.vue'
+import KitchenStock from './views/KitchenStock.vue'
+
 
 Vue.use(Router)
 
@@ -31,6 +33,14 @@ let router = new Router({
       },
       name: 'kitchen',
       component: Kitchen
+    },
+    {
+      path: '/kitchenstock',
+      meta: {
+        title: 'Kitchen Stock',
+      },
+      name: 'kitchenstock',
+      component: KitchenStock
     }
   ]
 })

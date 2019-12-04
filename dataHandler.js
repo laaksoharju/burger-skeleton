@@ -109,5 +109,8 @@ Data.prototype.markOrderStarted = function (orderId) {
 Data.prototype.markOrderNotStarted = function (orderId) {
   this.orders[orderId].status = "not-started";
 };
+Data.prototype.markOrderPickedUp = function (orderId) {
+  this.orders[orderId].status = "picked-up";
+};
 
 module.exports = Data;
