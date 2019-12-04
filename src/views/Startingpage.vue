@@ -1,8 +1,29 @@
 <template>
   <div>
+
+
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-    <router-link to="ordering">{{ uiLabels.placeOrder }}</router-link>
+    <h1>{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
+    <div id = "buttonArea">
+      <router-link id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
+
+    </div>
+    <br>
+    <div id ="buttonArea">
+
+       <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
+
+    </div>
+    <br>
+    <br>
+    <hr>
+
+    <div id = "hamburgerGif">
+      <img src= "https://media2.giphy.com/media/3o7TKUGccxlaQqdgRO/giphy.gif">
+    </div>
+
   </div>
+
 </template>
 <script>
 //import methods and data that are shared between ordering and kitchen views
@@ -33,4 +54,18 @@ export default {
 }
 </script>
 <style scoped>
+#buttonArea{
+  font-size: 40px;
+  border: 5px solid;
+	display: table;
+  margin: 2px;
+  border-radius: 5px;
+  background-color: MediumSlateBlue;
+  padding: 1em;
+
+}
+#button{
+  color: white;
+}
+
 </style>
