@@ -2,7 +2,7 @@
   <div class="ingredient">
     <label>
       <h3>{{item["ingredient_"+ lang]}}</h3>
-      <p>{{item.selling_price}}:-, {{item.stock}} pcs</p>
+      <p>{{item.selling_price}}:-</p>
       <button id="dec" v-on:click="decrementCounter($event)"> - </button>
       {{ counter }}
       <button id="inc" v-on:click="incrementCounter($event)"> + </button>
