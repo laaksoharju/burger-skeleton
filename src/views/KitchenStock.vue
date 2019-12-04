@@ -54,15 +54,13 @@ export default {
     }
   },
   methods: {
-    markDone: function (orderid) {
-      this.$store.state.socket.emit("orderDone", orderid);
-    },
+
     countNumberOfIngredients: function (id) {
       let counter1 = 0;
       let counter2 = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].ingredients[i].category !== 6 ) {
+          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' && this.orders[order].ingredients[i].category !== 6 ) {
             counter1 +=1;
 
           }
