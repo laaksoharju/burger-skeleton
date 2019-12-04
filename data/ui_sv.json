@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Avbryt köp",
   "next" : "Nästa",
+  "previous" : "Förra",
   "changeIng" : "Byt ut ingrediens",
   "content": "Innehåll",
   "thankOrder" : "Tack för din beställning!",
@@ -16,5 +17,10 @@
   "ingredients" : "Ingredienser",
   "ready" : "Klart",
   "order" : "Min burgare",
-  "language" : "English"
+  "language" : "English",
+  "bread": "Bröd",
+  "burger": "Burgare",
+  "topping": "Pålägg",
+  "sauce": "Sås",
+  "total": "Totalt:"
 }

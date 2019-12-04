@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Cancel order",
   "next" : "Next",
+  "previous" : "Previous",
   "changeIng" : "Change ingredient",
   "content" : "Content",
   "thankOrder" : "Thank you for your order!",
@@ -15,6 +16,14 @@
   "sideorders" : "Side orders",
   "ingredients" : "Ingredients",
   "ready" : "Done",
+  "pickedup": "Picked Up",
   "order" : "My burger",
-  "language" : "Svenska"
+  "language" : "Svenska",
+  "bread": "Bread",
+  "burger": "Burger",
+  "topping": "Topping",
+  "sauce": "Sauce",
+  "cook": "Cook now",
+  "usedingredients": "All ingredients used",
+  "total": "Total:"
 }
