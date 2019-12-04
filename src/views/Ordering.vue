@@ -1,5 +1,5 @@
 <template>
-<div id="ordering">
+<div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
   <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
 
@@ -13,23 +13,23 @@
 
   <div class="orderSummary">
     <div id="order-table">
-      <h1>{{ uiLabels.yourOrder }}</h1>
+      <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
         <tr v-for="item in chosenIngredients">
           <td>{{item["ingredient_"+lang]}}</td>
           <td>{{item.selling_price}}:-</td>
         </tr>
       </table>
-      <hr>
     </div>
 
     <div id="price-summary" v-if="chosenIngredients.length>0">
       <h3>{{uiLabels.total}}</h3>
-      {{ price }} :-
+      <p>{{ price }} :-</p>
+      <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
     </div>
   </div>
 
-
+<section class=menuDisplay>
   <h1>{{ uiLabels.ingredients }}</h1>
 
   <div id=ingredient-choice>
@@ -37,17 +37,12 @@
     </Ingredient>
   </div>
 
-  <h1>{{ uiLabels.order }}</h1>
-  {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
-  <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+
   <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
   <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
 
-  <h1>{{ uiLabels.ordersInQueue }}</h1>
-  <div>
-    <OrderItem v-for="(order, key) in orders" v-if="order.status !== 'done'" :order-id="key" :order="order" :ui-labels="uiLabels" :lang="lang" :key="key">
-    </OrderItem>
-  </div>
+
+</section>
 </div>
 </template>
 <script>
@@ -154,7 +149,26 @@ export default {
 </script>
 <style scoped>
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
+.container {
+  display: grid;
+
+  grid-template-areas:
+    "header header"
+    "content side";
+
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: auto 1fr;
+  grid-gap: 10px;
+
+  height: 100vh;
+}
+
+.menuDisplay{
+  grid-area:content;
+}
+
 #ingredient-choice {
+
   display: grid;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
@@ -184,6 +198,7 @@ ul {
 }
 
 #huvudmeny {
+  grid-area:header;
   display: grid;
   grid-column-gap: 0.5em;
   grid-row-gap: 0.5em;
@@ -191,17 +206,18 @@ ul {
 }
 
 #price-summary {
-  width: 100%;
   z-index: 2;
-  margin:0.5em;
-  position: fixed;
-  bottom: 1em;
+  width: inherit;
+  position: relative;
+  bottom:0.5em;
+
+
   background-color: pink;
   border: 0.2em dashed black;
 }
 
 .btn {
-  padding: 2em;
+  padding: 0.5em;
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 18px;
@@ -217,25 +233,14 @@ ul {
 }
 
 .orderSummary {
-  height: 100%;
-  /* Full-height: remove this if you want "auto" height */
-  width: 15em;
-  /* Set the width of the sidebar */
-  position: fixed;
-  /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1;
-  /* Stay on top */
-  top: 0;
-  /* Stay at the top */
-  right: 0;
+  grid-area:side;
   border: 0.2em solid black;
   background-color: pink;
-  overflow-x: hidden;
   /* Disable horizontal scroll */
 }
 
 #order-table {
   width: 100%;
-  padding: 1.5em;
+  position: relative;
 }
 </style>
