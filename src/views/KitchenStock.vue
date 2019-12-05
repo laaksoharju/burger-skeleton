@@ -5,11 +5,12 @@
   {{$store.state.hello}}
 
 <h1>{{uiLabels.usedingredients}}</h1>
-<div id="ingredientsused" v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
-  {{countIng.name}}: {{countIng.count}}
+<div id="ingredientsused" v-for="countIng in countAllIngredients"
+      v-if="countIng.count>0"
+      :key="countAllIngredients.indexOf(countIng)">
+    {{countIng.name}}: {{countIng.count}}
 <br>
-add {{countIng.name}} to stock
-<input type="number" id="antalsaker" name="antalsaker">
+add <input type="number" id="antalsaker" name="antalsaker"> {{countIng.name}} to stock
 <input type="button" id="laggtill" name="laggtill" value="add">
 </div>
 </div>
@@ -27,6 +28,7 @@ export default {
     OrderItem,
     OrderItemToPrepare
   },
+
   mixins: [sharedVueStuff], // include stuff that is used in both
                             //the ordering system and the kitchen
   data: function(){
@@ -40,36 +42,27 @@ export default {
       return this.countNumberOfIngredients(2)
     },
     countAllIngredients: function() {
-      let ingredientTuples1 = []
-      let ingredientTuples2 = []
+      let ingredientTuples = []
       for (let i = 0; i < this.ingredients.length; i += 1) {
-        ingredientTuples1[i] = {};
-        ingredientTuples1[i].name = this.ingredients[i]['ingredient_' + this.lang];
-        ingredientTuples1[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[0];
-        ingredientTuples2[i] = {};
-        ingredientTuples2[i].name = this.ingredients[i]['ingredient_' + this.lang];
-        ingredientTuples2[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[1];
+        ingredientTuples[i] = {};
+        ingredientTuples[i].name = this.ingredients[i]['ingredient_' + this.lang];
+        ingredientTuples[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id);
       }
-      return [ingredientTuples1,ingredientTuples2];
+      return ingredientTuples;
     }
   },
   methods: {
 
     countNumberOfIngredients: function (id) {
-      let counter1 = 0;
-      let counter2 = 0;
+      let counter = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' && this.orders[order].ingredients[i].category !== 6 ) {
-            counter1 +=1;
-
-          }
           if (this.orders[order].ingredients[i].ingredient_id === id) {
-            counter2 +=1;
+            counter = this.orders[order].ingredients[i].stock;
           }
         }
       }
-      return [counter1, counter2];
+      return counter;
     }
   }
 }
