@@ -5,7 +5,7 @@
     </div>
 
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-    <h1>{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
+    <h1 id = "dtext">{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
     <div id = "buttonArea">
       <router-link id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
 
@@ -14,6 +14,12 @@
     <div id ="buttonArea">
 
        <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
+
+    </div>
+    <br>
+    <div id ="buttonArea">
+
+       <router-link id = "button" to="ordering/sides">{{ uiLabels.goToSides }}</router-link>
 
     </div>
     <br>
@@ -60,6 +66,11 @@ export default {
 }
 </script>
 <style scoped>
+
+#dtext{
+
+}
+
 #buttonArea{
   /* padding-left:350px; */
 
@@ -77,7 +88,13 @@ export default {
 }
 #button{
   color: white;
+
 }
+.button:hover{
+  color: red;
+
+}
+
 .example-panel{
   position:fixed;
   z-index:-2;

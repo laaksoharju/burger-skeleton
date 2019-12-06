@@ -29,5 +29,8 @@
   "welcome": "Welcome to burger ordering service",
   "name": "Burger bidness",
   "goToOrdering":"Create your burger",
-  "goToRandomBurger": "Order a random burger"
+  "goToRandomBurger": "Order a random burger",
+  "goToSides": "Order sides and drinks",
+  "sides": "Sides",
+  "drinks": "Drinks"
 }
