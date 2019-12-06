@@ -13,7 +13,7 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-        <tr v-for="item in chosenIngredients">
+        <tr  v-for="item in chosenIngredients" :key= "item.ingredient_id">
           <td>
             {{item.counter}}
           </td>
@@ -98,7 +98,7 @@ export default {
       item.counter-=1;
       if (item.counter==0){
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
-    };
+    }
     },
     placeOrder: function() {
       var i,
