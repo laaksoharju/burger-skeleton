@@ -14,6 +14,9 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
         <tr v-for="item in chosenIngredients">
+          <td>
+            {{item.counter}}
+          </td>
           <td>{{item["ingredient_"+lang]}}</td>
           <td>{{item.selling_price}}:-</td>
         </tr>
@@ -23,25 +26,26 @@
 
   <div id="price-summary" v-if="chosenIngredients.length>0">
     <table style="width:100%">
-    <td>{{uiLabels.total}}</td>
-    <td>{{ price }} :-</td>
-  </table>
+      <td>{{uiLabels.total}}</td>
+      <td>{{ price }} :-</td>
+    </table>
     <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
   </div>
 
-<div class=menuDisplay>
-  <h1>{{ uiLabels.ingredients }}</h1>
+  <div class=menuDisplay>
+    <h1>{{ uiLabels.ingredients }}</h1>
 
-  <div id=ingredient-choice>
-    <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
-    </Ingredient>
+    <div id=ingredient-choice>
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item);removeDuplicates()" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+      </Ingredient>
+    </div>
+
+  </div>
+  <div id="buttons">
+    <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
+    <button id="next-button" v-if="category!==4" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
 
-
-  <button class="previous-button" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
-  <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
-
-</div>
 </div>
 </template>
 <script>
@@ -70,21 +74,27 @@ export default {
       orderNumber: "",
     }
   },
+
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
     }.bind(this));
   },
   methods: {
+    removeDuplicates: function() {
+      this.chosenIngredients = [ ...new Set(this.chosenIngredients) ]
+    },
     addToOrder: function(item) {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
+      item.counter+=1;
     },
 
-      removeFromOrder: function(item) {
-        this.chosenIngredients.pop(item);
-        this.price += -item.selling_price;
-      },
+    removeFromOrder: function(item) {
+      this.chosenIngredients.pop(item);
+      this.price += -item.selling_price;
+      item.counter-=1;
+    },
     placeOrder: function() {
       var i,
         //Wrap the order in an object
@@ -102,6 +112,9 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+      for (var item in ingredients){
+        item.counter=0;
+      }
     },
     nextCategory: function() {
       this.category += 1;
@@ -154,7 +167,7 @@ export default {
   grid-template-areas:
     "header header"
     "content side"
-    "content empty";
+    "buttons empty";
 
   grid-template-columns: 1fr 200px;
   grid-template-rows: auto 1fr 5em;
@@ -162,8 +175,20 @@ export default {
   height: 100vh;
 }
 
-.menuDisplay{
-  grid-area:content;
+#buttons {
+  grid-area: buttons;
+  position: relative;
+  font-size: 5em;
+}
+
+#next-button {
+  position: absolute;
+  top: 0;
+  right: 5em;
+}
+
+.menuDisplay {
+  grid-area: content;
 }
 
 #ingredient-choice {
@@ -172,7 +197,7 @@ export default {
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 10em);
   text-align: center;
-  font-size:18px;
+  font-size: 18px;
   overflow-y: scroll;
 }
 
@@ -198,7 +223,7 @@ ul {
 }
 
 #huvudmeny {
-  grid-area:header;
+  grid-area: header;
   display: grid;
   grid-column-gap: 0.5em;
   grid-row-gap: 0.5em;
@@ -209,9 +234,9 @@ ul {
   z-index: 2;
   width: inherit;
   position: fixed;
-  bottom:0.5em;
-right:0.5em;
-padding: 1em;
+  bottom: 0.5em;
+  right: 0.5em;
+  padding: 1em;
 
   background-color: pink;
   border: 0.2em dashed black;
@@ -234,7 +259,7 @@ padding: 1em;
 }
 
 .orderSummary {
-  grid-area:side;
+  grid-area: side;
   border: 0.2em solid black;
   background-color: pink;
   overflow-y: scroll;

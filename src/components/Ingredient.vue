@@ -4,10 +4,11 @@
       <h3>{{item["ingredient_"+ lang]}}</h3>
       <p>{{item.selling_price}}:-</p>
       <button id="dec" v-on:click="decrementCounter($event)"> - </button>
-      {{ counter }}
+      {{counter}}
       <button id="inc" v-on:click="incrementCounter($event)"> + </button>
     </label>
   </div>
+
 </template>
 <script>
 export default {
