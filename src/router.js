@@ -23,7 +23,7 @@ let router = new Router({
     {
       path: '/ordering',
       meta: {
-        title: 'Kitchen Burger bidness',
+        title: 'Burger Bidness',
       },
       name: 'ordering',
       component: Ordering
