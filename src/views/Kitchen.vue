@@ -6,7 +6,7 @@
   <div>
     <h1>{{uiLabels.cook}}</h1>
   </div>
-  <div v-for="countIng in countAllIngredients[0]" v-if="countIng.count>0" :key="countAllIngredients[0].indexOf(countIng)">
+  <div v-for="countIng in countAllIngredients" v-if="countIng.count>0" :key="countAllIngredients.indexOf(countIng)">
     {{countIng.name}}: {{countIng.count}}
   </div>
   <h1>{{ uiLabels.ordersInQueue }}</h1>
@@ -23,10 +23,7 @@
   </div>
 <br>
 <hr>
-<h3>{{uiLabels.usedingredients}}</h3>
-<div v-for="countIng in countAllIngredients[1]" v-if="countIng.count>0" :key="countAllIngredients[1].indexOf(countIng)">
-  {{countIng.name}}: {{countIng.count}}
-</div>
+
 </div>
 </template>
 
@@ -59,17 +56,13 @@ export default {
       return this.countNumberOfIngredients(2)
     },
     countAllIngredients: function() {
-      let ingredientTuples1 = []
-      let ingredientTuples2 = []
+      let ingredientTuples = [];
       for (let i = 0; i < this.ingredients.length; i += 1) {
-        ingredientTuples1[i] = {};
-        ingredientTuples1[i].name = this.ingredients[i]['ingredient_' + this.lang];
-        ingredientTuples1[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[0];
-        ingredientTuples2[i] = {};
-        ingredientTuples2[i].name = this.ingredients[i]['ingredient_' + this.lang];
-        ingredientTuples2[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id)[1];
-      }
-      return [ingredientTuples1,ingredientTuples2];
+        ingredientTuples[i] = {};
+        ingredientTuples[i].name = this.ingredients[i]['ingredient_' + this.lang];
+        ingredientTuples[i].count = this.countNumberOfIngredients(this.ingredients[i].ingredient_id);
+        }
+      return ingredientTuples;
     }
   },
   methods: {
@@ -80,20 +73,15 @@ export default {
       this.$store.state.socket.emit("orderPickedUp", orderid);
     },
     countNumberOfIngredients: function (id) {
-      let counter1 = 0;
-      let counter2 = 0;
+      let counter = 0;
       for (let order in this.orders) {
         for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
           if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' && this.orders[order].ingredients[i].category !== 6 ) {
-            counter1 +=1;
-
-          }
-          if (this.orders[order].ingredients[i].ingredient_id === id) {
-            counter2 +=1;
+            counter+=1;
           }
         }
       }
-      return [counter1, counter2];
+      return counter;
     }
   }
 }
@@ -112,8 +100,8 @@ h1 {
 	width: 450px;
   margin: 2px;
   border-radius: 5px;
-  background-color: dimgray;*/
-  text-decoration: underline;
+  background-color: dimgray;
+  text-decoration: underline;*/
 }
 h3{
   text-decoration: underline;
