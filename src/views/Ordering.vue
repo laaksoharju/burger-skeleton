@@ -1,16 +1,14 @@
 <template>
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
-  <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-
 
   <div id="huvudmeny">
+    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
     <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect1()">{{uiLabels.burger}}</button>
     <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect2()">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect3()">{{uiLabels.topping}}</button>
     <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
   </div>
-
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
@@ -21,12 +19,14 @@
         </tr>
       </table>
     </div>
+  </div>
 
-    <div id="price-summary" v-if="chosenIngredients.length>0">
-      <h3>{{uiLabels.total}}</h3>
-      <p>{{ price }} :-</p>
-      <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
-    </div>
+  <div id="price-summary" v-if="chosenIngredients.length>0">
+    <table style="width:100%">
+    <td>{{uiLabels.total}}</td>
+    <td>{{ price }} :-</td>
+  </table>
+    <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
   </div>
 
 <div class=menuDisplay>
@@ -153,12 +153,12 @@ export default {
 
   grid-template-areas:
     "header header"
-    "content side";
+    "content side"
+    "content empty";
 
   grid-template-columns: 1fr 200px;
-  grid-template-rows: auto 1fr;
-  grid-gap: 10px;
-
+  grid-template-rows: auto 1fr 5em;
+  grid-gap: 1em;
   height: 100vh;
 }
 
@@ -167,13 +167,13 @@ export default {
 }
 
 #ingredient-choice {
-
   display: grid;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 10em);
   text-align: center;
-  font-size:18px
+  font-size:18px;
+  overflow-y: scroll;
 }
 
 .example-panel {
@@ -208,9 +208,10 @@ ul {
 #price-summary {
   z-index: 2;
   width: inherit;
-  position: relative;
+  position: fixed;
   bottom:0.5em;
-
+right:0.5em;
+padding: 1em;
 
   background-color: pink;
   border: 0.2em dashed black;
@@ -236,6 +237,7 @@ ul {
   grid-area:side;
   border: 0.2em solid black;
   background-color: pink;
+  overflow-y: scroll;
 }
 
 #order-table {
