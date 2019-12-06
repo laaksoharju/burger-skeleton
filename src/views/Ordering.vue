@@ -17,8 +17,11 @@
           <td>
             {{item.counter}}
           </td>
+          <td>
+            x
+          </td>
           <td>{{item["ingredient_"+lang]}}</td>
-          <td>{{item.selling_price}}:-</td>
+          <td id="price">{{item.selling_price * item.counter}}:-</td>
         </tr>
       </table>
     </div>
@@ -91,9 +94,11 @@ export default {
     },
 
     removeFromOrder: function(item) {
-      this.chosenIngredients.pop(item);
       this.price += -item.selling_price;
       item.counter-=1;
+      if (item.counter==0){
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+    };
     },
     placeOrder: function() {
       var i,
@@ -103,7 +108,7 @@ export default {
           price: this.price
         };
         // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
-        
+
       this.$store.state.socket.emit('order', {
         order: order
       });
@@ -113,9 +118,6 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
-      for (var item in ingredients){
-        item.counter=0;
-      }
     },
     nextCategory: function() {
       this.category += 1;
@@ -170,10 +172,14 @@ export default {
     "content side"
     "buttons empty";
 
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: 1fr 300px;
   grid-template-rows: auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
+}
+
+#price {
+  text-align: right;
 }
 
 #buttons {
@@ -186,6 +192,12 @@ export default {
   position: absolute;
   top: 0;
   right: 5em;
+}
+
+#previous-button {
+  position: absolute;
+  top: 0;
+  left:0;
 }
 
 .menuDisplay {
