@@ -13,7 +13,7 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-        <tr  v-for="item in chosenIngredients" :key= "item.ingredient_id">
+        <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
           <td>
             {{item.counter}}
           </td>
@@ -39,7 +39,7 @@
     <h1>{{ uiLabels.ingredients }}</h1>
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item);removeDuplicates()" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
       </Ingredient>
     </div>
 
@@ -78,27 +78,31 @@ export default {
     }
   },
 
+  computed:{
+    chosenIngredientsSet: function(){
+      return [ ...new Set(this.chosenIngredients) ]
+    }
+  },
+
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
     }.bind(this));
   },
   methods: {
-    removeDuplicates: function() {
-      this.chosenIngredients = [ ...new Set(this.chosenIngredients) ]
-    },
+
     addToOrder: function(item) {
+
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter+=1;
+
     },
 
     removeFromOrder: function(item) {
       this.price += -item.selling_price;
       item.counter-=1;
-      if (item.counter==0){
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
-    }
     },
     placeOrder: function() {
       var i,
@@ -118,6 +122,7 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+
     },
     nextCategory: function() {
       this.category += 1;
@@ -185,19 +190,22 @@ export default {
 #buttons {
   grid-area: buttons;
   position: relative;
-  font-size: 5em;
 }
 
 #next-button {
   position: absolute;
   top: 0;
   right: 5em;
+  font-size: 1.5em;
+  padding: 0.1em 1.8em;
 }
 
 #previous-button {
   position: absolute;
   top: 0;
   left:0;
+  font-size: 1.5em;
+  padding: 0.1em 1em;
 }
 
 .menuDisplay {
@@ -275,6 +283,7 @@ ul {
   grid-area: side;
   border: 0.2em solid black;
   background-color: pink;
+  padding: 1em;
   overflow-y: scroll;
 }
 
