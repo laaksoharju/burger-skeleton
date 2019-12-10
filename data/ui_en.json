@@ -33,5 +33,6 @@
   "goToSides": "Order sides and drinks",
   "sides": "Sides",
   "drinks": "Drinks",
-  "checkout":"checkout"
+  "checkout":"Checkout",
+  "review":"Review your Order"
 }

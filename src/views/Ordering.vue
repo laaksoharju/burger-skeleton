@@ -1,23 +1,23 @@
 <template>
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
-<div id="heady">
-  <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
-  <div id="cancelbutton">
-      <router-link tag ="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
-  </div>
-</div>
-
-  <div id="huvudmeny">
-
-    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
-    <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect(2)">{{uiLabels.bread}}</button>
-    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
-    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
+  <div id="heady">
+    <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
     <div id="cancelbutton">
       <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
+  </div>
+
+  <div id="huvudmeny">
+
+    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
+    <button id="btn2" class="btn" v-on:click="highlightButton(); redirect(2)">{{uiLabels.bread}}</button>
+    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
+    <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
+  
   </div>
 
   <div class="orderSummary">
@@ -47,22 +47,41 @@
       <td>{{uiLabels.total}}</td>
       <td>{{ price }} :-</td>
     </table>
-    <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
   </div>
 
   <div class=menuDisplay>
-    <h1>{{ uiLabels.ingredients }}</h1>
+
 
     <div id=ingredient-choice>
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item); IsOkToAdd()" v-on:decrement="removeFromOrder(item); IsOkToAdd()" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
+
+    </div>
+
+    <div id="finalsummary" v-if="this.category == 7">
+      <h1> {{uiLabels.review}} </h1>
+      <h2>
+        <table style="width:100%">
+          <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+            <td>
+              {{item.counter}}
+            </td>
+            <td>
+              x
+            </td>
+            <td>{{item["ingredient_"+lang]}}</td>
+            <td id="price">{{item.selling_price * item.counter}}:-</td>
+          </tr>
+        </table>
+      </h2>
     </div>
 
   </div>
   <div id="buttons">
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
-    <button id="next-button" v-if="category!==4" v-on:click="nextCategory">{{ uiLabels.next }}</button>
+    <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
 
 </div>
@@ -92,8 +111,10 @@ export default {
       price: 0,
       category: 1,
       orderNumber: "",
+
       okToAdd: true
     }
+
   },
 
   computed: {
@@ -101,6 +122,7 @@ export default {
       return [...new Set(this.chosenIngredients)]
     }
   },
+
 
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
@@ -113,7 +135,9 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
+
       this.$emit("increase");
+
 
     },
 
@@ -150,6 +174,7 @@ export default {
 
     removeFromOrder: function(item) {
       this.price += -item.selling_price;
+
 
       item.counter-=1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
@@ -201,6 +226,10 @@ export default {
           btns[i - 1].className += " active";
         }
     },
+    redirect: function(num) {
+      this.category = num;
+
+    },
     highlightButton: function() {
       var btns = document.getElementsByClassName("btn");
       for (var i = 0; i < btns.length; i++) {
@@ -212,15 +241,23 @@ export default {
       }
     },
 
-    redirect: function(num) {
-      this.category = num;
-    },
-    redirect6: function(){
-      this.category = 6;
-  },
-}
-}
 
+    checkout: function() {
+      var btns = document.getElementsByClassName("btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+          var current = document.getElementsByClassName("active");
+          var cobtn = document.getElementById("btn7");
+          current[0].className = "btn";
+          cobtn.className += " active";
+        });
+        this.category = 7;
+
+
+      }
+    }
+  }
+}
 </script>
 <style scoped>
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
@@ -278,6 +315,11 @@ export default {
   overflow-y: scroll;
 }
 
+#finalsummary {
+  width: 100%;
+  position: relative;
+}
+
 .example-panel {
   position: fixed;
   left: 0;
@@ -298,14 +340,16 @@ ul {
   margin: 50px 0 30px 0;
   padding: 0;
 }
-#heady{
+
+#heady {
   grid-area: header;
 }
 
 #huvudmeny {
 
   grid-area: nav;
-  position:relative;
+
+  position: relative;
 
   display: grid;
   grid-column-gap: 0.2em;
@@ -314,20 +358,21 @@ ul {
   justify-content: start;
 }
 
-#cancelbutton{
+#cancelbutton {
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
 
 }
-#switchlangbutton{
-  width:70px;
-  height:30px;
+
+#switchlangbutton {
+  width: 70px;
+  height: 30px;
   color: #ffffff;
   background-color: #000000;
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
 }
 
 #cancelbutton {
