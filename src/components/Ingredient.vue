@@ -1,6 +1,6 @@
 <template>
   <div class="ingredient">
-      <h3>{{item["ingredient_"+ lang]}}</h3>
+     <h3>{{item["ingredient_"+ lang]}}</h3>
       <p>{{item.selling_price}}:-</p>
       <div id="addremove">
         <button ref = "Ordering "id="dec" v-on:decrease="decrementCounter($event)" v-on:click="decrementCounter($event)"> - </button>
