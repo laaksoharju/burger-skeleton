@@ -25,16 +25,13 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
 
-        <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
-          <td>  <button v-on:click="removeFromOrder(item)" > -</button></td>
-         <td> <button v-on:click="addToOrder(item)"> + </button></td>
 
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd();removeFromOrder(item)"> -</button></td>
           <td>
             {{item.counter}}
           </td>
-          <td>
-            x
-          </td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd();addToOrder(item)"> + </button></td>
           <td>{{item["ingredient_"+lang]}}</td>
           <td id="price">{{item.selling_price * item.counter}}:-</td>
         </tr>
@@ -54,7 +51,7 @@
 
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item); IsOkToAdd()" v-on:decrement="removeFromOrder(item); IsOkToAdd()" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd();addToOrder(item)" v-on:decrement=" IsOkToAdd();removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
 
@@ -130,23 +127,23 @@ export default {
     }.bind(this));
   },
   methods: {
-
     addToOrder: function(item) {
+      if (this.okToAdd){
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
 
       this.$emit("increase");
-
+      }
 
     },
 
     IsOkToAdd: function() {
       var i;
-      var chosen = 0;
+      let chosen = 0;
       this.okToAdd = true;
-      var cat = this.category
-      var lim;
+      let cat = this.category
+      let lim;
 
       if (cat == 1) {
         lim = 2;
@@ -160,7 +157,6 @@ export default {
       if (cat == 4) {
         lim = 2;
       }
-
       for (i = 0; i < this.chosenIngredients.length; i += 1) {
         if (this.chosenIngredients[i].category == cat) {
           chosen += 1;
@@ -173,12 +169,13 @@ export default {
     },
 
     removeFromOrder: function(item) {
+      if (item.counter>0){
       this.price += -item.selling_price;
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
-
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
       this.$emit("decrease");
+      }
 
     },
 
@@ -202,10 +199,10 @@ export default {
       this.chosenIngredients = [];
 
     },
-    updateOrder: function(){
+    updateOrder: function() {
       this.price += -item.selling_price;
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
     },
     nextCategory: function() {
@@ -285,6 +282,17 @@ export default {
   position: relative;
 }
 
+.plusMinus {
+  background-color: pink;
+  border: none;
+  color:red;
+  font-size: 1.3em;
+}
+
+#plusknapp{
+  color:green;
+}
+
 #next-button {
   position: absolute;
   top: 0;
@@ -348,9 +356,7 @@ ul {
 #huvudmeny {
 
   grid-area: nav;
-
-  position: relative;
-
+  position:relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
