@@ -78,10 +78,16 @@ export default {
 }
 
 #ingredientsused {
-  border: outset firebrick;
+  border: 5px outset lightcoral;
   margin: 0.5em;
   display: table;
-  background-color: DarkBlue;
-  color: floralwhite;
+  background-color: floralwhite;
+
+}
+#laggtill{
+  font-size: 20px;
+  background-color: indianred;
+  font-stretch: expanded;
+  color: white;
 }
 </style>
