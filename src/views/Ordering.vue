@@ -59,7 +59,6 @@
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
-
     </div>
 
     <!-- reviewsidan på samma sätt som ordersummarysidan -->
@@ -254,8 +253,10 @@ export default {
 }
 </script>
 <style scoped>
+@import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 .container {
+  font-family: 'Quicksand', sans-serif;
   display: grid;
 
   grid-template-areas:
@@ -312,9 +313,9 @@ export default {
 
 #ingredient-choice {
   display: grid;
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fill, 10em);
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0.5em;
+  grid-template-columns: repeat(auto-fill, 9em);
   text-align: center;
   font-size: 18px;
   overflow-y: scroll;
@@ -344,7 +345,7 @@ export default {
 
 .ingredient {
   border: 0.2em solid black;
-  padding: 1em;
+  padding: 0.3em;
   background-color: pink;
   color: black;
 }
@@ -360,13 +361,12 @@ ul {
 }
 
 #huvudmeny {
-
   grid-area: nav;
   position:relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 10em);
+  grid-template-columns: repeat(auto-fill, 8em);
   justify-content: start;
 }
 
@@ -374,7 +374,6 @@ ul {
   position: absolute;
   top: 0;
   right: 0;
-
 }
 
 #switchlangbutton {

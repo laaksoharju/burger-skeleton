@@ -1,13 +1,24 @@
 <template>
-  <div class="ingredient">
-     <h3>{{item["ingredient_"+ lang]}}</h3>
-      <p>{{item.selling_price}}:-</p>
-      <div id="addremove">
-        <button ref = "Ordering" id="dec" v-on:decrease="decrementCounter($event)" v-on:click="decrementCounter($event)"> - </button>
-        {{item.counter}}
-        <button ref = "Ordering" id="inc" v-on:increase="incrementCounter($event)" v-on:click="incrementCounter($event)"> + </button>
-      </div>
+<div class="ingredient">
+  <div id="allergies">
+    <span id="gluten" v-if="item.gluten_free == 1">
+      <img src="@/assets/gluten.png" height="20">
+    </span>
+    <span id="lactose" v-if="item.milk_free == 1">
+      <img src="@/assets/dairy.png" height="20">
+    </span>
+    <span v-if="item.vegan == 1">
+      <img src="@/assets/vegan.png" height="20">
+    </span>
   </div>
+  <h3 id="ing-title">{{item["ingredient_"+ lang]}}</h3>
+  <p id="price">{{item.selling_price}}:-</p>
+  <div id="addremove">
+    <button ref="Ordering" id="dec" v-on:decrease="decrementCounter($event)" v-on:click="decrementCounter($event)"> - </button>
+    {{item.counter}}
+    <button ref="Ordering" id="inc" v-on:increase="incrementCounter($event)" v-on:click="incrementCounter($event)"> + </button>
+  </div>
+</div>
 </template>
 <script>
 export default {
@@ -53,7 +64,41 @@ export default {
 <style scoped>
 .ingredient {
   display: grid;
-  grid-template-rows: 40% 40% 20%;
+  position:relative;
+  grid-template-areas:
+  "allergies"
+  "ingredient"
+  "price"
+  "buttons";
 
+  grid-template-columns: auto;
+  grid-template-rows: 5% 40% 35% 20%;
+
+  width: 8em;
+  height: 8em;
+  hyphens: auto;
 }
+
+.vegan{
+  grid-area: vegan;
+}
+
+#allergies{
+  grid-area: allergies;
+  position:absolute;
+  left:0;
+}
+
+#ing-title{
+  grid-area: ingredient;
+}
+
+#price{
+  grid-area: price;
+}
+
+#addremove {
+  grid-area: buttons;
+}
+
 </style>
