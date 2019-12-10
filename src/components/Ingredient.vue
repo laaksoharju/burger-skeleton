@@ -1,11 +1,12 @@
 <template>
-<div class="ingredient">
-  <h3>{{item["ingredient_"+ lang]}}</h3>
-  <p>{{item.selling_price}}:-</p>
-  <div id="addremove">
-    <button id="dec" v-on:click="decrementCounter($event)"> - </button>
-    {{counter}}
-    <button id="inc" v-on:click="incrementCounter($event)"> + </button>
+  <div class="ingredient">
+      <h3>{{item["ingredient_"+ lang]}}</h3>
+      <p>{{item.selling_price}}:-</p>
+      <div id="addremove">
+        <button ref = "Ordering "id="dec" v-on:decrease="decrementCounter($event)" v-on:click="decrementCounter($event)"> - </button>
+        {{item.counter}}
+        <button ref = "Ordering" id="inc" v-on:increase="incrementCounter($event)" v-on:click="incrementCounter($event)"> + </button>
+      </div>
   </div>
 </div>
 </template>
