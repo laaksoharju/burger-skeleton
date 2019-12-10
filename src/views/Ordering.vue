@@ -17,7 +17,7 @@
     <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
-  
+
   </div>
 
   <div class="orderSummary">
@@ -25,9 +25,9 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
 
-        <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
-          <td>  <button v-on:click="removeFromOrder(item)" > -</button></td>
-         <td> <button v-on:click="addToOrder(item)"> + </button></td>
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <td> <button v-on:click="removeFromOrder(item)"> -</button></td>
+          <td> <button v-on:click="addToOrder(item)"> + </button></td>
 
           <td>
             {{item.counter}}
@@ -43,11 +43,18 @@
   </div>
 
   <div id="price-summary" v-if="chosenIngredients.length>0">
+
     <table style="width:100%">
       <td>{{uiLabels.total}}</td>
       <td>{{ price }} :-</td>
     </table>
-    <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+    <div v-if="category!=7">
+      <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+    </div>
+    <div v-else-if="category==7">
+      <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    </div>
+
   </div>
 
   <div class=menuDisplay>
@@ -59,6 +66,8 @@
       </Ingredient>
 
     </div>
+
+    <!-- reviewsidan på samma sätt som ordersummarysidan -->
 
     <div id="finalsummary" v-if="this.category == 7">
       <h1> {{uiLabels.review}} </h1>
@@ -176,8 +185,8 @@ export default {
       this.price += -item.selling_price;
 
 
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
       this.$emit("decrease");
 
     },
@@ -202,10 +211,10 @@ export default {
       this.chosenIngredients = [];
 
     },
-    updateOrder: function(){
+    updateOrder: function() {
       this.price += -item.selling_price;
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
     },
     nextCategory: function() {
@@ -231,10 +240,10 @@ export default {
 
     },
     highlightButton: function() {
-      var btns = document.getElementsByClassName("btn");
-      for (var i = 0; i < btns.length; i++) {
+      let btns = document.getElementsByClassName("btn");
+      for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
-          var current = document.getElementsByClassName("active");
+          let current = document.getElementsByClassName("active");
           current[0].className = "btn";
           this.className += " active";
         });
@@ -243,11 +252,11 @@ export default {
 
 
     checkout: function() {
-      var btns = document.getElementsByClassName("btn");
-      for (var i = 0; i < btns.length; i++) {
+      let btns = document.getElementsByClassName("btn");
+      for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
-          var current = document.getElementsByClassName("active");
-          var cobtn = document.getElementById("btn7");
+          let current = document.getElementsByClassName("active");
+          let cobtn = document.getElementById("btn7");
           current[0].className = "btn";
           cobtn.className += " active";
         });
@@ -318,6 +327,15 @@ export default {
 #finalsummary {
   width: 100%;
   position: relative;
+}
+#pobutton{
+  padding: 0.5em;
+  background-color: darkgreen;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
 .example-panel {
