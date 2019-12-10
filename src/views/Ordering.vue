@@ -9,6 +9,7 @@
   </div>
 
   <div id="huvudmeny">
+
     <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" class="btn" v-on:click="highlightButton(); redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
@@ -16,16 +17,18 @@
     <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
-
-
-
+  
   </div>
 
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+
+        <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
+          <td>  <button v-on:click="removeFromOrder(item)" > -</button></td>
+         <td> <button v-on:click="addToOrder(item)"> + </button></td>
+
           <td>
             {{item.counter}}
           </td>
@@ -51,7 +54,8 @@
 
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-if="item.category!=7" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item); IsOkToAdd()" v-on:decrement="removeFromOrder(item); IsOkToAdd()" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+        :key="item.ingredient_id">
       </Ingredient>
 
     </div>
@@ -100,6 +104,7 @@ export default {
   },
   mixins: [sharedVueStuff], // include stuff that is used in both
   // the ordering system and the kitchen
+
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
@@ -107,6 +112,7 @@ export default {
       category: 1,
       orderNumber: "",
 
+      okToAdd: true
     }
 
   },
@@ -126,18 +132,56 @@ export default {
   methods: {
 
     addToOrder: function(item) {
-
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
 
+      this.$emit("increase");
+
+
+    },
+
+    IsOkToAdd: function() {
+      var i;
+      var chosen = 0;
+      this.okToAdd = true;
+      var cat = this.category
+      var lim;
+
+      if (cat == 1) {
+        lim = 2;
+      }
+      if (cat == 2) {
+        lim = 1;
+      }
+      if (cat == 3) {
+        lim = 4;
+      }
+      if (cat == 4) {
+        lim = 2;
+      }
+
+      for (i = 0; i < this.chosenIngredients.length; i += 1) {
+        if (this.chosenIngredients[i].category == cat) {
+          chosen += 1;
+        }
+      }
+      if (chosen >= lim) {
+        this.okToAdd = false
+      }
+      return this.okToAdd;
     },
 
     removeFromOrder: function(item) {
       this.price += -item.selling_price;
-      item.counter -= 1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+
+
+      item.counter-=1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      this.$emit("decrease");
+
     },
+
     placeOrder: function() {
       var i,
         //Wrap the order in an object
@@ -156,6 +200,12 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+
+    },
+    updateOrder: function(){
+      this.price += -item.selling_price;
+      item.counter-=1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
 
     },
     nextCategory: function() {
@@ -190,7 +240,6 @@ export default {
         });
       }
     },
-
 
 
     checkout: function() {
@@ -297,8 +346,11 @@ ul {
 }
 
 #huvudmeny {
+
   grid-area: nav;
+
   position: relative;
+
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
@@ -321,6 +373,13 @@ ul {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#cancelbutton {
+  position: absolute;
+  top: 0;
+  right: 0;
+
 }
 
 #price-summary {
