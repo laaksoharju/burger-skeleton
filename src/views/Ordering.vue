@@ -1,16 +1,21 @@
 <template>
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
+<div id="heady">
+  <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+  <div id="cancelbutton">
+      <router-link tag ="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
+  </div>
+</div>
 
   <div id="huvudmeny">
-    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
     <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect1()">{{uiLabels.burger}}</button>
     <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect2()">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect3()">{{uiLabels.topping}}</button>
     <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
-    <div id="cancelbutton">
-        <router-link tag ="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
-    </div>
+    <button id="btn5" class="btn" v-on:click="highlightButton(); redirect5()">{{uiLabels.sideorders}}</button>
+    <button id="btn6" class="btn" v-on:click="highlightButton(); redirect6()">{{uiLabels.drinks}}</button>
+    <button id="btn7" class="btn" v-on:click="highlightButton()">{{uiLabels.checkout}}</button>
   </div>
 
 
@@ -185,10 +190,14 @@ export default {
       this.category = 4;
     },
     redirect5: function(){
-
+      this.category = 5;
     },
-  }
+    redirect6: function(){
+      this.category = 6;
+  },
 }
+}
+
 </script>
 <style scoped>
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
@@ -197,11 +206,12 @@ export default {
 
   grid-template-areas:
     "header header"
+    "nav nav"
     "content side"
     "buttons empty";
 
   grid-template-columns: 1fr 300px;
-  grid-template-rows: auto 1fr 5em;
+  grid-template-rows: 25px auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
@@ -265,14 +275,34 @@ ul {
   margin: 50px 0 30px 0;
   padding: 0;
 }
+#heady{
+  grid-area: header;
+}
 
 #huvudmeny {
-  grid-area: header;
+  grid-area: nav;
   position:relative;
   display: grid;
-  grid-column-gap: 0.5em;
-  grid-row-gap: 0.5em;
+  grid-column-gap: 0.2em;
+  grid-row-gap: 0.4em;
   grid-template-columns: repeat(auto-fill, 10em);
+  justify-content: start;
+}
+
+#cancelbutton{
+  position: absolute;
+  top:0;
+  right:0;
+
+}
+#switchlangbutton{
+  width:70px;
+  height:30px;
+  color: #ffffff;
+  background-color: #000000;
+  position: absolute;
+  top:0;
+  left:0;
 }
 
 #cancelbutton{
