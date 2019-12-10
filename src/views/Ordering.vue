@@ -17,7 +17,7 @@
     <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
-  
+
   </div>
 
   <div class="orderSummary">
@@ -25,16 +25,12 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
 
-        <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
-          <td>  <button v-on:click="removeFromOrder(item)" > -</button></td>
-         <td> <button v-on:click="addToOrder(item)"> + </button></td>
-
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd();removeFromOrder(item)"> -</button></td>
           <td>
             {{item.counter}}
           </td>
-          <td>
-            x
-          </td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd();addToOrder(item)"> + </button></td>
           <td>{{item["ingredient_"+lang]}}</td>
           <td id="price">{{item.selling_price * item.counter}}:-</td>
         </tr>
@@ -43,22 +39,31 @@
   </div>
 
   <div id="price-summary" v-if="chosenIngredients.length>0">
+
     <table style="width:100%">
       <td>{{uiLabels.total}}</td>
       <td>{{ price }} :-</td>
     </table>
-    <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+    <div v-if="category!=7">
+      <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+    </div>
+    <div v-else-if="category==7">
+      <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    </div>
+
   </div>
 
   <div class=menuDisplay>
 
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item); IsOkToAdd()" v-on:decrement="removeFromOrder(item); IsOkToAdd()" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd();addToOrder(item)" v-on:decrement=" IsOkToAdd();removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
 
     </div>
+
+    <!-- reviewsidan på samma sätt som ordersummarysidan -->
 
     <div id="finalsummary" v-if="this.category == 7">
       <h1> {{uiLabels.review}} </h1>
@@ -130,23 +135,23 @@ export default {
     }.bind(this));
   },
   methods: {
-
     addToOrder: function(item) {
+      if (this.okToAdd){
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
 
       this.$emit("increase");
-
+      }
 
     },
 
     IsOkToAdd: function() {
       var i;
-      var chosen = 0;
+      let chosen = 0;
       this.okToAdd = true;
-      var cat = this.category
-      var lim;
+      let cat = this.category
+      let lim;
 
       if (cat == 1) {
         lim = 2;
@@ -160,7 +165,6 @@ export default {
       if (cat == 4) {
         lim = 2;
       }
-
       for (i = 0; i < this.chosenIngredients.length; i += 1) {
         if (this.chosenIngredients[i].category == cat) {
           chosen += 1;
@@ -173,12 +177,13 @@ export default {
     },
 
     removeFromOrder: function(item) {
+      if (item.counter>0){
       this.price += -item.selling_price;
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
-
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
       this.$emit("decrease");
+      }
 
     },
 
@@ -202,10 +207,10 @@ export default {
       this.chosenIngredients = [];
 
     },
-    updateOrder: function(){
+    updateOrder: function() {
       this.price += -item.selling_price;
-      item.counter-=1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
     },
     nextCategory: function() {
@@ -231,10 +236,10 @@ export default {
 
     },
     highlightButton: function() {
-      var btns = document.getElementsByClassName("btn");
-      for (var i = 0; i < btns.length; i++) {
+      let btns = document.getElementsByClassName("btn");
+      for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
-          var current = document.getElementsByClassName("active");
+          let current = document.getElementsByClassName("active");
           current[0].className = "btn";
           this.className += " active";
         });
@@ -243,11 +248,11 @@ export default {
 
 
     checkout: function() {
-      var btns = document.getElementsByClassName("btn");
-      for (var i = 0; i < btns.length; i++) {
+      let btns = document.getElementsByClassName("btn");
+      for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
-          var current = document.getElementsByClassName("active");
-          var cobtn = document.getElementById("btn7");
+          let current = document.getElementsByClassName("active");
+          let cobtn = document.getElementById("btn7");
           current[0].className = "btn";
           cobtn.className += " active";
         });
@@ -285,6 +290,17 @@ export default {
   position: relative;
 }
 
+.plusMinus {
+  background-color: pink;
+  border: none;
+  color:red;
+  font-size: 1.3em;
+}
+
+#plusknapp{
+  color:green;
+}
+
 #next-button {
   position: absolute;
   top: 0;
@@ -319,6 +335,15 @@ export default {
   width: 100%;
   position: relative;
 }
+#pobutton{
+  padding: 0.5em;
+  background-color: darkgreen;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 0.5em;
+  text-align: center;
+}
 
 .example-panel {
   position: fixed;
@@ -348,9 +373,7 @@ ul {
 #huvudmeny {
 
   grid-area: nav;
-
-  position: relative;
-
+  position:relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
