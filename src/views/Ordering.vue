@@ -16,9 +16,6 @@
     <button id="btn5" class="btn" v-on:click="highlightButton(); redirect5()">{{uiLabels.sideorders}}</button>
     <button id="btn6" class="btn" v-on:click="highlightButton(); redirect6()">{{uiLabels.drinks}}</button>
     <button id="btn7" class="btn" v-on:click="highlightButton()">{{uiLabels.checkout}}</button>
-
-
-
   </div>
 
 
@@ -28,7 +25,11 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
+
         <tr  v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key= "item.ingredient_id">
+          <td>  <button v-on:click="removeFromOrder(item)" > -</button></td>
+         <td> <button v-on:click="addToOrder(item)"> + </button></td>
+
           <td>
             {{item.counter}}
           </td>
@@ -111,6 +112,7 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter+=1;
+      this.$emit("increase");
 
     },
 
@@ -118,7 +120,9 @@ export default {
       this.price += -item.selling_price;
       item.counter-=1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
+      this.$emit("decrease");
     },
+
     placeOrder: function() {
       var i,
         //Wrap the order in an object
@@ -137,6 +141,12 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+
+    },
+    updateOrder: function(){
+      this.price += -item.selling_price;
+      item.counter-=1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
 
     },
     nextCategory: function() {
@@ -181,7 +191,6 @@ export default {
     },
     redirect5: function(){
       this.category = 5;
-
     },
     redirect6: function(){
       this.category = 6;
@@ -294,6 +303,13 @@ ul {
   position: absolute;
   top:0;
   left:0;
+}
+
+#cancelbutton{
+  position: absolute;
+  top:0;
+  right:0;
+
 }
 
 #price-summary {
