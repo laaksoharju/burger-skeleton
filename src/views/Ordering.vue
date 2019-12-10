@@ -9,17 +9,16 @@
 </div>
 
   <div id="huvudmeny">
-    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect1()">{{uiLabels.burger}}</button>
-    <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect2()">{{uiLabels.bread}}</button>
-    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect3()">{{uiLabels.topping}}</button>
-    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
-    <button id="btn5" class="btn" v-on:click="highlightButton(); redirect5()">{{uiLabels.sideorders}}</button>
-    <button id="btn6" class="btn" v-on:click="highlightButton(); redirect6()">{{uiLabels.drinks}}</button>
-    <button id="btn7" class="btn" v-on:click="highlightButton()">{{uiLabels.checkout}}</button>
+
+    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
+    <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect(2)">{{uiLabels.bread}}</button>
+    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
+    <div id="cancelbutton">
+      <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
+    </div>
   </div>
-
-
-
 
   <div class="orderSummary">
     <div id="order-table">
@@ -55,7 +54,8 @@
     <h1>{{ uiLabels.ingredients }}</h1>
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item)" v-on:decrement="removeFromOrder(item)" v-show="item.category===category" :item="item" :lang="lang" :key="item.ingredient_id">
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="addToOrder(item); IsOkToAdd()" v-on:decrement="removeFromOrder(item); IsOkToAdd()" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+        :key="item.ingredient_id">
       </Ingredient>
     </div>
 
@@ -85,18 +85,20 @@ export default {
   },
   mixins: [sharedVueStuff], // include stuff that is used in both
   // the ordering system and the kitchen
+
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
       price: 0,
       category: 1,
       orderNumber: "",
+      okToAdd: true
     }
   },
 
-  computed:{
-    chosenIngredientsSet: function(){
-      return [ ...new Set(this.chosenIngredients) ]
+  computed: {
+    chosenIngredientsSet: function() {
+      return [...new Set(this.chosenIngredients)]
     }
   },
 
@@ -108,19 +110,51 @@ export default {
   methods: {
 
     addToOrder: function(item) {
-
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
-      item.counter+=1;
+      item.counter += 1;
       this.$emit("increase");
 
     },
 
+    IsOkToAdd: function() {
+      var i;
+      var chosen = 0;
+      this.okToAdd = true;
+      var cat = this.category
+      var lim;
+
+      if (cat == 1) {
+        lim = 2;
+      }
+      if (cat == 2) {
+        lim = 1;
+      }
+      if (cat == 3) {
+        lim = 4;
+      }
+      if (cat == 4) {
+        lim = 2;
+      }
+
+      for (i = 0; i < this.chosenIngredients.length; i += 1) {
+        if (this.chosenIngredients[i].category == cat) {
+          chosen += 1;
+        }
+      }
+      if (chosen >= lim) {
+        this.okToAdd = false
+      }
+      return this.okToAdd;
+    },
+
     removeFromOrder: function(item) {
       this.price += -item.selling_price;
+
       item.counter-=1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1 );
       this.$emit("decrease");
+
     },
 
     placeOrder: function() {
@@ -130,7 +164,7 @@ export default {
           ingredients: this.chosenIngredients,
           price: this.price
         };
-        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
+      // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
 
       this.$store.state.socket.emit('order', {
         order: order
@@ -177,20 +211,9 @@ export default {
         });
       }
     },
-    redirect1: function() {
-      this.category = 1;
-    },
-    redirect2: function() {
-      this.category = 2;
-    },
-    redirect3: function() {
-      this.category = 3;
-    },
-    redirect4: function() {
-      this.category = 4;
-    },
-    redirect5: function(){
-      this.category = 5;
+
+    redirect: function(num) {
+      this.category = num;
     },
     redirect6: function(){
       this.category = 6;
@@ -236,7 +259,7 @@ export default {
 #previous-button {
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   font-size: 1.5em;
   padding: 0.1em 1em;
 }
@@ -280,8 +303,10 @@ ul {
 }
 
 #huvudmeny {
+
   grid-area: nav;
   position:relative;
+
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
@@ -305,10 +330,10 @@ ul {
   left:0;
 }
 
-#cancelbutton{
+#cancelbutton {
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
 
 }
 
