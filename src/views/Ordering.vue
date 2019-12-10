@@ -252,7 +252,7 @@ ul {
 }
 
 #price-summary {
-  z-index: 2;
+  z-index: 1;
   width: inherit;
   position: fixed;
   bottom: 0.5em;
