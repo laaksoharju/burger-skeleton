@@ -74,8 +74,6 @@ export default {
 #buttonArea{
   /* padding-left:350px; */
 
-
-  min-height: 100vh;
   align-items:center;
   font-size: 40px;
   border: 5px solid;
