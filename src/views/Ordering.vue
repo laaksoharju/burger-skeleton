@@ -25,10 +25,10 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
 
+
         <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
           <td> <button v-on:click="removeFromOrder(item)"> -</button></td>
           <td> <button v-on:click="addToOrder(item)"> + </button></td>
-
           <td>
             {{item.counter}}
           </td>
@@ -153,6 +153,7 @@ export default {
       item.counter -= 1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
       this.$emit("decrease");
+
     },
 
     placeOrder: function() {
@@ -300,7 +301,7 @@ ul {
 #huvudmeny {
 
   grid-area: nav;
-  position: relative;
+  position:relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
