@@ -2,7 +2,9 @@
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
   <div id="heady">
-    <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    <button id="switchlangbutton" v-on:click="switchLang()">
+      {{ uiLabels.language }}
+    </button>
     <div id="cancelbutton">
       <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
@@ -188,31 +190,30 @@ export default {
     },
 
     placeOrder: function() {
-      var i,
-        //Wrap the order in an object
-        order = {
-          ingredients: this.chosenIngredients,
-          price: this.price
-        };
-      // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
+      if (confirm(this.uiLabels.instructions)) {
+        var i,
+          //Wrap the order in an object
+          order = {
+            ingredients: this.chosenIngredients,
+            price: this.price
+          };
+        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
 
-      this.$store.state.socket.emit('order', {
-        order: order
-      });
-      //set all counters to 0. Notice the use of $refs
-      for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-        this.$refs.ingredient[i].resetCounter();
+        this.$store.state.socket.emit('order', {
+          order: order
+        });
+        //set all counters to 0. Notice the use of $refs
+        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
+          this.$refs.ingredient[i].resetCounter();
+        }
+        this.price = 0;
+        this.chosenIngredients = [];
+
       }
-      this.price = 0;
-      this.chosenIngredients = [];
+
 
     },
-    updateOrder: function() {
-      this.price += -item.selling_price;
-      item.counter -= 1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
-    },
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
@@ -389,13 +390,14 @@ ul {
 }
 
 #switchlangbutton {
-  width: 70px;
-  height: 30px;
-  color: #ffffff;
-  background-color: #000000;
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding: 0.5em;
+  background-color: royalblue;
+  color: gold;
+  cursor: pointer;
+  font-size: 15px;
+  border: 2px solid crimson;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
 #cancelbutton {
