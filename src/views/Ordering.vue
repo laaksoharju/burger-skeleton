@@ -11,7 +11,6 @@
   </div>
 
   <div id="huvudmeny">
-
     <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" class="btn" v-on:click="highlightButton(); redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
@@ -28,11 +27,11 @@
       <table style="width:100%">
 
         <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd();removeFromOrder(item)"> -</button></td>
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
             {{item.counter}}
           </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd();addToOrder(item)"> + </button></td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
           <td>{{item["ingredient_"+lang]}}</td>
           <td id="price">{{item.selling_price * item.counter}}:-</td>
         </tr>
@@ -59,7 +58,7 @@
 
 
     <div id=ingredient-choice>
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd();addToOrder(item)" v-on:decrement=" IsOkToAdd();removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
 
@@ -142,19 +141,17 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
-
       this.$emit("increase");
       }
 
     },
 
-    IsOkToAdd: function() {
+    IsOkToAdd: function(item) {
       var i;
       let chosen = 0;
       this.okToAdd = true;
-      let cat = this.category
+      let cat = item.category
       let lim;
-
       if (cat == 1) {
         lim = 2;
       }
@@ -183,7 +180,6 @@ export default {
       this.price += -item.selling_price;
       item.counter -= 1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
-
       this.$emit("decrease");
       }
 
@@ -258,7 +254,6 @@ export default {
           cobtn.className += " active";
         });
         this.category = 7;
-
 
       }
     }
