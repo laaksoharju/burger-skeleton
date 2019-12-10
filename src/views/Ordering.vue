@@ -1,23 +1,34 @@
 <template>
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
+  <div id="heady">
+    <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    <div id="cancelbutton">
+      <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
+    </div>
+  </div>
 
   <div id="huvudmeny">
+
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
     <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
     <div id="cancelbutton">
-      <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
+
   </div>
 
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
+
         <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <td> <button v-on:click="removeFromOrder(item)"> -</button></td>
+          <td> <button v-on:click="addToOrder(item)"> + </button></td>
+
           <td>
             {{item.counter}}
           </td>
@@ -102,6 +113,7 @@ export default {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;
       item.counter += 1;
+      this.$emit("increase");
 
     },
 
@@ -140,7 +152,9 @@ export default {
       this.price += -item.selling_price;
       item.counter -= 1;
       this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+      this.$emit("decrease");
     },
+
     placeOrder: function() {
       var i,
         //Wrap the order in an object
@@ -159,6 +173,12 @@ export default {
       }
       this.price = 0;
       this.chosenIngredients = [];
+
+    },
+    updateOrder: function() {
+      this.price += -item.selling_price;
+      item.counter -= 1;
+      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
 
     },
     nextCategory: function() {
@@ -189,6 +209,7 @@ export default {
         });
       }
     },
+
     redirect: function(num) {
       this.category = num;
     },
@@ -202,11 +223,12 @@ export default {
 
   grid-template-areas:
     "header header"
+    "nav nav"
     "content side"
     "buttons empty";
 
   grid-template-columns: 1fr 300px;
-  grid-template-rows: auto 1fr 5em;
+  grid-template-rows: 25px auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
@@ -271,13 +293,36 @@ ul {
   padding: 0;
 }
 
-#huvudmeny {
+#heady {
   grid-area: header;
+}
+
+#huvudmeny {
+
+  grid-area: nav;
   position: relative;
   display: grid;
-  grid-column-gap: 0.5em;
-  grid-row-gap: 0.5em;
+  grid-column-gap: 0.2em;
+  grid-row-gap: 0.4em;
   grid-template-columns: repeat(auto-fill, 10em);
+  justify-content: start;
+}
+
+#cancelbutton {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+}
+
+#switchlangbutton {
+  width: 70px;
+  height: 30px;
+  color: #ffffff;
+  background-color: #000000;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #cancelbutton {

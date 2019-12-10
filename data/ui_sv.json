@@ -29,5 +29,6 @@
   "goToRandomBurger": "Slumpa hamburgare",
   "goToSides": "Beställ tillbehör & dryck",
   "sides": "Tillbehör",
-  "drinks": "Dryck"
+  "drinks": "Dryck",
+  "checkout":"Kassan"
 }
