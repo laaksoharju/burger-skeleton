@@ -13,13 +13,9 @@
     <button id="btn2" class="btn" v-on:click="highlightButton() ; redirect2()">{{uiLabels.bread}}</button>
     <button id="btn3" class="btn" v-on:click="highlightButton(); redirect3()">{{uiLabels.topping}}</button>
     <button id="btn4" class="btn" v-on:click="highlightButton(); redirect4()">{{uiLabels.sauce}}</button>
-
     <button id="btn5" class="btn" v-on:click="highlightButton(); redirect5()">{{uiLabels.sideorders}}</button>
     <button id="btn6" class="btn" v-on:click="highlightButton(); redirect6()">{{uiLabels.drinks}}</button>
     <button id="btn7" class="btn" v-on:click="highlightButton()">{{uiLabels.checkout}}</button>
-
-
-
   </div>
 
 
@@ -195,7 +191,6 @@ export default {
     },
     redirect5: function(){
       this.category = 5;
-
     },
     redirect6: function(){
       this.category = 6;
