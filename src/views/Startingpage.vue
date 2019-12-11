@@ -17,11 +17,11 @@
 
     </div>
     <br>
-    <div id ="buttonArea">
+    <!--<div id ="buttonArea">
 
        <router-link id = "button" to="ordering/sides">{{ uiLabels.goToSides }}</router-link>
 
-    </div>
+    </div>-->
     <br>
     <br>
     <hr>
