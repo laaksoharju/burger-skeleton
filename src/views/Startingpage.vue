@@ -21,6 +21,8 @@
        <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
     </div>
     </div>
+
+  
     <br>
 
     <div id = "hamburgerGif">
