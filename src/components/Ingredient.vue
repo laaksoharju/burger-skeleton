@@ -75,7 +75,7 @@ export default {
   grid-template-rows: 5% 40% 35% 20%;
 
   width: 8em;
-  height: 8em;
+  height: 9em;
   hyphens: auto;
 }
 

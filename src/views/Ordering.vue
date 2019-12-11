@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div id="price-summary" v-if="chosenIngredients.length>0">
+  <div id="price-summary">
 
     <table style="width:100%">
       <td>{{uiLabels.total}}</td>
@@ -92,6 +92,13 @@
           </tr>
         </table>
       </h2>
+      <button v-on:click="addMenu()">Lägg till meny</button>
+      <div v-for="(menu,key) in currentOrder.menus" :key="key">
+        <h5>{{key}}:</h5>
+        <div v-for="(item,key2) in menu.ingredients" :key="key2">
+          {{item["ingredient_"+lang]}}
+        </div>
+      </div>
     </div>
 
   </div>
@@ -134,7 +141,11 @@ export default {
       price: 0,
       category: 1,
       orderNumber: "",
-      okToAdd: true
+      okToAdd: true,
+      currentOrder: {
+        menus: []
+      }
+
     }
 
   },
@@ -144,7 +155,6 @@ export default {
       return [...new Set(this.chosenIngredients)]
     }
   },
-
 
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
@@ -160,7 +170,17 @@ export default {
         item.counter += 1;
         this.$emit("increase");
       }
+    },
 
+    addMenu: function() {
+      this.currentOrder.menus.push({
+        ingredients: this.chosenIngredients.splice(0),
+        price: this.price
+      });
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.$refs.ingredient[i].resetCounter();
+      }
+      this.chosenIngredients = [];
     },
 
     IsOkToAdd: function(item) {
@@ -223,26 +243,15 @@ export default {
 
     placeOrder: function() {
       if (confirm(this.uiLabels.instructions)) {
-        var i,
-          //Wrap the order in an object
-          order = {
-            ingredients: this.chosenIngredients,
-            price: this.price
-          };
-        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
-
-        this.$store.state.socket.emit('order', {
-          order: order
-        });
-        //set all counters to 0. Notice the use of $refs
+        /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
-        }
+        }*/
+        this.$store.state.socket.emit('order', this.currentOrder);
+        this.currentOrder = [];
+        this.category = 1;
         this.price = 0;
-        this.chosenIngredients = [];
-
       }
-
 
     },
 
