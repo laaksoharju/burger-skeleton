@@ -29,14 +29,17 @@
   "welcome": "Welcome to burger ordering service",
   "name": "Burger bidness",
   "goToOrdering":"Create your burger",
-  "goToRandomBurger": "Order a random burger",
+  "goToRandomMenu": "Order a random menu",
   "goToSides": "Order sides and drinks",
   "sides": "Sides",
   "drinks": "Drinks",
   "checkout":"Checkout",
   "review":"Review your Order",
   "instructions":"Press OK if you really want to order and follow the instructions on the payment register",
+  "choose":"Choose",
+  "noMaxLimit":"No max limit",
   "dairyFree":"Dairy free",
   "glutenFree":"Gluten free",
   "vegan":"Vegan"
+
 }

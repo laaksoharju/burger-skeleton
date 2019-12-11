@@ -11,16 +11,25 @@
   </div>
 
   <div id="huvudmeny">
+
     <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
     <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
-    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click=" redirect(3)">{{uiLabels.topping}}</button>
-    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
+    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
+
+  <div class="limittext" v-if= "category != 5 && category != 6 && category != 7" >
+    {{uiLabels.choose}} max {{maxIngredients()}} </div>
+  <div class="limittext" v-else-if= "category == 5 || category == 6" >
+    {{uiLabels.noMaxLimit}} </div>
+
+
+
 
   <div class="orderSummary">
     <div id="order-table">
@@ -55,12 +64,13 @@
 
   </div>
 
-  <div class=menuDisplay>
+  <div class="menuDisplay">
 
+    <div id="ingredient-choice">
 
-    <div id=ingredient-choice>
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
+
       </Ingredient>
     </div>
 
@@ -93,6 +103,7 @@
 
   </div>
   <div id="buttons">
+    <button  id = "random-button" v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
@@ -134,6 +145,7 @@ export default {
       currentOrder: {
         menus: []
       }
+
     }
 
   },
@@ -147,6 +159,7 @@ export default {
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
+
     }.bind(this));
   },
   methods: {
@@ -199,6 +212,25 @@ export default {
       return this.okToAdd;
     },
 
+    maxIngredients: function() {
+      let cat = this.category
+      let max = 0;
+      if (cat == 1) {
+        max = 2;
+      }
+      if (cat == 2) {
+        max = 1;
+      }
+      if (cat == 3) {
+        max = 4;
+      }
+      if (cat == 4) {
+        max = 2;
+      }
+      return max;
+
+    },
+
     removeFromOrder: function(item) {
       if (item.counter > 0) {
         this.price += -item.selling_price;
@@ -241,36 +273,52 @@ export default {
           btns[i - 1].className += " active";
         }
     },
+    randomBurger: function(ingredients){
+      // console.log(ingredients[0].ingredient_sv)
+
+      let burgmax = 9;
+      let toppingmax = 34;
+      let saucemax = 48;
+      let breadmax = 52;
+      let sidesmax = 55;
+      let drinkmax = 60;
+
+
+    for (let i = 0; i < 2; i++){
+      let randburg =   Math.floor(Math.random() * (burgmax));
+      this.addToOrder(ingredients[randburg])
+    }
+
+    let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
+    this.addToOrder(ingredients[randbread])
+
+    for (let i = 0; i < 4; i++){
+      let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+      this.addToOrder(ingredients[randtopping])
+    }
+
+    for (let i = 0; i < 2; i++){
+      let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
+      this.addToOrder(ingredients[randsauce])
+    }
+
+    let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
+    this.addToOrder(ingredients[randsides])
+    let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
+    this.addToOrder(ingredients[randdrink])
+      this.category =7;
+
+},
+
+
+
     redirect: function(num) {
       this.category = num;
 
     },
-    highlightButton: function() {
-      let btns = document.getElementsByClassName("btn");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          let current = document.getElementsByClassName("active");
-          current[0].className = "btn";
-          this.className += " active";
-        });
-      }
-    },
 
-
-    checkout: function() {
-      let btns = document.getElementsByClassName("btn");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          let current = document.getElementsByClassName("active");
-          let cobtn = document.getElementById("btn7");
-          current[0].className = "btn";
-          cobtn.className += " active";
-        });
-        this.category = 7;
-
-      }
-    }
   }
+
 }
 </script>
 <style scoped>
@@ -284,18 +332,28 @@ export default {
   grid-template-areas:
     "header header"
     "nav nav"
+    "chooseMax side"
     "content side"
     "buttons empty"
     "footer footer";
 
   grid-template-columns: 1fr 300px;
-  grid-template-rows: 25px auto 1fr 5em auto;
+
+  grid-template-rows: 25px auto auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
 
+
+.limittext{
+  grid-area: chooseMax;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #footer {
   grid-area: footer;
+
 }
 
 #price {
@@ -333,6 +391,20 @@ export default {
   font-size: 1.5em;
   padding: 0.1em 1em;
 }
+#random-button{
+  border-radius: 4px;
+  position: relative;
+  background:url("https://thumbs.gfycat.com/SplendidGleefulEasternnewt-max-1mb.gif") repeat scroll left top;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 20px;
+  width: 200px;
+  transition: all 5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+
 
 .menuDisplay {
   grid-area: content;
