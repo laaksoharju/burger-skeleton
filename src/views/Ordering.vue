@@ -70,6 +70,7 @@
 
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
+
       </Ingredient>
     </div>
 
@@ -95,6 +96,7 @@
 
   </div>
   <div id="buttons">
+    <button  id = "random-button" v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
@@ -147,6 +149,7 @@ export default {
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
+
     }.bind(this));
   },
   methods: {
@@ -261,6 +264,45 @@ export default {
           btns[i - 1].className += " active";
         }
     },
+    randomBurger: function(ingredients){
+      // console.log(ingredients[0].ingredient_sv)
+
+      let burgmax = 9;
+      let toppingmax = 34;
+      let saucemax = 48;
+      let breadmax = 52;
+      let sidesmax = 55;
+      let drinkmax = 60;
+
+
+    for (let i = 0; i < 2; i++){
+      let randburg =   Math.floor(Math.random() * (burgmax));
+      this.addToOrder(ingredients[randburg])
+    }
+
+    let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
+    this.addToOrder(ingredients[randbread])
+
+    for (let i = 0; i < 4; i++){
+      let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+      this.addToOrder(ingredients[randtopping])
+    }
+
+    for (let i = 0; i < 2; i++){
+      let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
+      this.addToOrder(ingredients[randsauce])
+    }
+
+    let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
+    this.addToOrder(ingredients[randsides])
+    let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
+    this.addToOrder(ingredients[randdrink])
+      this.category =7;
+
+},
+
+
+
     redirect: function(num) {
       this.category = num;
 
@@ -340,6 +382,20 @@ export default {
   font-size: 1.5em;
   padding: 0.1em 1em;
 }
+#random-button{
+  border-radius: 4px;
+  position: relative;
+  background:url("https://thumbs.gfycat.com/SplendidGleefulEasternnewt-max-1mb.gif") repeat scroll left top;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 20px;
+  width: 200px;
+  transition: all 5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+
 
 .menuDisplay {
   grid-area: content;
