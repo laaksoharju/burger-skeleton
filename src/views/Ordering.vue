@@ -99,6 +99,12 @@
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
 
+  <div id="footer">
+    <img src="@/assets/gluten.png" height="20"> - {{uiLabels.glutenFree}}
+    <img src="@/assets/dairy.png" height="20"> - {{uiLabels.dairyFree}}
+    <img src="@/assets/vegan.png" height="20"> - {{uiLabels.vegan}}
+  </div>
+
 </div>
 </template>
 <script>
@@ -277,18 +283,26 @@ export default {
     "nav nav"
     "chooseMax side"
     "content side"
-    "buttons empty";
+    "buttons empty"
+    "footer footer";
 
   grid-template-columns: 1fr 300px;
+
   grid-template-rows: 25px auto auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
 
+
 .limittext{
   grid-area: chooseMax;
   font-size: 20px;
   font-weight: bold;
+}
+
+#footer {
+  grid-area: footer;
+
 }
 
 #price {
