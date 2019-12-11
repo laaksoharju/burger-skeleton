@@ -11,16 +11,25 @@
   </div>
 
   <div id="huvudmeny">
+
     <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
     <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
-    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click=" redirect(3)">{{uiLabels.topping}}</button>
-    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
+    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
+
+  <div class="limittext" v-if= "category != 5 && category != 6 && category != 7" >
+    {{uiLabels.choose}} max {{maxIngredients()}} </div>
+  <div class="limittext" v-else-if= "category == 5 || category == 6" >
+    {{uiLabels.noMaxLimit}} </div>
+
+
+
 
   <div class="orderSummary">
     <div id="order-table">
@@ -55,10 +64,10 @@
 
   </div>
 
-  <div class=menuDisplay>
+  <div class="menuDisplay">
 
+    <div id="ingredient-choice">
 
-    <div id=ingredient-choice>
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
@@ -123,7 +132,6 @@ export default {
       price: 0,
       category: 1,
       orderNumber: "",
-
       okToAdd: true
     }
 
@@ -143,11 +151,11 @@ export default {
   },
   methods: {
     addToOrder: function(item) {
-      if (this.okToAdd){
-      this.chosenIngredients.push(item);
-      this.price += +item.selling_price;
-      item.counter += 1;
-      this.$emit("increase");
+      if (this.okToAdd) {
+        this.chosenIngredients.push(item);
+        this.price += +item.selling_price;
+        item.counter += 1;
+        this.$emit("increase");
       }
 
     },
@@ -181,12 +189,31 @@ export default {
       return this.okToAdd;
     },
 
+    maxIngredients: function() {
+      let cat = this.category
+      let max = 0;
+      if (cat == 1) {
+        max = 2;
+      }
+      if (cat == 2) {
+        max = 1;
+      }
+      if (cat == 3) {
+        max = 4;
+      }
+      if (cat == 4) {
+        max = 2;
+      }
+      return max;
+
+    },
+
     removeFromOrder: function(item) {
-      if (item.counter>0){
-      this.price += -item.selling_price;
-      item.counter -= 1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
-      this.$emit("decrease");
+      if (item.counter > 0) {
+        this.price += -item.selling_price;
+        item.counter -= 1;
+        this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+        this.$emit("decrease");
       }
 
     },
@@ -238,36 +265,14 @@ export default {
       this.category = num;
 
     },
-    highlightButton: function() {
-      let btns = document.getElementsByClassName("btn");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          let current = document.getElementsByClassName("active");
-          current[0].className = "btn";
-          this.className += " active";
-        });
-      }
-    },
 
-
-    checkout: function() {
-      let btns = document.getElementsByClassName("btn");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          let current = document.getElementsByClassName("active");
-          let cobtn = document.getElementById("btn7");
-          current[0].className = "btn";
-          cobtn.className += " active";
-        });
-        this.category = 7;
-
-      }
-    }
   }
+
 }
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
+
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 .container {
   font-family: 'Quicksand', sans-serif;
@@ -276,18 +281,28 @@ export default {
   grid-template-areas:
     "header header"
     "nav nav"
+    "chooseMax side"
     "content side"
     "buttons empty"
     "footer footer";
 
   grid-template-columns: 1fr 300px;
-  grid-template-rows: 25px auto 1fr 5em auto;
+
+  grid-template-rows: 25px auto auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
 
+
+.limittext{
+  grid-area: chooseMax;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #footer {
   grid-area: footer;
+
 }
 
 #price {
@@ -302,12 +317,12 @@ export default {
 .plusMinus {
   background-color: pink;
   border: none;
-  color:red;
+  color: red;
   font-size: 1.3em;
 }
 
-#plusknapp{
-  color:green;
+#plusknapp {
+  color: green;
 }
 
 #next-button {
@@ -344,7 +359,8 @@ export default {
   width: 100%;
   position: relative;
 }
-#pobutton{
+
+#pobutton {
   padding: 0.5em;
   background-color: darkgreen;
   color: white;
@@ -381,7 +397,7 @@ ul {
 
 #huvudmeny {
   grid-area: nav;
-  position:relative;
+  position: relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;

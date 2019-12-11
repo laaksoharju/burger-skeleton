@@ -33,6 +33,8 @@
   "checkout":"Kassan",
   "review":"Kontrollera din Beställning",
   "instructions":"Klicka OK om du är säker på att du vill beställa och följ instruktionerna i betalningsterminalen",
+  "choose":"Välj",
+  "noMaxLimit":"Ingen maxgräns", 
   "dairyFree":"Mjölkfri",
   "glutenFree":"Glutenfri",
   "vegan":"Vegansk"

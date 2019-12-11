@@ -36,7 +36,10 @@
   "checkout":"Checkout",
   "review":"Review your Order",
   "instructions":"Press OK if you really want to order and follow the instructions on the payment register",
+  "choose":"Choose",
+  "noMaxLimit":"No max limit",
   "dairyFree":"Dairy free",
   "glutenFree":"Gluten free",
   "vegan":"Vegan"
+
 }
