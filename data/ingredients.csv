@@ -36,7 +36,7 @@ ingredient_id,ingredient_sv,ingredient_en,category,milk_free,gluten_free,vegan,s
 35,Aioli,Aioli,4,1,1,0,5,0
 36,Ajvar,Ajvar,4,1,1,1,5,0
 37,Barbecuesås,Barbecue Sauce,4,1,1,1,0,0
-38,Klassisk Hamburgarsås,Classic Hamburger Dressing,4,1,1,0,5,0
+38,Hamburgardressing,Hamburger Dressing,4,1,1,0,5,0
 39,Dijonsås,Dijon Sauce,4,1,1,0,5,0
 40,Guacamole,Guacamole,4,1,1,1,10,0
 41,Hot Salsa,Hot Salsa,4,1,1,1,5,0
