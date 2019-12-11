@@ -34,5 +34,6 @@
   "sides": "Sides",
   "drinks": "Drinks",
   "checkout":"Checkout",
-  "review":"Review your Order"
+  "review":"Review your Order",
+  "instructions":"Press OK if you really want to order and follow the instructions on the payment register"
 }

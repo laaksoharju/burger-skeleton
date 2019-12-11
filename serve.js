@@ -37,6 +37,7 @@ data.initializeData();
 
 io.on('connection', function (socket) {
   // Send list of orders and text labels when a client connects
+  // här ska det ändras för att slippa uppdatera sidan 
   socket.emit('initialize', { orders: data.getAllOrders(),
                           uiLabels: data.getUILabels(),
                           ingredients: data.getIngredients() });

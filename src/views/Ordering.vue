@@ -2,20 +2,23 @@
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
   <div id="heady">
-    <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    <button id="switchlangbutton" v-on:click="switchLang()">
+      {{ uiLabels.language }}
+    </button>
     <div id="cancelbutton">
       <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
   <div id="huvudmeny">
-    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
-    <button id="btn2" class="btn" v-on:click="highlightButton(); redirect(2)">{{uiLabels.bread}}</button>
-    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
-    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
-    <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
+    <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
+    <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
+    <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
+    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click=" redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
+    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="checkout()">{{uiLabels.checkout}}</button>
 
   </div>
 
@@ -59,7 +62,6 @@
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
-
     </div>
 
     <!-- reviewsidan på samma sätt som ordersummarysidan -->
@@ -184,25 +186,30 @@ export default {
     },
 
     placeOrder: function() {
-      var i,
-        //Wrap the order in an object
-        order = {
-          ingredients: this.chosenIngredients,
-          price: this.price
-        };
-      // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
+      if (confirm(this.uiLabels.instructions)) {
+        var i,
+          //Wrap the order in an object
+          order = {
+            ingredients: this.chosenIngredients,
+            price: this.price
+          };
+        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
 
-      this.$store.state.socket.emit('order', {
-        order: order
-      });
-      //set all counters to 0. Notice the use of $refs
-      for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-        this.$refs.ingredient[i].resetCounter();
+        this.$store.state.socket.emit('order', {
+          order: order
+        });
+        //set all counters to 0. Notice the use of $refs
+        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
+          this.$refs.ingredient[i].resetCounter();
+        }
+        this.price = 0;
+        this.chosenIngredients = [];
+
       }
-      this.price = 0;
-      this.chosenIngredients = [];
+
 
     },
+
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
@@ -254,8 +261,10 @@ export default {
 }
 </script>
 <style scoped>
+@import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 .container {
+  font-family: 'Quicksand', sans-serif;
   display: grid;
 
   grid-template-areas:
@@ -312,9 +321,9 @@ export default {
 
 #ingredient-choice {
   display: grid;
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fill, 10em);
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0.5em;
+  grid-template-columns: repeat(auto-fill, 9em);
   text-align: center;
   font-size: 18px;
   overflow-y: scroll;
@@ -344,7 +353,7 @@ export default {
 
 .ingredient {
   border: 0.2em solid black;
-  padding: 1em;
+  padding: 0.3em;
   background-color: pink;
   color: black;
 }
@@ -360,13 +369,12 @@ ul {
 }
 
 #huvudmeny {
-
   grid-area: nav;
   position:relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 10em);
+  grid-template-columns: repeat(auto-fill, 8em);
   justify-content: start;
 }
 
@@ -374,17 +382,17 @@ ul {
   position: absolute;
   top: 0;
   right: 0;
-
 }
 
 #switchlangbutton {
-  width: 70px;
-  height: 30px;
-  color: #ffffff;
-  background-color: #000000;
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding: 0.5em;
+  background-color: royalblue;
+  color: gold;
+  cursor: pointer;
+  font-size: 15px;
+  border: 2px solid crimson;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
 #cancelbutton {
