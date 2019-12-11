@@ -11,13 +11,14 @@
   </div>
 
   <div id="huvudmeny">
-    <button id="btn1" class="btn active" v-on:click="highlightButton(); redirect(1)">{{uiLabels.burger}}</button>
-    <button id="btn2" class="btn" v-on:click="highlightButton(); redirect(2)">{{uiLabels.bread}}</button>
-    <button id="btn3" class="btn" v-on:click="highlightButton(); redirect(3)">{{uiLabels.topping}}</button>
-    <button id="btn4" class="btn" v-on:click="highlightButton(); redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" class="btn" v-on:click="highlightButton(); redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" class="btn" v-on:click="highlightButton(); redirect(6)">{{uiLabels.drinks}}</button>
-    <button id="btn7" class="btn" v-on:click="checkout()">{{uiLabels.checkout}}</button>
+    <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
+    <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
+    <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
+    <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click=" redirect(3)">{{uiLabels.topping}}</button>
+    <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
+    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="checkout()">{{uiLabels.checkout}}</button>
 
   </div>
 
