@@ -18,7 +18,7 @@
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
     <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
-    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="checkout()">{{uiLabels.checkout}}</button>
+    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
 
@@ -47,7 +47,7 @@
       <td>{{ price }} :-</td>
     </table>
     <div v-if="category!=7">
-      <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+      <button class="btn" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
     </div>
     <div v-else-if="category==7">
       <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
@@ -88,6 +88,12 @@
   <div id="buttons">
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
+  </div>
+
+  <div id="footer">
+    <img src="@/assets/gluten.png" height="20"> - {{uiLabels.glutenFree}}
+    <img src="@/assets/dairy.png" height="20"> - {{uiLabels.dairyFree}}
+    <img src="@/assets/vegan.png" height="20"> - {{uiLabels.vegan}}
   </div>
 
 </div>
@@ -271,12 +277,17 @@ export default {
     "header header"
     "nav nav"
     "content side"
-    "buttons empty";
+    "buttons empty"
+    "footer footer";
 
   grid-template-columns: 1fr 300px;
-  grid-template-rows: 25px auto 1fr 5em;
+  grid-template-rows: 25px auto 1fr 5em auto;
   grid-gap: 1em;
   height: 100vh;
+}
+
+#footer {
+  grid-area: footer;
 }
 
 #price {
