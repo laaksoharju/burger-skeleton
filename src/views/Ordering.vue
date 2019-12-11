@@ -18,7 +18,7 @@
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click=" redirect(4)">{{uiLabels.sauce}}</button>
     <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click=" redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click=" redirect(6)">{{uiLabels.drinks}}</button>
-    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="checkout()">{{uiLabels.checkout}}</button>
+    <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
 
@@ -47,7 +47,7 @@
       <td>{{ price }} :-</td>
     </table>
     <div v-if="category!=7">
-      <button class="btn" v-on:click="checkout()">{{ uiLabels.checkout }}</button>
+      <button class="btn" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
     </div>
     <div v-else-if="category==7">
       <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
