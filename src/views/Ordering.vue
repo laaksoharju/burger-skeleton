@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div id="price-summary" v-if="chosenIngredients.length>0">
+  <div id="price-summary">
 
     <table style="width:100%">
       <td>{{uiLabels.total}}</td>
@@ -82,6 +82,13 @@
           </tr>
         </table>
       </h2>
+      <button v-on:click="addMenu()">Lägg till meny</button>
+      <div v-for="(menu,key) in currentOrder.menus" :key="key">
+        <h5>{{key}}:</h5>
+        <div v-for="(item,key2) in menu.ingredients" :key="key2">
+          {{item["ingredient_"+lang]}}
+        </div>
+      </div>
     </div>
 
   </div>
@@ -123,8 +130,10 @@ export default {
       price: 0,
       category: 1,
       orderNumber: "",
-
-      okToAdd: true
+      okToAdd: true,
+      currentOrder: {
+        menus: []
+      }
     }
 
   },
@@ -135,7 +144,6 @@ export default {
     }
   },
 
-
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
@@ -143,13 +151,23 @@ export default {
   },
   methods: {
     addToOrder: function(item) {
-      if (this.okToAdd){
-      this.chosenIngredients.push(item);
-      this.price += +item.selling_price;
-      item.counter += 1;
-      this.$emit("increase");
+      if (this.okToAdd) {
+        this.chosenIngredients.push(item);
+        this.price += +item.selling_price;
+        item.counter += 1;
+        this.$emit("increase");
       }
+    },
 
+    addMenu: function() {
+      this.currentOrder.menus.push({
+        ingredients: this.chosenIngredients.splice(0),
+        price: this.price
+      });
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.$refs.ingredient[i].resetCounter();
+      }
+      this.chosenIngredients = [];
     },
 
     IsOkToAdd: function(item) {
@@ -182,37 +200,26 @@ export default {
     },
 
     removeFromOrder: function(item) {
-      if (item.counter>0){
-      this.price += -item.selling_price;
-      item.counter -= 1;
-      this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
-      this.$emit("decrease");
+      if (item.counter > 0) {
+        this.price += -item.selling_price;
+        item.counter -= 1;
+        this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+        this.$emit("decrease");
       }
 
     },
 
     placeOrder: function() {
       if (confirm(this.uiLabels.instructions)) {
-        var i,
-          //Wrap the order in an object
-          order = {
-            ingredients: this.chosenIngredients,
-            price: this.price
-          };
-        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
-
-        this.$store.state.socket.emit('order', {
-          order: order
-        });
-        //set all counters to 0. Notice the use of $refs
+        /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
-        }
+        }*/
+        this.$store.state.socket.emit('order', this.currentOrder);
+        this.currentOrder = [];
+        this.category = 1;
         this.price = 0;
-        this.chosenIngredients = [];
-
       }
-
 
     },
 
@@ -268,6 +275,7 @@ export default {
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
+
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 .container {
   font-family: 'Quicksand', sans-serif;
@@ -302,12 +310,12 @@ export default {
 .plusMinus {
   background-color: pink;
   border: none;
-  color:red;
+  color: red;
   font-size: 1.3em;
 }
 
-#plusknapp{
-  color:green;
+#plusknapp {
+  color: green;
 }
 
 #next-button {
@@ -344,7 +352,8 @@ export default {
   width: 100%;
   position: relative;
 }
-#pobutton{
+
+#pobutton {
   padding: 0.5em;
   background-color: darkgreen;
   color: white;
@@ -381,7 +390,7 @@ ul {
 
 #huvudmeny {
   grid-area: nav;
-  position:relative;
+  position: relative;
   display: grid;
   grid-column-gap: 0.2em;
   grid-row-gap: 0.4em;

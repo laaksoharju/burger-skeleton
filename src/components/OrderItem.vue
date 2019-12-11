@@ -1,7 +1,10 @@
 <template>
 	<div >
-		Order #{{orderId}} <br> {{order.type}} {{uiLabels.ingredients}}: {{ order.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
+		Order #{{orderId}}
+		<div v-for="(menu, key) in order.menus" :key="key">
+			{{order.type}} {{uiLabels.ingredients}}: {{ menu.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
 	</div>
+</div>
 </template>
 <script>
 export default {
