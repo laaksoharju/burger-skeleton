@@ -1,42 +1,47 @@
 <template>
-  <div>
+  <div class=containerStart>
     <div>
-    <img class="example-panel" src= "https://newevolutiondesigns.com/images/freebies/white-wallpaper-18.jpg">
+    <img class="example-panel" src="@/assets/kitchen2.jpeg">
     </div>
 
-    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-    <h1 id = "dtext">{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
+    <div id="headyStart">
+    <button id="switchlangbutton" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+  </div>
+
+  <h1 id = "dtext">{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
+  <br>
+
+  <div id="allButtons">
+
     <div id = "buttonArea">
       <router-link id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
-
     </div>
     <br>
     <div id ="buttonArea">
-
        <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
-
     </div>
-    <br>
-    <!--<div id ="buttonArea">
+    </div>
 
-       <router-link id = "button" to="ordering/sides">{{ uiLabels.goToSides }}</router-link>
+  
+    <br>
 
-    </div>-->
-    <br>
-    <br>
-    <hr>
-    <hr>
     <div id = "hamburgerGif">
-      <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif">
+      <br>
+      <br>
+      <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif" width="150px">
       <br>
       <h4>*I am hungry / Jag är hungrig </h4>
     </div>
+
     <br>
     <hr>
-    <footer> A nice website production </footer>
-  </div>
 
+    <footer id="foot"> A nice website production </footer>
+
+  </div>
 </template>
+
+
 <script>
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
@@ -65,29 +70,91 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 
-#dtext{
+.containerStart {
+  font-family: 'Quicksand', sans-serif;
+  display: grid;
+
+  grid-template-areas:
+    "header"
+    "main"
+    "foot"
+    "footer";
+
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-column-gap:1.2em;
+  height: 60vh;
+}
+
+#headyStart {
+  grid-area: header;
+  position: absolute;
 
 }
 
-#buttonArea{
-  /* padding-left:350px; */
+#allButtons {
+  grid-area: main;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-left: 25em;
+}
 
+#hamburgerGif {
+  grid-area: foot;
+  text-align: center;
+}
+
+#foot {
+  grid-area: footer;
+  bottom: 10px;
+}
+
+
+#dtext{
+  grid-area: header;
+  text-align: center;
+  align-items: center;
+  font-size: 45px;
+}
+
+#buttonArea{
+  justify-content: center;
   align-items:center;
-  font-size: 40px;
+  text-align: center;
+  font-size: 35px;
   border: 5px solid;
 	display: table;
   margin: 2px;
   border-radius: 5px;
-  background-color: coral;
+  background-color: pink;
   padding: 1em;
+  width: 480px;
+
 
 }
 #button{
-  color: white;
-
+  color: #000000;
+  background-color: pink;
+  text-align: center;
+  align-items: center;
 }
+
+
+#switchlangbutton {
+  padding: 0.5em;
+  background-color: royalblue;
+  color: gold;
+  cursor: pointer;
+  font-size: 15px;
+  border: 2px solid crimson;
+  border-radius: 0.5em;
+  text-align: center;
+}
+
 .button:hover{
   color: red;
 
