@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Cancel order",
   "next" : "Next",
+  "menu":"Menu",
   "previous" : "Previous",
   "changeIng" : "Change ingredient",
   "content" : "Content",

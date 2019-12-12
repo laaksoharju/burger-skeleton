@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Avbryt köp",
   "next" : "Nästa",
+  "menu":"Meny",
   "previous" : "Förra",
   "changeIng" : "Byt ut ingrediens",
   "content": "Innehåll",
@@ -34,7 +35,7 @@
   "review":"Kontrollera din Beställning",
   "instructions":"Klicka OK om du är säker på att du vill beställa och följ instruktionerna i betalningsterminalen",
   "choose":"Välj",
-  "noMaxLimit":"Ingen maxgräns", 
+  "noMaxLimit":"Ingen maxgräns",
   "dairyFree":"Mjölkfri",
   "glutenFree":"Glutenfri",
   "vegan":"Vegansk"
