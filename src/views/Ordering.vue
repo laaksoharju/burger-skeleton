@@ -248,7 +248,9 @@ export default {
           this.$refs.ingredient[i].resetCounter();
         }*/
         this.$store.state.socket.emit('order', this.currentOrder);
-        this.currentOrder = [];
+        this.currentOrder = {
+          menus: []
+        };
         this.category = 1;
         this.price = 0;
       }
