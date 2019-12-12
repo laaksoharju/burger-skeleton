@@ -29,8 +29,6 @@
     {{uiLabels.noMaxLimit}} </div>
 
 
-
-
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
@@ -94,7 +92,7 @@
       </h2>
       <button v-on:click="addMenu()">Lägg till meny</button>
       <div v-for="(menu,key) in currentOrder.menus" :key="key">
-        <h5>{{key}}:</h5>
+        <h5>{{uiLabels.menu}} {{key+1}}:</h5>
         <div v-for="(item,key2) in menu.ingredients" :key="key2">
           {{item["ingredient_"+lang]}}
         </div>
@@ -178,7 +176,7 @@ export default {
         price: this.price
       });
       for (let i = 0; i < this.chosenIngredients.length; i += 1) {
-        this.$refs.ingredient[i].resetCounter();
+        this.chosenIngredients[i].counter=0;
       }
       this.chosenIngredients = [];
     },
@@ -256,7 +254,6 @@ export default {
       }
 
     },
-
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
@@ -311,8 +308,6 @@ export default {
       this.category =7;
 
 },
-
-
 
     redirect: function(num) {
       this.category = num;
