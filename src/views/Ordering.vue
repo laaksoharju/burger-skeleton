@@ -102,6 +102,7 @@
   </div>
   <div id="buttons">
     <button  id = "random-button" v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button  id = "random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
@@ -140,6 +141,8 @@ export default {
       category: 1,
       orderNumber: "",
       okToAdd: true,
+      addedToMenu: false,
+      randomBurgerBoolean: false,
       currentOrder: {
         menus: []
       }
@@ -171,9 +174,11 @@ export default {
     },
 
     addMenu: function() {
+      this.addedToMenu = true;
       this.currentOrder.menus.push({
         ingredients: this.chosenIngredients.splice(0),
-        price: this.price
+        price: this.price,
+
       });
       for (let i = 0; i < this.chosenIngredients.length; i += 1) {
         this.chosenIngredients[i].counter=0;
@@ -240,7 +245,10 @@ export default {
     },
 
     placeOrder: function() {
-      if (confirm(this.uiLabels.instructions)) {
+      if(this.addedToMenu == false ){
+        alert("You have to add your order first")
+      }
+      else if (confirm(this.uiLabels.instructions)) {
         /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
@@ -273,8 +281,10 @@ export default {
         }
     },
     randomBurger: function(ingredients){
-      // console.log(ingredients[0].ingredient_sv)
-
+      this.price = 0;
+      this.chosenIngredients = [];
+      this.randomBurgerBool();
+      console.log(this.randomBurgerBoolean);
       let burgmax = 9;
       let toppingmax = 34;
       let saucemax = 48;
@@ -285,21 +295,25 @@ export default {
 
     for (let i = 0; i < 2; i++){
       let randburg =   Math.floor(Math.random() * (burgmax));
-      this.addToOrder(ingredients[randburg])
-    }
+      if (this.IsOkToAdd(ingredients[randburg])){
+        this.addToOrder(ingredients[randburg])
+    }}
 
     let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
+    if(this.IsOkToAdd(ingredients[randbread])){
     this.addToOrder(ingredients[randbread])
-
+  }
     for (let i = 0; i < 4; i++){
       let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+      if (this.IsOkToAdd(ingredients[randtopping])){
       this.addToOrder(ingredients[randtopping])
-    }
+    }}
 
     for (let i = 0; i < 2; i++){
       let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
-      this.addToOrder(ingredients[randsauce])
-    }
+      if (this.IsOkToAdd(ingredients[randsauce])){
+        this.addToOrder(ingredients[randsauce])
+    }}
 
     let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
     this.addToOrder(ingredients[randsides])
@@ -308,6 +322,12 @@ export default {
       this.category =7;
 
 },
+
+randomBurgerBool: function(){
+  return this.randomBurgerBoolean = true;
+  console.log(this.randomBurgerBoolean)
+},
+
 
     redirect: function(num) {
       this.category = num;
