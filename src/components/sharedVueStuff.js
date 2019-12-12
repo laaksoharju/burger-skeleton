@@ -27,6 +27,9 @@ var sharedVueStuff = {
         this.ingredients = data.ingredients;
       }
     }.bind(this));
+
+    this.$store.state.socket.emit('fetchData', {});
+
   },
   methods: {
     switchLang: function () {
