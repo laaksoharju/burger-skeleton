@@ -32,9 +32,9 @@
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
-      <table style="width:100%">
 
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+      <table style="width:100%">
+        <tr v-for="item in chosenIngredientsSet" v-if="item.category==1" :key="item.ingredient_id">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
             {{item.counter}}
@@ -78,7 +78,7 @@
       <h1> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
             <td>
               {{item.counter}}
             </td>
@@ -96,6 +96,7 @@
         <div v-for="(item,key2) in menu.ingredients" :key="key2">
           {{item["ingredient_"+lang]}}
         </div>
+        <button v-on:click="changeMenu(menu.ingredients)">Ändra</button>
       </div>
     </div>
 
@@ -171,6 +172,14 @@ export default {
         item.counter += 1;
         this.$emit("increase");
       }
+    },
+
+    changeMenu: function(menu) {
+      this.chosenIngredients =[];
+      for (let i = 0; i < menu.length; i += 1){
+        this.chosenIngredients.push(menu[i]);
+      }
+      menu={ingredients:[],price:0};
     },
 
     addMenu: function() {
