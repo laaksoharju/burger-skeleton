@@ -33,42 +33,15 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-        <h3>{{uiLabels.burger}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id<54" :key="item.ingredient_id">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
+        <tr v-for="item in countAllChosenIngredients" :key="countAllChosenIngredients.indexOf(item)">
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="removeFromOrder(item.id)"> - </button></td>
           <td>
-            {{item.counter}}
+            {{item.count}}
           </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item.id)"> + </button></td>
+          <td>{{getItemById(item.id)["ingredient_"+lang]}}</td>
+          <td id="price">{{getItemById(item.id).selling_price * item.count}}:-</td>
         </tr>
-        <br>
-
-        <h3>{{uiLabels.sides}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>53&& item.ingredient_id<57" :key="item.ingredient_id">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
-          <td>
-            {{item.counter}}
-          </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
-        </tr>
-        <br>
-
-        <h3>{{uiLabels.drinks}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>56" :key="item.ingredient_id">
-
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
-          <td>
-            {{item.counter}}
-          </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
-        </tr>
-
       </table>
     </div>
   </div>
@@ -91,7 +64,7 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement=" IsOkToAdd(item.ingredient_id);removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
 
       </Ingredient>
@@ -103,34 +76,40 @@
       <h1> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
+          <tr v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
-              {{item.counter}}
+              {{item.count}}
             </td>
             <td>
               x
             </td>
-            <td>{{item["ingredient_"+lang]}}</td>
-            <td id="price">{{item.selling_price * item.counter}}:-</td>
+            <td>{{getItemById(item.id)["ingredient_"+lang]}}</td>
+            <td id="price">{{getItemById(item.id).selling_price * item.count}}:-</td>
           </tr>
         </table>
       </h2>
-      <button v-on:click="addMenu()">Lägg till meny</button>
-      <div v-for="(menu,key) in currentOrder.menus" :key="key">
-        <h5>{{uiLabels.menu}} {{key+1}}:</h5>
+      <div v-if="chosenIngredients.length>0">
+      <button v-on:click="addMenu()">{{uiLabels.done}}</button>
+    </div>
+      <div >
+        <table id="order-summary" style="width:100%">
+          <tr id="tablerow"  v-for="(menu,key) in currentOrder.menus" :key="key">
+        <td id="menunr">{{uiLabels.menu}} {{key+1}}</td>
         <div v-for="(item,key2) in menu.ingredients" :key="key2">
-          {{item["ingredient_"+lang]}}
+          <td id="ing-display">{{item["ingredient_"+lang]}}</td>
         </div>
-        <button v-on:click="changeMenu(menu)">Ändra</button>
+        <td id="editbtn"><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
+      </tr>
+      </table>
       </div>
     </div>
 
   </div>
   <div id="buttons">
     <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
-    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
-    <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
-    <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
+    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
+    <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
+    <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
 
   <div id="footer">
@@ -181,6 +160,15 @@ export default {
   computed: {
     chosenIngredientsSet: function() {
       return [...new Set(this.chosenIngredients)]
+    },
+    countAllChosenIngredients: function() {
+      let chosenIngredientTuples = [];
+      for (let i = 0; i < this.chosenIngredientsSet.length; i += 1) {
+        chosenIngredientTuples[i] = {};
+        chosenIngredientTuples[i].id = this.chosenIngredientsSet[i].ingredient_id;
+        chosenIngredientTuples[i].count = this.countNumberOfChosenIngredients(this.chosenIngredientsSet[i].ingredient_id);
+        }
+      return chosenIngredientTuples;
     }
   },
 
@@ -191,11 +179,27 @@ export default {
     }.bind(this));
   },
   methods: {
-    addToOrder: function(item) {
+    getItemById(id) {
+      for(let i = 0; i < this.ingredients.length; i += 1) {
+        if (this.ingredients[i].ingredient_id === id)
+          return this.ingredients[i];
+      }
+      return null
+    },
+    countNumberOfChosenIngredients: function(id) {
+      let counter = 0;
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        if(this.chosenIngredients[i].ingredient_id === id){
+        counter += 1;
+        }
+      }
+      return counter; },
+
+    addToOrder: function(id) {
+
       if (this.okToAdd) {
-        this.chosenIngredients.push(item);
-        this.price += +item.selling_price;
-        item.counter += 1;
+        this.chosenIngredients.push(this.getItemById(id));
+        this.price += this.getItemById(id).selling_price;
         this.$emit("increase");
       }
     },
@@ -209,23 +213,24 @@ export default {
     },
 
     addMenu: function() {
+      this.randomBurgerBoolean = false;
       this.addedToMenu = true;
+
       this.currentOrder.menus.push({
         ingredients: this.chosenIngredients.splice(0),
-        price: this.price,
-
+        price: this.price
       });
-      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
-        this.chosenIngredients[i].counter=0;
-      }
       this.chosenIngredients = [];
+      for (var i = 0; i < this.$refs.ingredient.length; i += 1) {
+        this.$refs.ingredient[i].resetCounter();
+      }
     },
 
-    IsOkToAdd: function(item) {
+    IsOkToAdd: function(id) {
       var i;
       let chosen = 0;
       this.okToAdd = true;
-      let cat = item.category
+      let cat = this.getItemById(id).category
       let lim;
       if (cat == 1) {
         lim = 2;
@@ -247,6 +252,7 @@ export default {
       if (chosen >= lim) {
         this.okToAdd = false
       }
+      this.addToOrder(id)
       return this.okToAdd;
     },
 
@@ -269,19 +275,19 @@ export default {
 
     },
 
-    removeFromOrder: function(item) {
-      if (item.counter > 0) {
-        this.price += -item.selling_price;
-        item.counter -= 1;
-        this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+    removeFromOrder: function(id) {
+        this.price += -this.getItemById(id).selling_price;
+        this.chosenIngredients.splice(this.chosenIngredients.indexOf(this.getItemById(id)), 1);
         this.$emit("decrease");
-      }
-
     },
 
     placeOrder: function() {
       if(this.addedToMenu == false ){
         alert("You cannot order nothing!\n Please add your order first!")
+      }
+      else if(this.chosenIngredients.length != 0){
+        alert("You have unfinished business...")
+        console.log(this.chosenIngredients)
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
@@ -294,6 +300,7 @@ export default {
         };
         this.category = 1;
         this.price = 0;
+        document.location = "/";
       }
 
     },
@@ -319,10 +326,9 @@ export default {
 
     randomBurger: function(ingredients){
       this.chosenIngredients = [];
-      this.price = 0;
 
 
-      this.randomBurgerBool();
+      this.randomBurgerBoolean = true;
       let burgmax = 9;
       let toppingmax = 34;
       let saucemax = 48;
@@ -360,14 +366,62 @@ export default {
       this.category =7;
 
 },
+newRandomBurger:function(ingredients) {
+  if (this.randomBurgerBoolean == true ){
+    for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.price = this.price - this.chosenIngredients[i].selling_price
+  }
+  this.chosenIngredients = [];
+
+  this.randomBurgerBoolean = true;
+  let burgmax = 9;
+  let toppingmax = 34;
+  let saucemax = 48;
+  let breadmax = 52;
+  let sidesmax = 55;
+  let drinkmax = 60;
+
+
+for (let i = 0; i  < 2; i++){
+  let randburg =   Math.floor(Math.random() * (burgmax));
+  if (this.IsOkToAdd(ingredients[randburg])){
+    this.addToOrder(ingredients[randburg])
+}}
+
+let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
+if(this.IsOkToAdd(ingredients[randbread])){
+this.addToOrder(ingredients[randbread])
+}
+for (let i = 0; i < 4; i++){
+  let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+  if (this.IsOkToAdd(ingredients[randtopping])){
+  this.addToOrder(ingredients[randtopping])
+}}
+
+for (let i = 0; i < 2; i++){
+  let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
+  if (this.IsOkToAdd(ingredients[randsauce])){
+    this.addToOrder(ingredients[randsauce])
+}}
+
+let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
+this.addToOrder(ingredients[randsides])
+let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
+this.addToOrder(ingredients[randdrink])
+
+}},
 
 
 
 
 
 randomBurgerBool: function(){
-
-  return this.randomBurgerBoolean = true
+  if (this.randomBurgerBoolean == true ){
+    return true
+  }
+  else if (this.randomBurgerBoolean == false){
+    return false
+  }
 },
 
 
@@ -381,6 +435,7 @@ randomBurgerBool: function(){
 }
 </script>
 <style scoped>
+
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
 
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
@@ -412,7 +467,23 @@ randomBurgerBool: function(){
 
 #footer {
   grid-area: footer;
+}
 
+#menunr{
+  font-weight:bold;
+  vertical-align: top;
+}
+
+#order-summary{
+   border-collapse: collapse;
+}
+
+#tablerow{
+  border-bottom: solid 1px black;
+}
+
+#editbtn{
+  text-align: right;
 }
 
 #price {
@@ -434,16 +505,82 @@ randomBurgerBool: function(){
 #plusknapp {
   color: green;
 }
-
-#next-button {
-  position: absolute;
-  top: 0;
-  right: 5em;
-  font-size: 1.5em;
-  padding: 0.1em 1.8em;
+/*PREVIOUS BUTTON*/
+.previous-button {
+  border: solid black;
+  text-align: center;
+  font-size: 1.3em;
+  padding: 0.4em;
+  width: 6em;
+  transition: all 0.5s;
   cursor: pointer;
-
+  position:absolute;
+  left:0;
 }
+
+.previous-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.previous-button span:after {
+  content: '\00ab';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+}
+
+.previous-button:hover span {
+  padding-right: 25px;
+}
+.previous-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/*NEXT BUTTON*/
+.next-button {
+  border: solid black;
+  text-align: center;
+  font-size: 1.3em;
+  padding: 0.4em;
+  width: 6em;
+  transition: all 0.5s;
+  cursor: pointer;
+  position:absolute;
+  right:0px;
+}
+
+.next-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.next-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+}
+
+.next-button:hover span {
+  padding-right: 25px;
+}
+
+.next-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
 .random-button2 {
   position:absolute;
   top:0;
@@ -473,6 +610,7 @@ randomBurgerBool: function(){
 .random-button:hover{
   cursor:pointer;
 }*/
+
 .random-button2 {
   color: #fff !important;
   text-transform: uppercase;
@@ -517,6 +655,7 @@ transition: all 0.4s ease 0s;
 
 .menuDisplay {
   grid-area: content;
+  overflow-y: scroll;
 }
 
 #ingredient-choice {
