@@ -64,7 +64,7 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement=" IsOkToAdd(item.ingredient_id);removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement="removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
 
       </Ingredient>
@@ -250,7 +250,9 @@ export default {
       if (chosen >= lim) {
         this.okToAdd = false
       }
-      this.addToOrder(id)
+      else{
+        this.addToOrder(id);
+      }
       return this.okToAdd;
     },
 
@@ -334,33 +336,26 @@ export default {
 
 
     for (let i = 0; i  < 2; i++){
-      let randburg =   Math.floor(Math.random() * (burgmax));
-      if (this.IsOkToAdd(ingredients[randburg])){
-        this.addToOrder(ingredients[randburg])
-    }}
+      let randburg = Math.floor(Math.random() * (burgmax));
+      this.IsOkToAdd(ingredients[randburg].ingredient_id)}
 
     let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
-    if(this.IsOkToAdd(ingredients[randbread])){
-    this.addToOrder(ingredients[randbread])
-  }
+    this.IsOkToAdd(ingredients[randbread].ingredient_id)
+
     for (let i = 0; i < 4; i++){
-      let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
-      if (this.IsOkToAdd(ingredients[randtopping])){
-      this.addToOrder(ingredients[randtopping])
-    }}
+      let randtopping = Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+      this.IsOkToAdd(ingredients[randtopping].ingredient_id)}
 
     for (let i = 0; i < 2; i++){
       let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
-      if (this.IsOkToAdd(ingredients[randsauce])){
-        this.addToOrder(ingredients[randsauce])
-    }}
+      this.IsOkToAdd(ingredients[randsauce].ingredient_id)}
 
     let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
-    this.addToOrder(ingredients[randsides])
+    this.addToOrder(ingredients[randsides].ingredient_id)
     let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
-    this.addToOrder(ingredients[randdrink])
-      this.category =7;
+    this.addToOrder(ingredients[randdrink].ingredient_id)
 
+      this.category =7;
 },
 
 randomBurgerBool: function(){
