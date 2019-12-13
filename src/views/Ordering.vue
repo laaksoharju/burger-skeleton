@@ -32,9 +32,9 @@
   <div class="orderSummary">
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
-
       <table style="width:100%">
-        <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
+       <h3>{{uiLabels.burger}}</h3>
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id<54" :key="item.ingredient_id">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
             {{item.counter}}
@@ -43,6 +43,32 @@
           <td>{{item["ingredient_"+lang]}}</td>
           <td id="price">{{item.selling_price * item.counter}}:-</td>
         </tr>
+        <br>
+
+        <h3>{{uiLabels.sides}}</h3>
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>53&& item.ingredient_id<57" :key="item.ingredient_id">
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
+          <td>
+            {{item.counter}}
+          </td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
+          <td>{{item["ingredient_"+lang]}}</td>
+          <td id="price">{{item.selling_price * item.counter}}:-</td>
+        </tr>
+        <br>
+
+        <h3>{{uiLabels.drinks}}</h3>
+        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>56" :key="item.ingredient_id">
+
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
+          <td>
+            {{item.counter}}
+          </td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
+          <td>{{item["ingredient_"+lang]}}</td>
+          <td id="price">{{item.selling_price * item.counter}}:-</td>
+        </tr>
+
       </table>
     </div>
   </div>
@@ -65,7 +91,6 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-
       <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
 
@@ -288,7 +313,9 @@ export default {
           btns[i].className = "btn";
           btns[i - 1].className += " active";
         }
-    },
+      },
+
+
     randomBurger: function(ingredients){
       this.chosenIngredients = [];
       this.price = 0;
@@ -604,8 +631,10 @@ ul {
   overflow-y: scroll;
 }
 
+
 #order-table {
   width: 100%;
   position: relative;
 }
+
 </style>
