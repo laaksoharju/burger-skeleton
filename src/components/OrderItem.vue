@@ -1,8 +1,8 @@
 <template>
 	<div >
-		Order #{{orderId}}
+		<span id= "ordertext"> Order #{{orderId}} </span>
 		<div v-for="(menu, key) in order.menus" :key="key">
-			{{order.type}} {{uiLabels.ingredients}}: {{ menu.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
+			<span id="menutext"> {{uiLabels.menu}} {{key+1}}: </span> {{ menu.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}
 	</div>
 </div>
 </template>
@@ -18,5 +18,13 @@ export default {
 }
 </script>
 <style scoped>
+#ordertext {
+	font-size: 40px;
+	font-weight: bolder;
+}
+#menutext {
+	font-weight: bolder;
+}
+
 
 </style>
