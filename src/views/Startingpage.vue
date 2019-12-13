@@ -14,7 +14,7 @@
   <div id="allButtons">
 
     <div class = "buttonArea">
-      <router-link id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
+      <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
     </div>
     <br>
     <div class ="buttonArea">
@@ -76,7 +76,6 @@ export default {
 .containerStart {
   font-family: 'Quicksand', sans-serif;
   display: grid;
-  position: absolute;
 
   grid-template-areas:
     "header"
@@ -97,8 +96,8 @@ export default {
 
 #allButtons {
   grid-area: main;
-position: relative;
-  left: 15%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #hamburgerGif {
