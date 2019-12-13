@@ -104,8 +104,8 @@
   <div id="buttons">
     <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
-    <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
-    <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
+    <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
+    <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
 
   <div id="footer">
@@ -183,6 +183,7 @@ export default {
     },
 
     addMenu: function() {
+      this.randomBurgerBoolean = false;
       this.addedToMenu = true;
       this.currentOrder.menus.push({
         ingredients: this.chosenIngredients.splice(0),
@@ -257,6 +258,9 @@ export default {
       if(this.addedToMenu == false ){
         alert("You cannot order nothing!\n Please add your order first!")
       }
+      else if(this.chosenIngredients != []){
+        alert("You have unfinished business...")
+      }
       else if (confirm(this.uiLabels.instructions)) {
         /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
@@ -293,8 +297,7 @@ export default {
       this.chosenIngredients = [];
       this.price = 0;
 
-
-      this.randomBurgerBool();
+      this.randomBurgerBoolean = true;
       let burgmax = 9;
       let toppingmax = 34;
       let saucemax = 48;
@@ -334,8 +337,12 @@ export default {
 },
 
 randomBurgerBool: function(){
-
-  return this.randomBurgerBoolean = true
+  if (this.randomBurgerBoolean == true ){
+    return true
+  }
+  else if (this.randomBurgerBoolean == false){
+    return false
+  }
 },
 
 
@@ -402,14 +409,90 @@ randomBurgerBool: function(){
 #plusknapp {
   color: green;
 }
+/*PREVIOUS BUTTON*/
+.previous-button {
+  border-radius: 4px;
 
-#next-button {
-  position: absolute;
-  top: 0;
-  right: 5em;
-  font-size: 1.5em;
-  padding: 0.1em 1.8em;
+  border: none;
+
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  position:absolute;
+  left:0;
 }
+
+.previous-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.previous-button span:after {
+  content: '\00ab';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+}
+
+.previous-button:hover span {
+  padding-right: 25px;
+}
+.previous-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/*NEXT BUTTON*/
+.next-button {
+  border-radius: 4px;
+
+  border: none;
+
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  position:absolute;
+  right:0px;
+}
+
+.next-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.next-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+}
+
+.next-button:hover span {
+  padding-right: 25px;
+}
+
+.next-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
 .random-button2 {
   position:absolute;
   top:0;
@@ -420,24 +503,7 @@ randomBurgerBool: function(){
 
 }
 
-#previous-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.5em;
-  padding: 0.1em 1em;
-}
-/*.random-button{
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.5em;
-  padding: 0.1em 1em;
-  background:url("../assets/randomBackground.png") repeat scroll left top;
-}
-.random-button:hover{
-  cursor:pointer;
-}*/
+
 .random-button2 {
   color: #fff !important;
   text-transform: uppercase;
