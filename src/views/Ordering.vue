@@ -6,7 +6,7 @@
       {{ uiLabels.language }}
     </button>
     <div id="cancelbutton">
-      <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
+      <router-link tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
     <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
@@ -53,7 +53,7 @@
       <td>{{ price }} :-</td>
     </table>
     <div v-if="category!=7">
-      <button class="btn" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
+      <button class="btnc" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
     </div>
     <div v-else-if="category==7">
       <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
@@ -148,6 +148,7 @@ export default {
       okToAdd: true,
       addedToMenu: false,
       randomBurgerBoolean: false,
+      isOrderedbool: false,
       currentOrder: {
         menus: []
       }
@@ -410,6 +411,10 @@ this.addToOrder(ingredients[randdrink])
 
 }},
 
+
+
+
+
 randomBurgerBool: function(){
   if (this.randomBurgerBoolean == true ){
     return true
@@ -586,6 +591,25 @@ randomBurgerBool: function(){
 
 }
 
+#previous-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.5em;
+  padding: 0.1em 1em;
+  cursor: pointer;
+}
+/*.random-button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.5em;
+  padding: 0.1em 1em;
+  background:url("../assets/randomBackground.png") repeat scroll left top;
+}
+.random-button:hover{
+  cursor:pointer;
+}*/
 
 .random-button2 {
   color: #fff !important;
@@ -735,15 +759,31 @@ ul {
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 18px;
-  border-radius: 0.5em;
-  text-align: center;
+  border-radius: 0.1em;
+  border: 2px solid;
+  margin: 2px;
+  padding: 1em;
+  width: 134px;
+
+}
+
+.btnc {
+  padding: 0.5em;
+ background-color: #f1f1f1;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 0.5em;
+ text-align: center;
 }
 
 /* Style the active class, and buttons on mouse-over */
 .active,
 .btn:hover {
-  background-color: #bfbfbf;
-
+  background-color:pink ;
+  /* denna hade vi: #bfbfbf*/
+}
+#btn5:hover {
+  background-color: pink;
 }
 
 .orderSummary {
@@ -752,6 +792,10 @@ ul {
   background-color: pink;
   padding: 1em;
   overflow-y: scroll;
+}
+
+#btn5{
+  background-color:  #d9d9d9;
 }
 
 
