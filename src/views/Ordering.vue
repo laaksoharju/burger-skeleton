@@ -305,6 +305,7 @@ export default {
         };
         this.category = 1;
         this.price = 0;
+        document.location = "/";
       }
 
     },
