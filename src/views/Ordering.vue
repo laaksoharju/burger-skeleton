@@ -90,13 +90,19 @@
           </tr>
         </table>
       </h2>
-      <button v-on:click="addMenu()">Lägg till meny</button>
-      <div v-for="(menu,key) in currentOrder.menus" :key="key">
-        <h5>{{uiLabels.menu}} {{key+1}}:</h5>
+      <div v-if="chosenIngredients.length>0">
+      <button v-on:click="addMenu()">{{uiLabels.done}}</button>
+    </div>
+      <div >
+        <table id="order-summary" style="width:100%">
+          <tr id="tablerow"  v-for="(menu,key) in currentOrder.menus" :key="key">
+        <td id="menunr">{{uiLabels.menu}} {{key+1}}</td>
         <div v-for="(item,key2) in menu.ingredients" :key="key2">
-          {{item["ingredient_"+lang]}}
+          <td id="ing-display">{{item["ingredient_"+lang]}}</td>
         </div>
-        <button v-on:click="changeMenu(menu)">Ändra</button>
+        <td id="editbtn"><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
+      </tr>
+      </table>
       </div>
     </div>
 
@@ -379,7 +385,23 @@ randomBurgerBool: function(){
 
 #footer {
   grid-area: footer;
+}
 
+#menunr{
+  font-weight:bold;
+  vertical-align: top;
+}
+
+#order-summary{
+   border-collapse: collapse;
+}
+
+#tablerow{
+  border-bottom: solid 1px black;
+}
+
+#editbtn{
+  text-align: right;
 }
 
 #price {
@@ -434,6 +456,7 @@ randomBurgerBool: function(){
 
 .menuDisplay {
   grid-area: content;
+  overflow-y: scroll;
 }
 
 #ingredient-choice {
