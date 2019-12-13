@@ -6,7 +6,7 @@
       {{ uiLabels.language }}
     </button>
     <div id="cancelbutton">
-      <router-link tag="button" class="btn" to="/">{{uiLabels.cancelOrder}}</router-link>
+      <router-link tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
     <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
@@ -33,7 +33,7 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-       <h3>{{uiLabels.burger}}</h3>
+        <h3>{{uiLabels.burger}}</h3>
         <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id<54" :key="item.ingredient_id">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
@@ -80,7 +80,7 @@
       <td>{{ price }} :-</td>
     </table>
     <div v-if="category!=7">
-      <button class="btn" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
+      <button class="btnc" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
     </div>
     <div v-else-if="category==7">
       <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
@@ -169,6 +169,7 @@ export default {
       okToAdd: true,
       addedToMenu: false,
       randomBurgerBoolean: false,
+      isOrderedbool: false,
       currentOrder: {
         menus: []
       }
@@ -360,6 +361,10 @@ export default {
 
 },
 
+
+
+
+
 randomBurgerBool: function(){
 
   return this.randomBurgerBoolean = true
@@ -436,6 +441,8 @@ randomBurgerBool: function(){
   right: 5em;
   font-size: 1.5em;
   padding: 0.1em 1.8em;
+  cursor: pointer;
+
 }
 .random-button2 {
   position:absolute;
@@ -453,6 +460,7 @@ randomBurgerBool: function(){
   left: 0;
   font-size: 1.5em;
   padding: 0.1em 1em;
+  cursor: pointer;
 }
 /*.random-button{
   position: absolute;
@@ -612,15 +620,31 @@ ul {
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 18px;
-  border-radius: 0.5em;
-  text-align: center;
+  border-radius: 0.1em;
+  border: 2px solid;
+  margin: 2px;
+  padding: 1em;
+  width: 134px;
+
+}
+
+.btnc {
+  padding: 0.5em;
+ background-color: #f1f1f1;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 0.5em;
+ text-align: center;
 }
 
 /* Style the active class, and buttons on mouse-over */
 .active,
 .btn:hover {
-  background-color: #bfbfbf;
-
+  background-color:pink ;
+  /* denna hade vi: #bfbfbf*/
+}
+#btn5:hover {
+  background-color: pink;
 }
 
 .orderSummary {
@@ -629,6 +653,10 @@ ul {
   background-color: pink;
   padding: 1em;
   overflow-y: scroll;
+}
+
+#btn5{
+  background-color:  #d9d9d9;
 }
 
 
