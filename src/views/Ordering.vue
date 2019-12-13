@@ -34,7 +34,7 @@
       <h2>{{ uiLabels.yourOrder }}</h2>
 
       <table style="width:100%">
-        <tr v-for="item in chosenIngredientsSet" v-if="item.category==1" :key="item.ingredient_id">
+        <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
             {{item.counter}}
@@ -96,7 +96,7 @@
         <div v-for="(item,key2) in menu.ingredients" :key="key2">
           {{item["ingredient_"+lang]}}
         </div>
-        <button v-on:click="changeMenu(menu.ingredients)">Ändra</button>
+        <button v-on:click="changeMenu(menu)">Ändra</button>
       </div>
     </div>
 
@@ -176,10 +176,10 @@ export default {
 
     changeMenu: function(menu) {
       this.chosenIngredients =[];
-      for (let i = 0; i < menu.length; i += 1){
-        this.chosenIngredients.push(menu[i]);
+      for (let i = 0; i < menu.ingredients.length; i += 1){
+        this.chosenIngredients.push(menu.ingredients[i]);
       }
-      menu={ingredients:[],price:0};
+      this.currentOrder.menus.splice(this.currentOrder.menus.indexOf(menu), 1);
     },
 
     addMenu: function() {
