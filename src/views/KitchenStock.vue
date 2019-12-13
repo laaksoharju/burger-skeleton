@@ -4,22 +4,70 @@
   {{$store.state.hello}}
 
   <h1>{{uiLabels.usedingredients}}</h1>
- Pattys
- <div id="ingredientsused" v-for="item in ingredients" v-if="item.category == 1" :key="item.ingredient_id">
+
+  <div class="labels">{{uiLabels.burger}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 1" :key="item.ingredient_id">
     {{item["ingredient_"+ lang]}}: {{item.stock}}
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
     <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
-Bread
-  <div id="ingredientsused" v-for="item in ingredients" v-if="item.category == 2" :key="item.ingredient_id">
-     {{item["ingredient_"+ lang]}}: {{item.stock}}
-     <br>
-     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
-     {{item["ingredient_"+ lang]}} to stock
-     <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
-   </div>
+
+  <br>
+  <div class="labels">{{uiLabels.bread}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 2" :key="item.ingredient_id">
+    {{item["ingredient_"+ lang]}}: {{item.stock}}
+    <br>
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
+    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+  </div>
+
+  <br>
+  <div class="labels">{{uiLabels.topping}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 3" :key="item.ingredient_id">
+    {{item["ingredient_"+ lang]}}: {{item.stock}}
+    <br>
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
+    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+  </div>
+
+  <br>
+  <div class="labels">{{uiLabels.sauce}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 4" :key="item.ingredient_id">
+    {{item["ingredient_"+ lang]}}: {{item.stock}}
+    <br>
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
+    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+  </div>
+
+  <br>
+  <div class="labels">{{uiLabels.sides}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 5" :key="item.ingredient_id">
+    {{item["ingredient_"+ lang]}}: {{item.stock}}
+    <br>
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
+    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+  </div>
+
+  <br>
+  <div class="labels">{{uiLabels.drinks}}</div>
+  <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 6" :key="item.ingredient_id">
+    {{item["ingredient_"+ lang]}}: {{item.stock}}
+    <br>
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
+    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+  </div>
+
+
+
+
+
 </div>
 </template>
 
@@ -33,7 +81,7 @@ import Ingredient from '@/components/Ingredient.vue'
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 export default {
-  name: 'Ordering',
+  name: 'KitchenStock',
   components: {
     OrderItem,
     OrderItemToPrepare,
@@ -50,7 +98,9 @@ export default {
       num: {}
     }
   },
-  computed: {},
+  computed: {
+
+  },
 
   methods: {
 
@@ -62,9 +112,12 @@ export default {
 
     clearField: function(id) {
       this.num[id] = null;
-    }
+    },
+
+
 
   }
+
 }
 </script>
 <style scoped>
@@ -85,17 +138,23 @@ export default {
 
 }
 
-#ingredientsused {
+.ingredientsused {
   border: 5px outset lightcoral;
   margin: 0.5em;
   display: table;
   background-color: floralwhite;
 
 }
-#laggtill{
+
+#laggtill {
   font-size: 20px;
   background-color: indianred;
   font-stretch: expanded;
   color: white;
+}
+
+.labels {
+  font-size: 45px;
+  font-weight: bold;
 }
 </style>
