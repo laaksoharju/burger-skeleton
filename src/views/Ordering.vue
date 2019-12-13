@@ -101,8 +101,8 @@
 
   </div>
   <div id="buttons">
-    <button  id = "random-button" v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
-    <button  id = "random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
@@ -246,7 +246,7 @@ export default {
 
     placeOrder: function() {
       if(this.addedToMenu == false ){
-        alert("You have to add your order first")
+        alert("You cannot order nothing!\n Please add your order first!")
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
@@ -281,10 +281,11 @@ export default {
         }
     },
     randomBurger: function(ingredients){
-      this.price = 0;
       this.chosenIngredients = [];
+      this.price = 0;
+
+
       this.randomBurgerBool();
-      console.log(this.randomBurgerBoolean);
       let burgmax = 9;
       let toppingmax = 34;
       let saucemax = 48;
@@ -293,7 +294,7 @@ export default {
       let drinkmax = 60;
 
 
-    for (let i = 0; i < 2; i++){
+    for (let i = 0; i  < 2; i++){
       let randburg =   Math.floor(Math.random() * (burgmax));
       if (this.IsOkToAdd(ingredients[randburg])){
         this.addToOrder(ingredients[randburg])
@@ -324,8 +325,8 @@ export default {
 },
 
 randomBurgerBool: function(){
-  return this.randomBurgerBoolean = true;
-  console.log(this.randomBurgerBoolean)
+
+  return this.randomBurgerBoolean = true
 },
 
 
@@ -400,6 +401,15 @@ randomBurgerBool: function(){
   font-size: 1.5em;
   padding: 0.1em 1.8em;
 }
+.random-button2 {
+  position:absolute;
+  top:0;
+  right:5em;
+  font-size:1.5em;
+  padding: 0.1em 1.8em;
+  background:url("../assets/randomBackground.png") repeat scroll left top;
+
+}
 
 #previous-button {
   position: absolute;
@@ -408,18 +418,56 @@ randomBurgerBool: function(){
   font-size: 1.5em;
   padding: 0.1em 1em;
 }
-#random-button{
-  border-radius: 4px;
-  position: relative;
-  background:url("https://thumbs.gfycat.com/SplendidGleefulEasternnewt-max-1mb.gif") repeat scroll left top;
-  text-align: center;
+/*.random-button{
+  position: absolute;
+  top: 0;
+  left: 0;
   font-size: 1.5em;
+  padding: 0.1em 1em;
+  background:url("../assets/randomBackground.png") repeat scroll left top;
+}
+.random-button:hover{
+  cursor:pointer;
+}*/
+.random-button2 {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ed3330;
   padding: 20px;
-  width: 200px;
-  transition: all 5s;
-  cursor: pointer;
-  margin: 5px;
-
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+.random-button2:hover{
+  cursor:pointer;
+  background: #434343;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+  }
+.random-button {
+color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #ed3330;
+padding: 20px;
+border-radius: 5px;
+display: inline-block;
+border: none;
+transition: all 0.3s ease 0s;
+}
+.random-button:hover {
+cursor:pointer;
+background: #434343;
+letter-spacing: 1px;
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
 }
 
 
