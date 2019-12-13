@@ -40,5 +40,7 @@
   "noMaxLimit":"Ingen maxgräns",
   "dairyFree":"Mjölkfri",
   "glutenFree":"Glutenfri",
-  "vegan":"Vegansk"
+  "vegan":"Vegansk",
+  "done":"Klar",
+  "edit":"Ändra"
 }

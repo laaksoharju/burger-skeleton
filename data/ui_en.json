@@ -43,6 +43,7 @@
   "noMaxLimit":"No max limit",
   "dairyFree":"Dairy free",
   "glutenFree":"Gluten free",
-  "vegan":"Vegan"
-
+  "vegan":"Vegan",
+  "done":"Done",
+  "edit":"Edit"
 }
