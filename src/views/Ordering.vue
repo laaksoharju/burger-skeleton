@@ -33,42 +33,15 @@
     <div id="order-table">
       <h2>{{ uiLabels.yourOrder }}</h2>
       <table style="width:100%">
-       <h3>{{uiLabels.burger}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id<54" :key="item.ingredient_id">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
+        <tr v-for="item in countAllChosenIngredients" :key="countAllChosenIngredients.indexOf(item)">
+          <td> <button class="plusMinus" id="minusknapp" v-on:click="removeFromOrder(item.id)"> - </button></td>
           <td>
-            {{item.counter}}
+            {{item.count}}
           </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
+          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item.id)"> + </button></td>
+          <td>{{getItemById(item.id)["ingredient_"+lang]}}</td>
+          <td id="price">{{getItemById(item.id).selling_price * item.count}}:-</td>
         </tr>
-        <br>
-
-        <h3>{{uiLabels.sides}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>53&& item.ingredient_id<57" :key="item.ingredient_id">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
-          <td>
-            {{item.counter}}
-          </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
-        </tr>
-        <br>
-
-        <h3>{{uiLabels.drinks}}</h3>
-        <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>56" :key="item.ingredient_id">
-
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
-          <td>
-            {{item.counter}}
-          </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item);addToOrder(item)"> + </button></td>
-          <td>{{item["ingredient_"+lang]}}</td>
-          <td id="price">{{item.selling_price * item.counter}}:-</td>
-        </tr>
-
       </table>
     </div>
   </div>
@@ -91,7 +64,7 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="; IsOkToAdd(item);addToOrder(item)" v-on:decrement=" IsOkToAdd(item);removeFromOrder(item)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement=" IsOkToAdd(item.ingredient_id);removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
         :key="item.ingredient_id">
 
       </Ingredient>
@@ -103,15 +76,15 @@
       <h1> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
+          <tr v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
-              {{item.counter}}
+              {{item.count}}
             </td>
             <td>
               x
             </td>
-            <td>{{item["ingredient_"+lang]}}</td>
-            <td id="price">{{item.selling_price * item.counter}}:-</td>
+            <td>{{getItemById(item.id)["ingredient_"+lang]}}</td>
+            <td id="price">{{getItemById(item.id).selling_price * item.count}}:-</td>
           </tr>
         </table>
       </h2>
@@ -186,6 +159,15 @@ export default {
   computed: {
     chosenIngredientsSet: function() {
       return [...new Set(this.chosenIngredients)]
+    },
+    countAllChosenIngredients: function() {
+      let chosenIngredientTuples = [];
+      for (let i = 0; i < this.chosenIngredientsSet.length; i += 1) {
+        chosenIngredientTuples[i] = {};
+        chosenIngredientTuples[i].id = this.chosenIngredientsSet[i].ingredient_id;
+        chosenIngredientTuples[i].count = this.countNumberOfChosenIngredients(this.chosenIngredientsSet[i].ingredient_id);
+        }
+      return chosenIngredientTuples;
     }
   },
 
@@ -196,11 +178,27 @@ export default {
     }.bind(this));
   },
   methods: {
-    addToOrder: function(item) {
+    getItemById(id) {
+      for(let i = 0; i < this.ingredients.length; i += 1) {
+        if (this.ingredients[i].ingredient_id === id)
+          return this.ingredients[i];
+      }
+      return null
+    },
+    countNumberOfChosenIngredients: function(id) {
+      let counter = 0;
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        if(this.chosenIngredients[i].ingredient_id === id){
+        counter += 1;
+        }
+      }
+      return counter; },
+
+    addToOrder: function(id) {
+
       if (this.okToAdd) {
-        this.chosenIngredients.push(item);
-        this.price += +item.selling_price;
-        item.counter += 1;
+        this.chosenIngredients.push(this.getItemById(id));
+        this.price += this.getItemById(id).selling_price;
         this.$emit("increase");
       }
     },
@@ -219,20 +217,19 @@ export default {
 
       this.currentOrder.menus.push({
         ingredients: this.chosenIngredients.splice(0),
-        price: this.price,
-
+        price: this.price
       });
-      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
-        this.chosenIngredients[i].counter=0;
-      }
       this.chosenIngredients = [];
+      for (var i = 0; i < this.$refs.ingredient.length; i += 1) {
+        this.$refs.ingredient[i].resetCounter();
+      }
     },
 
-    IsOkToAdd: function(item) {
+    IsOkToAdd: function(id) {
       var i;
       let chosen = 0;
       this.okToAdd = true;
-      let cat = item.category
+      let cat = this.getItemById(id).category
       let lim;
       if (cat == 1) {
         lim = 2;
@@ -254,6 +251,7 @@ export default {
       if (chosen >= lim) {
         this.okToAdd = false
       }
+      this.addToOrder(id)
       return this.okToAdd;
     },
 
@@ -276,14 +274,10 @@ export default {
 
     },
 
-    removeFromOrder: function(item) {
-      if (item.counter > 0) {
-        this.price += -item.selling_price;
-        item.counter -= 1;
-        this.chosenIngredients.splice(this.chosenIngredients.indexOf(item), 1);
+    removeFromOrder: function(id) {
+        this.price += -this.getItemById(id).selling_price;
+        this.chosenIngredients.splice(this.chosenIngredients.indexOf(this.getItemById(id)), 1);
         this.$emit("decrease");
-      }
-
     },
 
     placeOrder: function() {
@@ -508,17 +502,13 @@ randomBurgerBool: function(){
 }
 /*PREVIOUS BUTTON*/
 .previous-button {
-  border-radius: 4px;
-
-  border: none;
-
+  border: solid black;
   text-align: center;
-  font-size: 20px;
-  padding: 20px;
-  width: 200px;
+  font-size: 1.3em;
+  padding: 0.4em;
+  width: 6em;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
   position:absolute;
   left:0;
 }
@@ -549,17 +539,13 @@ randomBurgerBool: function(){
 
 /*NEXT BUTTON*/
 .next-button {
-  border-radius: 4px;
-
-  border: none;
-
+  border: solid black;
   text-align: center;
-  font-size: 20px;
-  padding: 20px;
-  width: 200px;
+  font-size: 1.3em;
+  padding: 0.4em;
+  width: 6em;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
   position:absolute;
   right:0px;
 }
