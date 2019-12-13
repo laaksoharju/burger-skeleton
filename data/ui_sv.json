@@ -1,6 +1,7 @@
 {
   "cancelOrder" : "Avbryt köp",
   "next" : "Nästa",
+  "menu":"Meny",
   "previous" : "Förra",
   "changeIng" : "Byt ut ingrediens",
   "content": "Innehåll",
@@ -27,6 +28,8 @@
   "name": "Burger bidness",
   "goToOrdering":"Skapa din burgare",
   "goToRandomMenu": "Slumpa meny!",
+  "goToRandomMenu2": "Gillade du inte den menyn? Tryck här för att slumpa igen",
+  "randomBurgerTitle": "Klicka här för att beställa en slumpmässig hamburgarmeny, med slumpade pålägg och tillbehör!",
   "goToSides": "Beställ tillbehör & dryck",
   "sides": "Tillbehör",
   "drinks": "Dryck",
@@ -34,7 +37,7 @@
   "review":"Kontrollera din Beställning",
   "instructions":"Klicka OK om du är säker på att du vill beställa och följ instruktionerna i betalningsterminalen",
   "choose":"Välj",
-  "noMaxLimit":"Ingen maxgräns", 
+  "noMaxLimit":"Ingen maxgräns",
   "dairyFree":"Mjölkfri",
   "glutenFree":"Glutenfri",
   "vegan":"Vegansk"

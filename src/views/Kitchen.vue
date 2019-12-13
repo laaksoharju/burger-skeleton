@@ -47,8 +47,6 @@ export default {
                             //the ordering system and the kitchen
   data: function(){
     return {
-      chosenIngredients: [],
-      price: 0
     }
   },
   computed: {
@@ -75,12 +73,15 @@ export default {
     countNumberOfIngredients: function (id) {
       let counter = 0;
       for (let order in this.orders) {
-        for (let i = 0; i < this.orders[order].ingredients.length; i += 1) {
-          if (this.orders[order].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' && this.orders[order].ingredients[i].category !== 6 ) {
-            counter+=1;
+        let menus = this.orders[order].menus;
+        for(let j = 0; j < menus.length; j += 1){
+        for (let i = 0; i < menus[j].ingredients.length; i += 1) {
+          if (menus[j].ingredients[i].ingredient_id === id && this.orders[order].status !== 'done' && this.orders[order].status !== 'picked-up' ) {
+            counter += 1;
           }
         }
       }
+    }
       return counter;
     }
   }

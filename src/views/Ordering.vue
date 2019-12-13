@@ -59,6 +59,7 @@
 
         <h3>{{uiLabels.drinks}}</h3>
         <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0 && item.ingredient_id>56" :key="item.ingredient_id">
+
           <td> <button class="plusMinus" id="minusknapp" v-on:click="IsOkToAdd(item);removeFromOrder(item)"> - </button></td>
           <td>
             {{item.counter}}
@@ -72,7 +73,7 @@
     </div>
   </div>
 
-  <div id="price-summary" v-if="chosenIngredients.length>0">
+  <div id="price-summary">
 
     <table style="width:100%">
       <td>{{uiLabels.total}}</td>
@@ -102,7 +103,7 @@
       <h1> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr v-for="item in chosenIngredientsSet" v-if="item.counter>0" :key="item.ingredient_id">
+          <tr v-for="item in chosenIngredientsSet" :key="item.ingredient_id">
             <td>
               {{item.counter}}
             </td>
@@ -114,11 +115,20 @@
           </tr>
         </table>
       </h2>
+      <button v-on:click="addMenu()">Lägg till meny</button>
+      <div v-for="(menu,key) in currentOrder.menus" :key="key">
+        <h5>{{uiLabels.menu}} {{key+1}}:</h5>
+        <div v-for="(item,key2) in menu.ingredients" :key="key2">
+          {{item["ingredient_"+lang]}}
+        </div>
+        <button v-on:click="changeMenu(menu)">Ändra</button>
+      </div>
     </div>
 
   </div>
   <div id="buttons">
-    <button  id = "random-button" v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     <button id="previous-button" v-if="category!==1" v-on:click="previousCategory">{{ uiLabels.previous }}</button>
     <button id="next-button" v-if="category!==7" v-on:click="nextCategory">{{ uiLabels.next }}</button>
   </div>
@@ -156,7 +166,13 @@ export default {
       price: 0,
       category: 1,
       orderNumber: "",
-      okToAdd: true
+      okToAdd: true,
+      addedToMenu: false,
+      randomBurgerBoolean: false,
+      currentOrder: {
+        menus: []
+      }
+
     }
 
   },
@@ -166,7 +182,6 @@ export default {
       return [...new Set(this.chosenIngredients)]
     }
   },
-
 
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
@@ -182,7 +197,27 @@ export default {
         item.counter += 1;
         this.$emit("increase");
       }
+    },
 
+    changeMenu: function(menu) {
+      this.chosenIngredients =[];
+      for (let i = 0; i < menu.ingredients.length; i += 1){
+        this.chosenIngredients.push(menu.ingredients[i]);
+      }
+      this.currentOrder.menus.splice(this.currentOrder.menus.indexOf(menu), 1);
+    },
+
+    addMenu: function() {
+      this.addedToMenu = true;
+      this.currentOrder.menus.push({
+        ingredients: this.chosenIngredients.splice(0),
+        price: this.price,
+
+      });
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.chosenIngredients[i].counter=0;
+      }
+      this.chosenIngredients = [];
     },
 
     IsOkToAdd: function(item) {
@@ -244,30 +279,23 @@ export default {
     },
 
     placeOrder: function() {
-      if (confirm(this.uiLabels.instructions)) {
-        var i,
-          //Wrap the order in an object
-          order = {
-            ingredients: this.chosenIngredients,
-            price: this.price
-          };
-        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
-
-        this.$store.state.socket.emit('order', {
-          order: order
-        });
-        //set all counters to 0. Notice the use of $refs
+      if(this.addedToMenu == false ){
+        alert("You cannot order nothing!\n Please add your order first!")
+      }
+      else if (confirm(this.uiLabels.instructions)) {
+        /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
-        }
+        }*/
+        this.$store.state.socket.emit('order', this.currentOrder);
+        this.currentOrder = {
+          menus: []
+        };
+        this.category = 1;
         this.price = 0;
-        this.chosenIngredients = [];
-
       }
 
-
     },
-
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
@@ -289,8 +317,11 @@ export default {
 
 
     randomBurger: function(ingredients){
-      // console.log(ingredients[0].ingredient_sv)
+      this.chosenIngredients = [];
+      this.price = 0;
 
+
+      this.randomBurgerBool();
       let burgmax = 9;
       let toppingmax = 34;
       let saucemax = 48;
@@ -299,23 +330,27 @@ export default {
       let drinkmax = 60;
 
 
-    for (let i = 0; i < 2; i++){
+    for (let i = 0; i  < 2; i++){
       let randburg =   Math.floor(Math.random() * (burgmax));
-      this.addToOrder(ingredients[randburg])
-    }
+      if (this.IsOkToAdd(ingredients[randburg])){
+        this.addToOrder(ingredients[randburg])
+    }}
 
     let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
+    if(this.IsOkToAdd(ingredients[randbread])){
     this.addToOrder(ingredients[randbread])
-
+  }
     for (let i = 0; i < 4; i++){
       let randtopping =   Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
+      if (this.IsOkToAdd(ingredients[randtopping])){
       this.addToOrder(ingredients[randtopping])
-    }
+    }}
 
     for (let i = 0; i < 2; i++){
       let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
-      this.addToOrder(ingredients[randsauce])
-    }
+      if (this.IsOkToAdd(ingredients[randsauce])){
+        this.addToOrder(ingredients[randsauce])
+    }}
 
     let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
     this.addToOrder(ingredients[randsides])
@@ -325,6 +360,10 @@ export default {
 
 },
 
+randomBurgerBool: function(){
+
+  return this.randomBurgerBoolean = true
+},
 
 
     redirect: function(num) {
@@ -398,6 +437,15 @@ export default {
   font-size: 1.5em;
   padding: 0.1em 1.8em;
 }
+.random-button2 {
+  position:absolute;
+  top:0;
+  right:5em;
+  font-size:1.5em;
+  padding: 0.1em 1.8em;
+  background:url("../assets/randomBackground.png") repeat scroll left top;
+
+}
 
 #previous-button {
   position: absolute;
@@ -406,18 +454,56 @@ export default {
   font-size: 1.5em;
   padding: 0.1em 1em;
 }
-#random-button{
-  border-radius: 4px;
-  position: relative;
-  background:url("https://thumbs.gfycat.com/SplendidGleefulEasternnewt-max-1mb.gif") repeat scroll left top;
-  text-align: center;
+/*.random-button{
+  position: absolute;
+  top: 0;
+  left: 0;
   font-size: 1.5em;
+  padding: 0.1em 1em;
+  background:url("../assets/randomBackground.png") repeat scroll left top;
+}
+.random-button:hover{
+  cursor:pointer;
+}*/
+.random-button2 {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ed3330;
   padding: 20px;
-  width: 200px;
-  transition: all 5s;
-  cursor: pointer;
-  margin: 5px;
-
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+.random-button2:hover{
+  cursor:pointer;
+  background: #434343;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+  }
+.random-button {
+color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #ed3330;
+padding: 20px;
+border-radius: 5px;
+display: inline-block;
+border: none;
+transition: all 0.3s ease 0s;
+}
+.random-button:hover {
+cursor:pointer;
+background: #434343;
+letter-spacing: 1px;
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
 }
 
 

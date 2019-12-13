@@ -4,14 +4,22 @@
   {{$store.state.hello}}
 
   <h1>{{uiLabels.usedingredients}}</h1>
-
-  <div id="ingredientsused" v-for="item in ingredients" v-if="item.stock<30" :key="item.ingredient_id">
+ Pattys
+ <div id="ingredientsused" v-for="item in ingredients" v-if="item.category == 1" :key="item.ingredient_id">
     {{item["ingredient_"+ lang]}}: {{item.stock}}
     <br>
-    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker"> {{item["ingredient_"+ lang]}} to stock
+    add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+    {{item["ingredient_"+ lang]}} to stock
     <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
-
   </div>
+Bread
+  <div id="ingredientsused" v-for="item in ingredients" v-if="item.category == 2" :key="item.ingredient_id">
+     {{item["ingredient_"+ lang]}}: {{item.stock}}
+     <br>
+     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
+     {{item["ingredient_"+ lang]}} to stock
+     <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+   </div>
 </div>
 </template>
 

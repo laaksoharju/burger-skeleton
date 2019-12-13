@@ -13,16 +13,16 @@
 
   <div id="allButtons">
 
-    <div id = "buttonArea">
-      <router-link id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
+    <div class = "buttonArea">
+      <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
     </div>
     <br>
-    <div id ="buttonArea">
+    <div class ="buttonArea">
        <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
     </div>
     </div>
 
-  
+
     <br>
 
     <div id = "hamburgerGif">
@@ -92,15 +92,12 @@ export default {
 #headyStart {
   grid-area: header;
   position: absolute;
-
 }
 
 #allButtons {
   grid-area: main;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  padding-left: 25em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #hamburgerGif {
@@ -121,7 +118,7 @@ export default {
   font-size: 45px;
 }
 
-#buttonArea{
+.buttonArea{
   justify-content: center;
   align-items:center;
   text-align: center;
