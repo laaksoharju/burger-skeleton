@@ -373,7 +373,8 @@ export default {
 },
 newRandomBurger:function(ingredients) {
   if (this.randomBurgerBoolean == true ){
-    this.price = 0;
+    for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.price = this.price - this.chosenIngredients[i].selling_price
   }
   this.chosenIngredients = [];
 
@@ -413,7 +414,7 @@ this.addToOrder(ingredients[randsides])
 let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
 this.addToOrder(ingredients[randdrink])
 
-},
+}},
 
 randomBurgerBool: function(){
   if (this.randomBurgerBoolean == true ){
@@ -435,6 +436,7 @@ randomBurgerBool: function(){
 }
 </script>
 <style scoped>
+
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
 
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
