@@ -73,10 +73,10 @@
     <!-- reviewsidan på samma sätt som ordersummarysidan -->
 
     <div id="finalsummary" v-if="this.category == 7">
-      <h1> {{uiLabels.review}} </h1>
+      <h1 id="review"> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
+          <tr id = "review"v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
               {{item.count}}
             </td>
@@ -399,12 +399,12 @@ randomBurgerBool: function(){
   display: grid;
 
   grid-template-areas:
-    "header header"
-    "nav nav"
-    "chooseMax side"
-    "content side"
-    "buttons empty"
-    "footer footer";
+    "header header header"
+    "nav nav nav"
+    "chooseMax chooseMax side"
+    "content content side"
+    "buttons buttons empty"
+    "footer footer footer";
 
   grid-template-columns: 1fr 300px;
 
@@ -535,16 +535,6 @@ randomBurgerBool: function(){
   right: 0;
 }
 
-
-.random-button2 {
-  position:absolute;
-  top:0;
-  right:5em;
-  font-size:1.5em;
-  padding: 0.1em 1.8em;
-  background:url("../assets/randomBackground.png") repeat scroll left top;
-
-}
 
 #previous-button {
   position: absolute;
@@ -753,10 +743,97 @@ ul {
   background-color:  #d9d9d9;
 }
 
-
 #order-table {
   width: 100%;
   position: relative;
+}
+
+@media (max-width: 600px){
+  .container {
+    display: grid;
+
+    grid-template-areas:
+      "header header header"
+      "nav nav nav"
+      "chooseMax chooseMax side"
+      "content content side"
+      "buttons buttons buttons"
+      "footer footer footer";
+
+    grid-template-columns: 1fr 150px;
+
+    grid-template-rows: auto auto auto auto auto;
+    grid-gap: 1em;
+    height: 85vh;
+  }
+  #ingredient-choice {
+    grid-column-start:1;
+    grid-column-end:5;
+    display: grid;
+    text-align: center;
+    font-size: 18px;
+    overflow-y: scroll;
+  }
+  .next-button {
+    border: solid black;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 0.3em;
+    width: 6em;
+    grid-gap: 2em;
+    transition: all 0.5s;
+    cursor: pointer;
+    position:relative;
+
+    right: 0px;
+    display: inline-block;
+  }
+  .previous-button{
+    font-size:1.1em;
+    padding: 0.3em;
+    width: 6em;
+    left: 0px;
+    display: inline-block;
+    position: relative;
+  }
+  #buttons {
+    position:relative;
+
+  }
+  #price-summary {
+    z-index: 1;
+    width: inherit;
+    position: fixed;
+    bottom: 0.25em;
+    right: 0.25em;
+    padding: 0em;
+
+    background-color: pink;
+    border: 0.2em dashed black;
+  }
+  #huvudmeny {
+    grid-area: nav;
+    position: relative;
+    display: grid;
+    grid-column-gap: 0em;
+    grid-row-gap: 0em;
+    grid-template-columns: repeat(auto-fill, 7.25em);
+    justify-content: start;
+  }
+  .random-button2{
+    right: 0px;
+    position:relative;
+  }
+ #review{
+  font-size: 16px;
+}
+.ingredient {
+  font-size:14px;
+}
+
+
+
+
 }
 
 </style>

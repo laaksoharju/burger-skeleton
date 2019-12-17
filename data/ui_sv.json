@@ -28,7 +28,7 @@
   "name": "Burger bidness",
   "goToOrdering":"Skapa din burgare",
   "goToRandomMenu": "Slumpa meny!",
-  "goToRandomMenu2": "Gillade du inte den menyn? Tryck här för att slumpa igen",
+  "goToRandomMenu2": "Slumpa igen",
   "randomBurgerTitle": "Klicka här för att beställa en slumpmässig hamburgarmeny, med slumpade pålägg och tillbehör!",
   "goToSides": "Beställ tillbehör & dryck",
   "sides": "Tillbehör",

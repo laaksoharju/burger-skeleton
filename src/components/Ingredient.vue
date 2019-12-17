@@ -71,7 +71,7 @@ export default {
   "buttons";
 
   grid-template-columns: auto;
-  grid-template-rows: 5% 40% 35% 20%;
+  grid-template-rows: 5% 40% 25% 30%;
 
   width: 8em;
   height: 9em;
@@ -99,5 +99,15 @@ export default {
 #addremove {
   grid-area: buttons;
 }
-
+@media (max-width: 600px){
+  #addremove{
+    font-size:16px;
+  }
+  #dec{
+    font-size: 28px;
+  }
+  #inc{
+    font-size: 28px;
+  }
+}
 </style>
