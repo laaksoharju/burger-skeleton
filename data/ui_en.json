@@ -31,7 +31,7 @@
   "name": "Burger bidness",
   "goToOrdering":"Create your burger",
   "goToRandomMenu": "Order a random menu",
-  "goToRandomMenu2": "Didn't like that menu? Press here to order a new one",
+  "goToRandomMenu2": "Randomize again",
   "randomBurgerTitle": "Press here to order a random menu with randomly chosen ingredients and sides!",
   "goToSides": "Order sides and drinks",
   "sides": "Sides",
