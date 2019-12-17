@@ -11,7 +11,8 @@
         v-show="item.category===category"
         v-on:increment="addToBurger(item)"
         v-on:decrement="removeFromBurger(item)" 
-        v-bind:item="item" 
+        v-bind:item="item"
+        v-bind:itemCount="ingredientCount(item)"
         :lang="lang"
         :key="item.ingredient_id">
       </Ingredient>
@@ -21,13 +22,16 @@
       <h1>{{ uiLabels.order }}</h1>
       <div v-for="(burger, key) in currentOrder.burgers" :key="key">
         {{key}}: 
-        <span v-for="(item, key2) in burger.ingredients" :key="key2">
-          {{ item['ingredient_' + lang] }}
+        <span v-for="(item, key2) in groupIngredients(burger.ingredients)" :key="key2">
+          {{item.count}} x {{ item.ing['ingredient_' + lang] }}
         </span>
         {{burger.price}}
       </div>
       <hr>
-      {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
+      <div v-for="(item, key2) in groupIngredients(chosenIngredients)" :key="key2">
+          {{item.count}} x {{ item.ing['ingredient_' + lang] }}
+          <button v-on:click="addToBurger(item.ing)"> + </button> <button v-on:click="removeFromBurger(item.ing)"> - </button>
+        </div>
       <button v-on:click="addToOrder()">{{ uiLabels.addToOrder }}</button>
       <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
       <button class="next-button" v-on:click="nextCategory">{{ uiLabels.next }}</button>
@@ -57,7 +61,8 @@ import Ingredient from '@/components/Ingredient.vue'
 import OrderItem from '@/components/OrderItem.vue'
 
 //import methods and data that are shared between ordering and kitchen views
-import sharedVueStuff from '@/components/sharedVueStuff.js'
+import sharedVueStuff from '@/mixins/sharedVueStuff.js'
+import utilityMethods from '@/mixins/utilityMethods.js'
 
 /* instead of defining a Vue instance, export default allows the only 
 necessary Vue instance (found in main.js) to import your data and methods */
@@ -67,7 +72,7 @@ export default {
     Ingredient,
     OrderItem
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both 
+  mixins: [sharedVueStuff, utilityMethods], // include stuff that is used in both 
                             // the ordering system and the kitchen
   data: function() { //Not that data is a function!
     return {
@@ -86,6 +91,14 @@ export default {
     }.bind(this));
   },
   methods: {
+    ingredientCount: function (item) {
+      let counter = 0;
+      for(let i = 0; i < this.chosenIngredients.length; i += 1) {
+        if (this.chosenIngredients[i] === item)
+          counter += 1;
+      }
+      return counter;
+    },
     addToBurger: function (item) {
       this.chosenIngredients.push(item);
       this.price += +item.selling_price;

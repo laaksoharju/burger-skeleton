@@ -39,7 +39,7 @@ import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
 
 //import methods and data that are shared between ordering and kitchen views
-import sharedVueStuff from '@/components/sharedVueStuff.js'
+import sharedVueStuff from '@/mixins/sharedVueStuff.js'
 
 export default {
   name: 'Ordering',

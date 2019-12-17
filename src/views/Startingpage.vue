@@ -8,7 +8,7 @@
 
 
 //import methods and data that are shared between ordering and kitchen views
-import sharedVueStuff from '@/components/sharedVueStuff.js'
+import sharedVueStuff from '@/mixins/sharedVueStuff.js'
 
 /* instead of defining a Vue instance, export default allows the only 
 necessary Vue instance (found in main.js) to import your data and methods */
