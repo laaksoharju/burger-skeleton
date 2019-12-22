@@ -284,8 +284,13 @@ export default {
 
     removeFromOrder: function(id) {
       if(this.chosenIngredients.includes(this.getItemById(id))){
-        this.price += -this.getItemById(id).selling_price;
-        this.chosenIngredients.splice(this.chosenIngredients.indexOf(this.getItemById(id)), 1);
+        for (let i = this.chosenIngredients.length-1; i >= 0; --i) {
+          if (this.chosenIngredients[i].ingredient_id === id){
+          this.chosenIngredients.splice(i, 1);
+          this.price += -this.getItemById(id).selling_price;
+          break;
+          }
+        }
       }
     },
 
