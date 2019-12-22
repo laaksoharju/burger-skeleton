@@ -64,7 +64,14 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement="removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient"
+        v-for="item in ingredients"
+        v-on:increment="IsOkToAdd(item.ingredient_id)"
+        v-on:decrement="removeFromOrder(item.ingredient_id)"
+        v-show="item.category===category"
+        v-bind:itemCount="countNumberOfChosenIngredients(item.ingredient_id)"
+        v-bind:item="item"
+        :lang="lang"
         :key="item.ingredient_id">
 
       </Ingredient>
@@ -196,11 +203,9 @@ export default {
       return counter; },
 
     addToOrder: function(id) {
-
       if (this.okToAdd) {
         this.chosenIngredients.push(this.getItemById(id));
         this.price += this.getItemById(id).selling_price;
-        this.$emit("increase");
       }
     },
 
@@ -278,9 +283,10 @@ export default {
     },
 
     removeFromOrder: function(id) {
+      if(this.chosenIngredients.includes(this.getItemById(id))){
         this.price += -this.getItemById(id).selling_price;
         this.chosenIngredients.splice(this.chosenIngredients.indexOf(this.getItemById(id)), 1);
-        this.$emit("decrease");
+      }
     },
 
     placeOrder: function() {
