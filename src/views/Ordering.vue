@@ -410,12 +410,12 @@ randomBurgerBool: function(){
   display: grid;
 
   grid-template-areas:
-    "header header header"
-    "nav nav nav"
-    "chooseMax chooseMax side"
-    "content content side"
-    "buttons buttons empty"
-    "footer footer footer";
+    "header header"
+    "nav nav"
+    "chooseMax side"
+    "content side"
+    "buttons empty"
+    "footer footer";
 
   grid-template-columns: 1fr 300px;
 
@@ -577,6 +577,9 @@ randomBurgerBool: function(){
   display: inline-block;
   border: none;
   transition: all 0.3s ease 0s;
+  top: 0;
+  right:0;
+  position:absolute;
 }
 .random-button2:hover{
   cursor:pointer;
