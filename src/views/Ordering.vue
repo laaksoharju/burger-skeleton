@@ -5,8 +5,8 @@
     <button id="switchlangbutton" v-on:click="switchLang()">
       {{ uiLabels.language }}
     </button>
-    <div id="cancelbutton">
-      <router-link tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
+    <div >
+      <router-link id="cancelbutton" tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -17,8 +17,8 @@
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn5" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['sbtn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['sbtn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   </div>
@@ -232,6 +232,7 @@ export default {
     },
 
     IsOkToAdd: function(id) {
+
       var i;
       let chosen = 0;
       this.okToAdd = true;
@@ -256,6 +257,10 @@ export default {
       }
       if (chosen >= lim) {
         this.okToAdd = false
+      }
+      else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)){
+        this.okToAdd = false;
+        alert("Slut på ingrediens")
       }
       else{
         this.addToOrder(id);
@@ -298,7 +303,6 @@ export default {
       }
       else if(this.chosenIngredients.length != 0){
         alert("You have unfinished business...")
-        console.log(this.chosenIngredients)
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
@@ -679,13 +683,15 @@ ul {
   grid-area: nav;
   position: relative;
   display: grid;
-  grid-column-gap: 0.2em;
+  grid-column-gap: 0.5em;
   grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 8em);
-  justify-content: start;
+  grid-template-columns: repeat(auto-fill, 10em);
+  justify-content: center;
 }
 
 #cancelbutton {
+  background-color: darkred;
+  color: floralwhite;
   position: absolute;
   top: 0;
   right: 0;
@@ -700,13 +706,6 @@ ul {
   border: 2px solid crimson;
   border-radius: 0.5em;
   text-align: center;
-}
-
-#cancelbutton {
-  position: absolute;
-  top: 0;
-  right: 0;
-
 }
 
 #price-summary {
@@ -725,12 +724,16 @@ ul {
   padding: 0.5em;
   background-color: #f1f1f1;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.3em;
   border-radius: 0.1em;
-  border: 2px solid;
-  margin: 2px;
+  border: 0.12em solid;
+  margin: 0.2em;
   padding: 1em;
-  width: 134px;
+  width: 8em;
+}
+
+.sbtn{
+  background-color:  #d9d9d9;
 }
 
 .btnc {
@@ -748,8 +751,14 @@ ul {
   background-color:pink ;
   /* denna hade vi: #bfbfbf*/
 }
-#btn5:hover {
-  background-color: pink;
+
+.btnc {
+ padding: 0.5em;
+ background-color: #f1f1f1;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 0.5em;
+ text-align: center;
 }
 
 .orderSummary {
@@ -758,10 +767,6 @@ ul {
   background-color: pink;
   padding: 1em;
   overflow-y: scroll;
-}
-
-#btn5{
-  background-color:  #d9d9d9;
 }
 
 #order-table {
