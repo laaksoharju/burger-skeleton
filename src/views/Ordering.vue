@@ -31,7 +31,7 @@
 
   <div class="orderSummary">
     <div id="order-table">
-      <h2>{{ uiLabels.yourOrder }}</h2>
+      <h2>{{ uiLabels.currentMenu }}</h2>
       <table style="width:100%">
         <tr v-for="item in countAllChosenIngredients" :key="countAllChosenIngredients.indexOf(item)">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="removeFromOrder(item.id)"> - </button></td>
@@ -83,7 +83,7 @@
       <h1 id="review"> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr id = "review"v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
+          <tr id = "review" v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
               {{item.count}}
             </td>
@@ -96,7 +96,8 @@
         </table>
       </h2>
       <div v-if="chosenIngredients.length>0">
-      <button v-on:click="addMenu()">{{uiLabels.done}}</button>
+      <button id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
+      <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     </div>
       <div >
         <table id="order-summary" style="width:100%">
@@ -114,7 +115,6 @@
   </div>
   <div id="buttons">
     <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
-    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
     <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
@@ -283,7 +283,6 @@ export default {
     },
 
     removeFromOrder: function(id) {
-      if(this.chosenIngredients.includes(this.getItemById(id))){
         for (let i = this.chosenIngredients.length-1; i >= 0; --i) {
           if (this.chosenIngredients[i].ingredient_id === id){
           this.chosenIngredients.splice(i, 1);
@@ -291,7 +290,6 @@ export default {
           break;
           }
         }
-      }
     },
 
     placeOrder: function() {
@@ -427,7 +425,7 @@ randomBurgerBool: function(){
 
 .limittext{
   grid-area: chooseMax;
-  font-size: 20px;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -477,7 +475,7 @@ randomBurgerBool: function(){
   text-align: center;
   font-size: 1.3em;
   padding: 0.4em;
-  width: 6em;
+  width: 7em;
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
@@ -514,7 +512,7 @@ randomBurgerBool: function(){
   text-align: center;
   font-size: 1.3em;
   padding: 0.4em;
-  width: 6em;
+  width: 7em;
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
@@ -569,11 +567,11 @@ randomBurgerBool: function(){
 
 .random-button2 {
   color: #fff !important;
-  text-transform: uppercase;
   text-decoration: none;
   background: #ed3330;
-  padding: 20px;
-  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.5em;
+  border-radius: 0.5em;
   display: inline-block;
   border: none;
   transition: all 0.3s ease 0s;
@@ -629,12 +627,22 @@ transition: all 0.4s ease 0s;
   position: relative;
 }
 
+#donebutton{
+  padding: 0.5em;
+  background-color: darkgreen;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 0.5em;
+  text-align: center;
+}
+
 #pobutton {
   padding: 0.5em;
   background-color: darkgreen;
   color: white;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.2em;
   border-radius: 0.5em;
   text-align: center;
 }
@@ -720,14 +728,13 @@ ul {
   margin: 2px;
   padding: 1em;
   width: 134px;
-
 }
 
 .btnc {
   padding: 0.5em;
  background-color: #f1f1f1;
  cursor: pointer;
- font-size: 18px;
+ font-size: 1.2em;
  border-radius: 0.5em;
  text-align: center;
 }
