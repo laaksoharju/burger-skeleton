@@ -1,4 +1,5 @@
 {
+  "currentMenu": "Your Menu",
   "cancelOrder" : "Cancel order",
   "next" : "Next",
   "menu":"Menu",
@@ -6,7 +7,6 @@
   "changeIng" : "Change ingredient",
   "content" : "Content",
   "thankOrder" : "Thank you for your order!",
-  "yourOrder" : "Your Order",
   "newOrder" : "New Order",
   "pay" : "Pay",
   "sum": "Sum",
@@ -31,7 +31,7 @@
   "name": "Burger bidness",
   "goToOrdering":"Create your burger",
   "goToRandomMenu": "Order a random menu",
-  "goToRandomMenu2": "Randomize again",
+  "goToRandomMenu2": "Not happy? Randomize again!",
   "randomBurgerTitle": "Press here to order a random menu with randomly chosen ingredients and sides!",
   "goToSides": "Order sides and drinks",
   "sides": "Sides",

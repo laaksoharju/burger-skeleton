@@ -16,10 +16,6 @@
     <div class = "buttonArea">
       <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
     </div>
-    <br>
-    <div class ="buttonArea">
-       <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
-    </div>
     </div>
 
 
