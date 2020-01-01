@@ -17,12 +17,7 @@
       <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
     </div>
     <br>
-    <div class ="buttonArea">
-       <router-link id = "button" to="kitchen">{{ uiLabels.goToRandomBurger }}</router-link>
     </div>
-    </div>
-
-
     <br>
 
     <div id = "hamburgerGif">
@@ -86,6 +81,7 @@ export default {
   grid-template-columns: auto;
   grid-template-rows: auto;
   grid-column-gap:1.2em;
+  grid-row-gap: 4em;
   height: 60vh;
 }
 
@@ -107,7 +103,7 @@ export default {
 
 #foot {
   grid-area: footer;
-  bottom: 10px;
+  bottom: 0.05em;
 }
 
 
@@ -115,21 +111,22 @@ export default {
   grid-area: header;
   text-align: center;
   align-items: center;
-  font-size: 45px;
+  font-size: 2em;
 }
 
 .buttonArea{
   justify-content: center;
   align-items:center;
   text-align: center;
-  font-size: 35px;
-  border: 5px solid;
+  font-size: 1.8em;
+  border: 0.12em solid;
 	display: table;
-  margin: 2px;
-  border-radius: 5px;
+  margin: 0.08em;
+  border-radius: 0.2em;
   background-color: pink;
   padding: 1em;
-  width: 480px;
+  width: 14em;
+  height:1.6em;
 
 
 }
@@ -146,8 +143,8 @@ export default {
   background-color: royalblue;
   color: gold;
   cursor: pointer;
-  font-size: 15px;
-  border: 2px solid crimson;
+  font-size: 0.9em;
+  border: 0.15em solid crimson;
   border-radius: 0.5em;
   text-align: center;
 }
