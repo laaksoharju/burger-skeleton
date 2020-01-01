@@ -5,8 +5,8 @@
     <button id="switchlangbutton" v-on:click="switchLang()">
       {{ uiLabels.language }}
     </button>
-    <div id="cancelbutton">
-      <router-link tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
+    <div >
+      <router-link id="cancelbutton" tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -17,8 +17,8 @@
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn5" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['sbtn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['sbtn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
   <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
@@ -33,7 +33,7 @@
 
   <div class="orderSummary">
     <div id="order-table">
-      <h2>{{ uiLabels.yourOrder }}</h2>
+      <h2>{{ uiLabels.currentMenu }}</h2>
       <table style="width:100%">
         <tr v-for="item in countAllChosenIngredients" :key="countAllChosenIngredients.indexOf(item)">
           <td> <button class="plusMinus" id="minusknapp" v-on:click="removeFromOrder(item.id)"> - </button></td>
@@ -66,7 +66,14 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd" v-on:decrement="removeFromOrder(item.ingredient_id)" v-show="item.category===category" :item="item" :okToAdd="okToAdd" :lang="lang"
+      <Ingredient ref="ingredient"
+        v-for="item in ingredients"
+        v-on:increment="IsOkToAdd(item.ingredient_id)"
+        v-on:decrement="removeFromOrder(item.ingredient_id)"
+        v-show="item.category===category"
+        v-bind:itemCount="countNumberOfChosenIngredients(item.ingredient_id)"
+        v-bind:item="item"
+        :lang="lang"
         :key="item.ingredient_id">
 
       </Ingredient>
@@ -78,7 +85,7 @@
       <h1 id="review"> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr id = "review"v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
+          <tr id = "review" v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
               {{item.count}}
             </td>
@@ -91,7 +98,8 @@
         </table>
       </h2>
       <div v-if="chosenIngredients.length>0">
-      <button v-on:click="addMenu()">{{uiLabels.done}}</button>
+      <button id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
+      <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     </div>
       <div >
         <table id="order-summary" style="width:100%">
@@ -109,7 +117,6 @@
   </div>
   <div id="buttons">
     <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
-    <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
     <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
     <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
@@ -198,11 +205,9 @@ export default {
       return counter; },
 
     addToOrder: function(id) {
-
       if (this.okToAdd) {
         this.chosenIngredients.push(this.getItemById(id));
         this.price += this.getItemById(id).selling_price;
-        this.$emit("increase");
       }
     },
 
@@ -229,6 +234,7 @@ export default {
     },
 
     IsOkToAdd: function(id) {
+
       var i;
       let chosen = 0;
       this.okToAdd = true;
@@ -253,6 +259,10 @@ export default {
       }
       if (chosen >= lim) {
         this.okToAdd = false
+      }
+      else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)){
+        this.okToAdd = false;
+        alert("Slut på ingrediens")
       }
       else{
         this.addToOrder(id);
@@ -280,9 +290,13 @@ export default {
     },
 
     removeFromOrder: function(id) {
-        this.price += -this.getItemById(id).selling_price;
-        this.chosenIngredients.splice(this.chosenIngredients.indexOf(this.getItemById(id)), 1);
-        this.$emit("decrease");
+        for (let i = this.chosenIngredients.length-1; i >= 0; --i) {
+          if (this.chosenIngredients[i].ingredient_id === id){
+          this.chosenIngredients.splice(i, 1);
+          this.price += -this.getItemById(id).selling_price;
+          break;
+          }
+        }
     },
 
     placeOrder: function() {
@@ -291,7 +305,6 @@ export default {
       }
       else if(this.chosenIngredients.length != 0){
         alert("You have unfinished business...")
-        console.log(this.chosenIngredients)
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
@@ -404,12 +417,12 @@ randomBurgerBool: function(){
   display: grid;
 
   grid-template-areas:
-    "header header header"
-    "nav nav nav"
-    "chooseMax chooseMax side"
-    "content content side"
-    "buttons buttons empty"
-    "footer footer footer";
+    "header header"
+    "nav nav"
+    "chooseMax side"
+    "content side"
+    "buttons empty"
+    "footer footer";
 
   grid-template-columns: 1fr 300px;
 
@@ -422,6 +435,7 @@ randomBurgerBool: function(){
 .limittext{
   grid-area: chooseMax;
   font-size: 1.4em;
+
   font-weight: bold;
 }
 
@@ -471,7 +485,7 @@ randomBurgerBool: function(){
   text-align: center;
   font-size: 1.3em;
   padding: 0.4em;
-  width: 6em;
+  width: 7em;
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
@@ -508,7 +522,7 @@ randomBurgerBool: function(){
   text-align: center;
   font-size: 1.3em;
   padding: 0.4em;
-  width: 6em;
+  width: 7em;
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
@@ -563,14 +577,17 @@ randomBurgerBool: function(){
 
 .random-button2 {
   color: #fff !important;
-  text-transform: uppercase;
   text-decoration: none;
   background: #ed3330;
-  padding: 20px;
-  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.5em;
+  border-radius: 0.5em;
   display: inline-block;
   border: none;
   transition: all 0.3s ease 0s;
+  top: 0;
+  right:0;
+  position:absolute;
 }
 .random-button2:hover{
   cursor:pointer;
@@ -626,12 +643,22 @@ transition: all 0.4s ease 0s;
   position: relative;
 }
 
+#donebutton{
+  padding: 0.5em;
+  background-color: darkgreen;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 0.5em;
+  text-align: center;
+}
+
 #pobutton {
   padding: 0.5em;
   background-color: darkgreen;
   color: white;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.2em;
   border-radius: 0.5em;
   text-align: center;
 }
@@ -665,13 +692,15 @@ ul {
   grid-area: nav;
   position: relative;
   display: grid;
-  grid-column-gap: 0.2em;
+  grid-column-gap: 0.5em;
   grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 8em);
-  justify-content: start;
+  grid-template-columns: repeat(auto-fill, 10em);
+  justify-content: center;
 }
 
 #cancelbutton {
+  background-color: darkred;
+  color: floralwhite;
   position: absolute;
   top: 0;
   right: 0;
@@ -686,13 +715,6 @@ ul {
   border: 0.15em solid crimson;
   border-radius: 0.5em;
   text-align: center;
-}
-
-#cancelbutton {
-  position: absolute;
-  top: 0;
-  right: 0;
-
 }
 
 #price-summary {
@@ -711,20 +733,23 @@ ul {
   padding: 0.5em;
   background-color: #f1f1f1;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.3em;
   border-radius: 0.1em;
-  border: 2px solid;
-  margin: 2px;
+  border: 0.12em solid;
+  margin: 0.2em;
   padding: 1em;
-  width: 134px;
+  width: 8em;
+}
 
+.sbtn{
+  background-color:  #d9d9d9;
 }
 
 .btnc {
   padding: 0.5em;
  background-color: #f1f1f1;
  cursor: pointer;
- font-size: 18px;
+ font-size: 1.2em;
  border-radius: 0.5em;
  text-align: center;
 }
@@ -735,8 +760,14 @@ ul {
   background-color:pink ;
   /* denna hade vi: #bfbfbf*/
 }
-#btn5:hover {
-  background-color: pink;
+
+.btnc {
+ padding: 0.5em;
+ background-color: #f1f1f1;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 0.5em;
+ text-align: center;
 }
 
 .orderSummary {
@@ -745,10 +776,6 @@ ul {
   background-color: pink;
   padding: 1em;
   overflow-y: scroll;
-}
-
-#btn5{
-  background-color:  #d9d9d9;
 }
 
 #order-table {
