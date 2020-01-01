@@ -21,6 +21,8 @@
     <button id="btn6" :class="['sbtn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
+  <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
+
   </div>
 
   <div class="limittext" v-if= "category != 5 && category != 6 && category != 7" >
@@ -394,8 +396,11 @@ randomBurgerBool: function(){
 
 
     redirect: function(num) {
+    //  var btns = document.getElementsByClassName('hide');
+    //  for (var i = 0; i < btns.length; i++){
+    //    btns[i].style.display = 'block';
+    //  }
       this.category = num;
-
     },
 
   }
@@ -429,7 +434,8 @@ randomBurgerBool: function(){
 
 .limittext{
   grid-area: chooseMax;
-  font-size: 1.5em;
+  font-size: 1.4em;
+
   font-weight: bold;
 }
 
@@ -503,7 +509,7 @@ randomBurgerBool: function(){
 }
 
 .previous-button:hover span {
-  padding-right: 25px;
+  padding-right: 1.2em;
 }
 .previous-button:hover span:after {
   opacity: 1;
@@ -520,7 +526,7 @@ randomBurgerBool: function(){
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
-  right:0px;
+  right:0;
 }
 
 .next-button span {
@@ -540,7 +546,7 @@ randomBurgerBool: function(){
 }
 
 .next-button:hover span {
-  padding-right: 25px;
+  padding-right: 1.2em;
 }
 
 .next-button:hover span:after {
@@ -618,6 +624,9 @@ transition: all 0.4s ease 0s;
   grid-area: content;
   overflow-y: scroll;
 }
+.hide{
+  display: none;
+}
 
 #ingredient-choice {
   display: grid;
@@ -625,7 +634,7 @@ transition: all 0.4s ease 0s;
   grid-row-gap: 0.5em;
   grid-template-columns: repeat(auto-fill, 9em);
   text-align: center;
-  font-size: 18px;
+  font-size: 1.1em;
   overflow-y: scroll;
 }
 
@@ -702,8 +711,8 @@ ul {
   background-color: royalblue;
   color: gold;
   cursor: pointer;
-  font-size: 15px;
-  border: 2px solid crimson;
+  font-size: 0.9em;
+  border: 0.15em solid crimson;
   border-radius: 0.5em;
   text-align: center;
 }
