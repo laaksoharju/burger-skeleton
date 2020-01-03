@@ -17,10 +17,7 @@
       <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
     </div>
     </div>
-
-
     <br>
-
     <div id = "hamburgerGif">
       <br>
       <br>

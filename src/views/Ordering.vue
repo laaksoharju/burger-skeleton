@@ -294,11 +294,10 @@ export default {
 
     placeOrder: function() {
       if(this.addedToMenu == false ){
-        alert("You cannot order nothing!\n Please add your order first!")
+        alert("You cannot order nothing!\nPlease add your order first!")
       }
       else if(this.chosenIngredients.length != 0){
         alert("You have unfinished business...")
-        console.log(this.chosenIngredients)
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
