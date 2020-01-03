@@ -5,8 +5,8 @@
     <button id="switchlangbutton" v-on:click="switchLang()">
       {{ uiLabels.language }}
     </button>
-    <div id="cancelbutton">
-      <router-link tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
+    <div >
+      <router-link id="cancelbutton" tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -17,9 +17,11 @@
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn5" :class="['btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['sbtn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['sbtn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
+
+  <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
 
   </div>
 
@@ -232,6 +234,7 @@ export default {
     },
 
     IsOkToAdd: function(id) {
+
       var i;
       let chosen = 0;
       this.okToAdd = true;
@@ -256,6 +259,10 @@ export default {
       }
       if (chosen >= lim) {
         this.okToAdd = false
+      }
+      else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)){
+        this.okToAdd = false;
+        alert("Slut på ingrediens")
       }
       else{
         this.addToOrder(id);
@@ -389,8 +396,11 @@ randomBurgerBool: function(){
 
 
     redirect: function(num) {
+    //  var btns = document.getElementsByClassName('hide');
+    //  for (var i = 0; i < btns.length; i++){
+    //    btns[i].style.display = 'block';
+    //  }
       this.category = num;
-
     },
 
   }
@@ -424,7 +434,8 @@ randomBurgerBool: function(){
 
 .limittext{
   grid-area: chooseMax;
-  font-size: 1.5em;
+  font-size: 1.4em;
+
   font-weight: bold;
 }
 
@@ -498,7 +509,7 @@ randomBurgerBool: function(){
 }
 
 .previous-button:hover span {
-  padding-right: 25px;
+  padding-right: 1.2em;
 }
 .previous-button:hover span:after {
   opacity: 1;
@@ -515,7 +526,7 @@ randomBurgerBool: function(){
   transition: all 0.5s;
   cursor: pointer;
   position:absolute;
-  right:0px;
+  right:0;
 }
 
 .next-button span {
@@ -535,7 +546,7 @@ randomBurgerBool: function(){
 }
 
 .next-button:hover span {
-  padding-right: 25px;
+  padding-right: 1.2em;
 }
 
 .next-button:hover span:after {
@@ -613,6 +624,9 @@ transition: all 0.4s ease 0s;
   grid-area: content;
   overflow-y: scroll;
 }
+.hide{
+  display: none;
+}
 
 #ingredient-choice {
   display: grid;
@@ -620,7 +634,7 @@ transition: all 0.4s ease 0s;
   grid-row-gap: 0.5em;
   grid-template-columns: repeat(auto-fill, 9em);
   text-align: center;
-  font-size: 18px;
+  font-size: 1.1em;
   overflow-y: scroll;
 }
 
@@ -678,13 +692,15 @@ ul {
   grid-area: nav;
   position: relative;
   display: grid;
-  grid-column-gap: 0.2em;
+  grid-column-gap: 0.5em;
   grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 8em);
-  justify-content: start;
+  grid-template-columns: repeat(auto-fill, 10em);
+  justify-content: center;
 }
 
 #cancelbutton {
+  background-color: darkred;
+  color: floralwhite;
   position: absolute;
   top: 0;
   right: 0;
@@ -695,17 +711,10 @@ ul {
   background-color: royalblue;
   color: gold;
   cursor: pointer;
-  font-size: 15px;
-  border: 2px solid crimson;
+  font-size: 0.9em;
+  border: 0.15em solid crimson;
   border-radius: 0.5em;
   text-align: center;
-}
-
-#cancelbutton {
-  position: absolute;
-  top: 0;
-  right: 0;
-
 }
 
 #price-summary {
@@ -724,12 +733,16 @@ ul {
   padding: 0.5em;
   background-color: #f1f1f1;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.3em;
   border-radius: 0.1em;
-  border: 2px solid;
-  margin: 2px;
+  border: 0.12em solid;
+  margin: 0.2em;
   padding: 1em;
-  width: 134px;
+  width: 8em;
+}
+
+.sbtn{
+  background-color:  #d9d9d9;
 }
 
 .btnc {
@@ -747,8 +760,14 @@ ul {
   background-color:pink ;
   /* denna hade vi: #bfbfbf*/
 }
-#btn5:hover {
-  background-color: pink;
+
+.btnc {
+ padding: 0.5em;
+ background-color: #f1f1f1;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 0.5em;
+ text-align: center;
 }
 
 .orderSummary {
@@ -757,10 +776,6 @@ ul {
   background-color: pink;
   padding: 1em;
   overflow-y: scroll;
-}
-
-#btn5{
-  background-color:  #d9d9d9;
 }
 
 #order-table {
