@@ -794,7 +794,6 @@ height: 125px;
 width: 100%;
 overflow-x: scroll;
 
-
 }
 
 .btn{
