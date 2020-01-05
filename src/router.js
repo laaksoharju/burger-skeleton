@@ -26,6 +26,7 @@ let router = new Router({
         title: 'Burger Bidness',
       },
       name: 'ordering',
+      props: true,
       component: Ordering
     },
 
