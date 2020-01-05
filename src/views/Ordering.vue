@@ -336,6 +336,10 @@ export default {
 
 
     randomBurger: function(ingredients) {
+
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.price -= this.chosenIngredients[i].selling_price;
+      }
       this.chosenIngredients = [];
 
 
