@@ -30,6 +30,7 @@
   "goToOrdering":"Skapa din burgare",
   "goToRandomMenu": "Slumpa meny!",
   "goToRandomMenu2": "Inte nöjd? Slumpa igen!",
+  "goToRandomMenu3": "Lägg till en ny slumpad meny",
   "randomBurgerTitle": "Klicka här för att beställa en slumpmässig hamburgarmeny, med slumpade pålägg och tillbehör!",
   "goToSides": "Beställ tillbehör & dryck",
   "sides": "Tillbehör",
@@ -46,5 +47,6 @@
   "edit":"Ändra",
   "alertAdd":"Du behöver lägga till ordern innan du kan beställa.",
   "alertUnfinished":"Du är inte klar än..",
-  "alertNoIngredients":"Slut på ingredienser"
+  "alertNoIngredients":"Slut på ingrediensen",
+  "newMenu":"Lägg till en ny meny"
 }
