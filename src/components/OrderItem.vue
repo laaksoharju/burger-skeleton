@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped>
 #ordertext {
-	font-size: 40px;
+	font-size: 1.5em;
 	font-weight: bolder;
 }
 #menutext {
