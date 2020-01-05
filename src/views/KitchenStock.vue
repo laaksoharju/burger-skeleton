@@ -3,7 +3,7 @@
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
   {{$store.state.hello}}
 
-  <h1>{{uiLabels.usedingredients}}</h1>
+  <h1 class="labels">{{uiLabels.usedingredients}}</h1>
 
   <div class="labels">{{uiLabels.burger}}</div>
   <div class="ingredientsused" v-for="item in ingredients" v-if="item.category == 1" :key="item.ingredient_id">
@@ -11,7 +11,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
   <br>
@@ -21,7 +21,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
   <br>
@@ -31,7 +31,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
   <br>
@@ -41,7 +41,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
   <br>
@@ -51,7 +51,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
   <br>
@@ -61,7 +61,7 @@
     <br>
     add <input v-model.number="num[item.ingredient_id]" type="number" id="antalsaker" name="antalsaker">
     {{item["ingredient_"+ lang]}} to stock
-    <button id="laggtill" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
+    <button id="addbutton" v-on:click="addToStock(item);clearField(item.ingredient_id)">add</button>
   </div>
 
 
@@ -132,29 +132,29 @@ export default {
 @import 'https://fonts.googleapis.com/css?family=Questrial&display=swap';
 
 #stock {
-  font-size: 24pt;
+  font-size: 1em;
   font-family: 'Questrial', sans-serif;
 
 
 }
 
 .ingredientsused {
-  border: 5px outset lightcoral;
+  border: 0.3em outset lightcoral;
   margin: 0.5em;
   display: table;
   background-color: floralwhite;
 
 }
 
-#laggtill {
-  font-size: 20px;
+#addbutton {
+  font-size: 1.5em;
   background-color: indianred;
   font-stretch: expanded;
   color: white;
 }
 
 .labels {
-  font-size: 45px;
+  font-size: 3em;
   font-weight: bold;
 }
 </style>

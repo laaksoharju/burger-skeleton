@@ -45,5 +45,8 @@
   "glutenFree":"Gluten free",
   "vegan":"Vegan",
   "done":"Done",
-  "edit":"Edit"
+  "edit":"Edit",
+  "alertAdd":"You cannot order nothing! Please add your order first.",
+  "alertUnfinished":"You have unfinished business..."
+
 }
