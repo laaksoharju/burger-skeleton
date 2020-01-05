@@ -50,7 +50,7 @@
   "alertAdd":"You cannot order nothing! Please add your order first.",
   "alertUnfinished":"You have unfinished business...",
   "alertNoIngredients":"Out of ingredient",
-  "newMenu":"Add another menu"
+  "newMenu":"Add another menu",
   "information": "Order a random menu - Randomizes the ingredients on the burger, random sides and a random drink",
   "information2": "Create your burger - Create a burger menu from scratch"
 
