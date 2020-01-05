@@ -14,7 +14,7 @@
   <div id="allButtons">
 
     <div class = "buttonArea">
-      <router-link style="text-decoration:none" id = "button" to="ordering">{{ uiLabels.goToOrdering }}</router-link>
+      <router-link style="text-decoration:none" id = "button" :to="{name:'ordering', params:{lang}}">{{ uiLabels.goToOrdering }}</router-link>
     </div>
     </div>
 
@@ -135,7 +135,6 @@ export default {
   text-align: center;
   align-items: center;
 }
-
 
 #switchlangbutton {
   padding: 0.5em;

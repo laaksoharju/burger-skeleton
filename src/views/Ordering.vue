@@ -2,11 +2,11 @@
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
   <div id="heady">
-    <button id="switchlangbutton" v-on:click="switchLang()">
+    <button class="buttons" id="switchlangbutton" v-on:click="switchLang()">
       {{ uiLabels.language }}
     </button>
-    <div >
-      <router-link id="cancelbutton" tag="button" class="btnc" to="/">{{uiLabels.cancelOrder}}</router-link>
+    <div>
+      <router-link id="cancelbutton" tag="button" class="buttons" to="/">{{uiLabels.cancelOrder}}</router-link>
     </div>
   </div>
 
@@ -17,17 +17,17 @@
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
     <button id="btn4" :class="['btn', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>
-    <button id="btn5" :class="['sbtn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
-    <button id="btn6" :class="['sbtn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
+    <button id="btn5" :class="['sides-btn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
+    <button id="btn6" :class="['sides-btn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
 
-  <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
+    <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
 
   </div>
 
-  <div class="limittext" v-if= "category != 5 && category != 6 && category != 7" >
+  <div class="limittext" v-if="category != 5 && category != 6 && category != 7">
     {{uiLabels.choose}} max {{maxIngredients()}} </div>
-  <div class="limittext" v-else-if= "category == 5 || category == 6" >
+  <div class="limittext" v-else-if="category == 5 || category == 6">
     {{uiLabels.noMaxLimit}} </div>
 
 
@@ -55,10 +55,10 @@
       <td>{{ price }} :-</td>
     </table>
     <div v-if="category!=7">
-      <button class="btnc" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
+      <button class="buttons" id="checkoutbutton" v-on:click="redirect(7)">{{ uiLabels.checkout }}</button>
     </div>
     <div v-else-if="category==7">
-      <button id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+      <button class="buttons" id="pobutton" v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
     </div>
 
   </div>
@@ -66,15 +66,8 @@
   <div class="menuDisplay">
 
     <div id="ingredient-choice">
-      <Ingredient ref="ingredient"
-        v-for="item in ingredients"
-        v-on:increment="IsOkToAdd(item.ingredient_id)"
-        v-on:decrement="removeFromOrder(item.ingredient_id)"
-        v-show="item.category===category"
-        v-bind:itemCount="countNumberOfChosenIngredients(item.ingredient_id)"
-        v-bind:item="item"
-        :lang="lang"
-        :key="item.ingredient_id">
+      <Ingredient ref="ingredient" v-for="item in ingredients" v-on:increment="IsOkToAdd(item.ingredient_id)" v-on:decrement="removeFromOrder(item.ingredient_id)" v-show="item.category===category"
+        v-bind:itemCount="countNumberOfChosenIngredients(item.ingredient_id)" v-bind:item="item" :lang="lang" :key="item.ingredient_id">
 
       </Ingredient>
     </div>
@@ -85,7 +78,7 @@
       <h1 id="review"> {{uiLabels.review}} </h1>
       <h2>
         <table style="width:100%">
-          <tr id = "review" v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
+          <tr id="review" v-for="item in countAllChosenIngredients" :key="item.ingredient_id">
             <td>
               {{item.count}}
             </td>
@@ -98,25 +91,25 @@
         </table>
       </h2>
       <div v-if="chosenIngredients.length>0">
-      <button id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
-      <button  class ="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click = "newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
-    </div>
-      <div >
+        <button class="buttons" id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
+        <button class="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
+      </div>
+      <div>
         <table id="order-summary" style="width:100%">
-          <tr id="tablerow"  v-for="(menu,key) in currentOrder.menus" :key="key">
-        <td id="menunr">{{uiLabels.menu}} {{key+1}}</td>
-        <div v-for="(item,key2) in menu.ingredients" :key="key2">
-          <td id="ing-display">{{item["ingredient_"+lang]}}</td>
-        </div>
-        <td id="editbtn"><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
-      </tr>
-      </table>
+          <tr id="tablerow" v-for="(menu,key) in currentOrder.menus" :key="key">
+            <td id="menunr">{{uiLabels.menu}} {{key+1}}</td>
+            <div v-for="(item,key2) in menu.ingredients" :key="key2">
+              <td id="ing-display">{{item["ingredient_"+lang]}}</td>
+            </div>
+            <td id="editbtn"><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
+          </tr>
+        </table>
       </div>
     </div>
 
   </div>
-  <div id="buttons">
-    <button  class = "random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click = "randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+  <div id="footer-buttons">
+    <button class="random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click="randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
     <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
@@ -141,6 +134,7 @@ import sharedVueStuff from '@/components/sharedVueStuff.js'
 necessary Vue instance (found in main.js) to import your data and methods */
 export default {
   name: 'Ordering',
+  props: ['lang'],
   components: {
     Ingredient,
     OrderItem
@@ -176,7 +170,7 @@ export default {
         chosenIngredientTuples[i] = {};
         chosenIngredientTuples[i].id = this.chosenIngredientsSet[i].ingredient_id;
         chosenIngredientTuples[i].count = this.countNumberOfChosenIngredients(this.chosenIngredientsSet[i].ingredient_id);
-        }
+      }
       return chosenIngredientTuples;
     }
   },
@@ -189,7 +183,7 @@ export default {
   },
   methods: {
     getItemById(id) {
-      for(let i = 0; i < this.ingredients.length; i += 1) {
+      for (let i = 0; i < this.ingredients.length; i += 1) {
         if (this.ingredients[i].ingredient_id === id)
           return this.ingredients[i];
       }
@@ -198,11 +192,12 @@ export default {
     countNumberOfChosenIngredients: function(id) {
       let counter = 0;
       for (let i = 0; i < this.chosenIngredients.length; i += 1) {
-        if(this.chosenIngredients[i].ingredient_id === id){
-        counter += 1;
+        if (this.chosenIngredients[i].ingredient_id === id) {
+          counter += 1;
         }
       }
-      return counter; },
+      return counter;
+    },
 
     addToOrder: function(id) {
       if (this.okToAdd) {
@@ -212,8 +207,8 @@ export default {
     },
 
     changeMenu: function(menu) {
-      this.chosenIngredients =[];
-      for (let i = 0; i < menu.ingredients.length; i += 1){
+      this.chosenIngredients = [];
+      for (let i = 0; i < menu.ingredients.length; i += 1) {
         this.chosenIngredients.push(menu.ingredients[i]);
       }
       this.currentOrder.menus.splice(this.currentOrder.menus.indexOf(menu), 1);
@@ -259,12 +254,10 @@ export default {
       }
       if (chosen >= lim) {
         this.okToAdd = false
-      }
-      else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)){
+      } else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)) {
         this.okToAdd = false;
         alert("Slut på ingrediens")
-      }
-      else{
+      } else {
         this.addToOrder(id);
       }
       return this.okToAdd;
@@ -290,23 +283,21 @@ export default {
     },
 
     removeFromOrder: function(id) {
-        for (let i = this.chosenIngredients.length-1; i >= 0; --i) {
-          if (this.chosenIngredients[i].ingredient_id === id){
+      for (let i = this.chosenIngredients.length - 1; i >= 0; --i) {
+        if (this.chosenIngredients[i].ingredient_id === id) {
           this.chosenIngredients.splice(i, 1);
           this.price += -this.getItemById(id).selling_price;
           break;
-          }
         }
+      }
     },
 
     placeOrder: function() {
-      if(this.addedToMenu == false ){
+      if (this.addedToMenu == false) {
         alert("You cannot order nothing!\nPlease add your order first!")
-      }
-      else if(this.chosenIngredients.length != 0){
+      } else if (this.chosenIngredients.length != 0) {
         alert("You have unfinished business...")
-      }
-      else if (confirm(this.uiLabels.instructions)) {
+      } else if (confirm(this.uiLabels.instructions)) {
         /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
@@ -338,10 +329,10 @@ export default {
           btns[i].className = "btn";
           btns[i - 1].className += " active";
         }
-      },
+    },
 
 
-    randomBurger: function(ingredients){
+    randomBurger: function(ingredients) {
       this.chosenIngredients = [];
 
 
@@ -354,52 +345,54 @@ export default {
       let drinkmax = 60;
 
 
-    for (let i = 0; i  < 2; i++){
-      let randburg = Math.floor(Math.random() * (burgmax));
-      this.IsOkToAdd(ingredients[randburg].ingredient_id)}
+      for (let i = 0; i < 2; i++) {
+        let randburg = Math.floor(Math.random() * (burgmax));
+        this.IsOkToAdd(ingredients[randburg].ingredient_id)
+      }
 
-    let randbread =   Math.floor(Math.random() * (breadmax-saucemax)) + saucemax;
-    this.IsOkToAdd(ingredients[randbread].ingredient_id)
+      let randbread = Math.floor(Math.random() * (breadmax - saucemax)) + saucemax;
+      this.IsOkToAdd(ingredients[randbread].ingredient_id)
 
-    for (let i = 0; i < 4; i++){
-      let randtopping = Math.floor(Math.random() * (toppingmax-burgmax)) + burgmax;
-      this.IsOkToAdd(ingredients[randtopping].ingredient_id)}
+      for (let i = 0; i < 4; i++) {
+        let randtopping = Math.floor(Math.random() * (toppingmax - burgmax)) + burgmax;
+        this.IsOkToAdd(ingredients[randtopping].ingredient_id)
+      }
 
-    for (let i = 0; i < 2; i++){
-      let randsauce =   Math.floor(Math.random() * (saucemax-toppingmax)) + toppingmax;
-      this.IsOkToAdd(ingredients[randsauce].ingredient_id)}
+      for (let i = 0; i < 2; i++) {
+        let randsauce = Math.floor(Math.random() * (saucemax - toppingmax)) + toppingmax;
+        this.IsOkToAdd(ingredients[randsauce].ingredient_id)
+      }
 
-    let randsides =   Math.floor(Math.random() * (sidesmax-breadmax)) + breadmax;
-    this.addToOrder(ingredients[randsides].ingredient_id)
-    let randdrink =   Math.floor(Math.random() * (drinkmax-sidesmax)) + sidesmax;
-    this.addToOrder(ingredients[randdrink].ingredient_id)
+      let randsides = Math.floor(Math.random() * (sidesmax - breadmax)) + breadmax;
+      this.addToOrder(ingredients[randsides].ingredient_id)
+      let randdrink = Math.floor(Math.random() * (drinkmax - sidesmax)) + sidesmax;
+      this.addToOrder(ingredients[randdrink].ingredient_id)
 
-      this.category =7;
-},
-newRandomBurger:function(ingredients) {
-  for (let i = 0; i < this.chosenIngredients.length; i += 1){
-    this.price -= this.chosenIngredients[i].selling_price;
-  }
-  this.chosenIngredients = [];
-  this.randomBurger(ingredients);
-},
+      this.category = 7;
+    },
+    newRandomBurger: function(ingredients) {
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.price -= this.chosenIngredients[i].selling_price;
+      }
+      this.chosenIngredients = [];
+      this.randomBurger(ingredients);
+    },
 
 
-randomBurgerBool: function(){
-  if (this.randomBurgerBoolean == true ){
-    return true
-  }
-  else if (this.randomBurgerBoolean == false){
-    return false
-  }
-},
+    randomBurgerBool: function() {
+      if (this.randomBurgerBoolean == true) {
+        return true
+      } else if (this.randomBurgerBoolean == false) {
+        return false
+      }
+    },
 
 
     redirect: function(num) {
-    //  var btns = document.getElementsByClassName('hide');
-    //  for (var i = 0; i < btns.length; i++){
-    //    btns[i].style.display = 'block';
-    //  }
+      //  var btns = document.getElementsByClassName('hide');
+      //  for (var i = 0; i < btns.length; i++){
+      //    btns[i].style.display = 'block';
+      //  }
       this.category = num;
     },
 
@@ -408,7 +401,6 @@ randomBurgerBool: function(){
 }
 </script>
 <style scoped>
-
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
 
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
@@ -431,11 +423,9 @@ randomBurgerBool: function(){
   height: 100vh;
 }
 
-
-.limittext{
+.limittext {
   grid-area: chooseMax;
   font-size: 1.4em;
-
   font-weight: bold;
 }
 
@@ -443,20 +433,20 @@ randomBurgerBool: function(){
   grid-area: footer;
 }
 
-#menunr{
-  font-weight:bold;
+#menunr {
+  font-weight: bold;
   vertical-align: top;
 }
 
-#order-summary{
-   border-collapse: collapse;
+#order-summary {
+  border-collapse: collapse;
 }
 
-#tablerow{
+#tablerow {
   border-bottom: solid 1px black;
 }
 
-#editbtn{
+#editbtn {
   text-align: right;
 }
 
@@ -464,7 +454,7 @@ randomBurgerBool: function(){
   text-align: right;
 }
 
-#buttons {
+#footer-buttons {
   grid-area: buttons;
   position: relative;
 }
@@ -479,6 +469,7 @@ randomBurgerBool: function(){
 #plusknapp {
   color: green;
 }
+
 /*PREVIOUS BUTTON*/
 .previous-button {
   border: solid black;
@@ -488,8 +479,8 @@ randomBurgerBool: function(){
   width: 7em;
   transition: all 0.5s;
   cursor: pointer;
-  position:absolute;
-  left:0;
+  position: absolute;
+  left: 0;
 }
 
 .previous-button span {
@@ -511,6 +502,7 @@ randomBurgerBool: function(){
 .previous-button:hover span {
   padding-right: 1.2em;
 }
+
 .previous-button:hover span:after {
   opacity: 1;
   right: 0;
@@ -525,8 +517,8 @@ randomBurgerBool: function(){
   width: 7em;
   transition: all 0.5s;
   cursor: pointer;
-  position:absolute;
-  right:0;
+  position: absolute;
+  right: 0;
 }
 
 .next-button span {
@@ -554,15 +546,6 @@ randomBurgerBool: function(){
   right: 0;
 }
 
-
-#previous-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.5em;
-  padding: 0.1em 1em;
-  cursor: pointer;
-}
 /*.random-button{
   position: absolute;
   top: 0;
@@ -586,45 +569,48 @@ randomBurgerBool: function(){
   border: none;
   transition: all 0.3s ease 0s;
   top: 0;
-  right:0;
-  position:absolute;
-}
-.random-button2:hover{
-  cursor:pointer;
-  background: #434343;
-  letter-spacing: 1px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-  transition: all 0.4s ease 0s;
-  }
-.random-button {
-color: #fff !important;
-text-transform: uppercase;
-text-decoration: none;
-background: #ed3330;
-padding: 20px;
-border-radius: 5px;
-display: inline-block;
-border: none;
-transition: all 0.3s ease 0s;
-}
-.random-button:hover {
-cursor:pointer;
-background: #434343;
-letter-spacing: 1px;
--webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-transition: all 0.4s ease 0s;
+  right: 0;
+  position: absolute;
 }
 
+.random-button2:hover {
+  cursor: pointer;
+  background: #434343;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.random-button {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ed3330;
+  padding: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+
+.random-button:hover {
+  cursor: pointer;
+  background: #434343;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+}
 
 .menuDisplay {
   grid-area: content;
   overflow-y: scroll;
 }
-.hide{
+
+.hide {
   display: none;
 }
 
@@ -643,24 +629,44 @@ transition: all 0.4s ease 0s;
   position: relative;
 }
 
-#donebutton{
+.buttons {
   padding: 0.5em;
-  background-color: darkgreen;
-  color: white;
   cursor: pointer;
-  font-size: 1em;
   border-radius: 0.5em;
   text-align: center;
 }
 
-#pobutton {
-  padding: 0.5em;
+#donebutton {
   background-color: darkgreen;
   color: white;
-  cursor: pointer;
+  font-size: 1em;
+}
+
+#pobutton {
+  background-color: darkgreen;
+  color: white;
   font-size: 1.2em;
-  border-radius: 0.5em;
-  text-align: center;
+}
+
+#checkoutbutton {
+  background-color: #f1f1f1;
+  font-size: 1.2em;
+}
+
+#cancelbutton {
+  background-color: darkred;
+  font-size: 0.9em;
+  color: floralwhite;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+#switchlangbutton {
+  background-color: royalblue;
+  color: gold;
+  font-size: 0.9em;
+  border: 0.15em solid crimson;
 }
 
 .example-panel {
@@ -698,25 +704,6 @@ ul {
   justify-content: center;
 }
 
-#cancelbutton {
-  background-color: darkred;
-  color: floralwhite;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#switchlangbutton {
-  padding: 0.5em;
-  background-color: royalblue;
-  color: gold;
-  cursor: pointer;
-  font-size: 0.9em;
-  border: 0.15em solid crimson;
-  border-radius: 0.5em;
-  text-align: center;
-}
-
 #price-summary {
   z-index: 1;
   width: inherit;
@@ -741,33 +728,15 @@ ul {
   width: 8em;
 }
 
-.sbtn{
-  background-color:  #d9d9d9;
-}
-
-.btnc {
-  padding: 0.5em;
- background-color: #f1f1f1;
- cursor: pointer;
- font-size: 1.2em;
- border-radius: 0.5em;
- text-align: center;
+.sides-btn {
+  background-color: #d9d9d9;
 }
 
 /* Style the active class, and buttons on mouse-over */
 .active,
 .btn:hover {
-  background-color:pink ;
+  background-color: pink;
   /* denna hade vi: #bfbfbf*/
-}
-
-.btnc {
- padding: 0.5em;
- background-color: #f1f1f1;
- cursor: pointer;
- font-size: 18px;
- border-radius: 0.5em;
- text-align: center;
 }
 
 .orderSummary {
@@ -783,7 +752,7 @@ ul {
   position: relative;
 }
 
-@media (max-width: 600px){
+@media (max-width: 600px) {
   .container {
     display: grid;
 
@@ -801,14 +770,16 @@ ul {
     grid-gap: 1em;
     height: 85vh;
   }
+
   #ingredient-choice {
-    grid-column-start:1;
-    grid-column-end:5;
+    grid-column-start: 1;
+    grid-column-end: 5;
     display: grid;
     text-align: center;
     font-size: 18px;
     overflow-y: scroll;
   }
+
   .next-button {
     border: solid black;
     text-align: center;
@@ -818,23 +789,26 @@ ul {
     grid-gap: 2em;
     transition: all 0.5s;
     cursor: pointer;
-    position:relative;
+    position: relative;
 
     right: 0px;
     display: inline-block;
   }
-  .previous-button{
-    font-size:1.1em;
+
+  .previous-button {
+    font-size: 1.1em;
     padding: 0.3em;
     width: 6em;
     left: 0px;
     display: inline-block;
     position: relative;
   }
+
   #buttons {
-    position:relative;
+    position: relative;
 
   }
+
   #price-summary {
     z-index: 1;
     width: inherit;
@@ -846,6 +820,7 @@ ul {
     background-color: pink;
     border: 0.2em dashed black;
   }
+
   #huvudmeny {
     grid-area: nav;
     position: relative;
@@ -855,20 +830,22 @@ ul {
     grid-template-columns: repeat(auto-fill, 7.25em);
     justify-content: start;
   }
-  .random-button2{
+
+  .random-button2 {
     right: 0px;
-    position:relative;
+    position: relative;
   }
- #review{
-  font-size: 16px;
-}
-.ingredient {
-  font-size:14px;
-}
+
+  #review {
+    font-size: 16px;
+  }
+
+  .ingredient {
+    font-size: 14px;
+  }
 
 
 
 
 }
-
 </style>
