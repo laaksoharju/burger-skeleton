@@ -137,7 +137,7 @@ export default {
   props: ['lang'],
   components: {
     Ingredient,
-    OrderItem
+    OrderItem,
   },
   mixins: [sharedVueStuff], // include stuff that is used in both
   // the ordering system and the kitchen
