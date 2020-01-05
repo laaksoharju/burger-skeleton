@@ -4,7 +4,7 @@
 <div v-if="category===0">
 
   <Startingpage ref="startingpage" v-on:randburg="randomBurger(ingredients)" v-on:bytsprak="switchLang()" v-on:gavidare="startOrdering()" :category="category" :ui-labels="uiLabels" :lang="lang">
-    
+
   </Startingpage>
 
 </div>
@@ -396,6 +396,7 @@ export default {
     },
     cancelOrdering: function() {
 
+      this.chosenIngredients = [];
       this.currentOrder = {
         menus: []
       };
@@ -806,7 +807,7 @@ height: 4em;
   }
 
   #review {
-    font-size: 0.5em;
+    font-size: 1em;
   }
 
   .ingredient {
