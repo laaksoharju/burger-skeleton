@@ -43,5 +43,7 @@
   "glutenFree":"Glutenfri",
   "vegan":"Vegansk",
   "done":"Klar",
-  "edit":"Ändra"
+  "edit":"Ändra",
+  "alertAdd":"Du kan inte beställa ingenting! Lägg till din order först, tack!",
+  "alertUnfinished":"Du är inte klar än.."
 }

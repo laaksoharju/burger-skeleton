@@ -301,10 +301,10 @@ export default {
 
     placeOrder: function() {
       if(this.addedToMenu == false ){
-        alert("You cannot order nothing!\n Please add your order first!")
-      }
+        alert(this.uiLabels.alertAdd)
+}
       else if(this.chosenIngredients.length != 0){
-        alert("You have unfinished business...")
+        alert(this.uiLabels.alertUnfinished)
       }
       else if (confirm(this.uiLabels.instructions)) {
         /*
@@ -624,9 +624,9 @@ transition: all 0.4s ease 0s;
   grid-area: content;
   overflow-y: scroll;
 }
-.hide{
+/*.hide{
   display: none;
-}
+}*/
 
 #ingredient-choice {
   display: grid;
@@ -738,7 +738,7 @@ ul {
   border: 0.12em solid;
   margin: 0.2em;
   padding: 1em;
-  width: 8em;
+  width: 9em;
 }
 
 .sbtn{
@@ -765,7 +765,7 @@ ul {
  padding: 0.5em;
  background-color: #f1f1f1;
  cursor: pointer;
- font-size: 18px;
+ font-size: 1.1em;
  border-radius: 0.5em;
  text-align: center;
 }
@@ -820,14 +820,14 @@ ul {
     cursor: pointer;
     position:relative;
 
-    right: 0px;
+    right: 0;
     display: inline-block;
   }
   .previous-button{
     font-size:1.1em;
     padding: 0.3em;
     width: 6em;
-    left: 0px;
+    left: 0;
     display: inline-block;
     position: relative;
   }
@@ -860,7 +860,7 @@ ul {
     position:relative;
   }
  #review{
-  font-size: 16px;
+  font-size: 15px;
 }
 .ingredient {
   font-size:14px;
