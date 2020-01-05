@@ -336,6 +336,10 @@ export default {
 
 
     randomBurger: function(ingredients) {
+
+      for (let i = 0; i < this.chosenIngredients.length; i += 1) {
+        this.price -= this.chosenIngredients[i].selling_price;
+      }
       this.chosenIngredients = [];
 
 
@@ -767,7 +771,7 @@ export default {
     grid-gap: 2em;
     transition: all 0.5s;
     cursor: pointer;
-    position: relative;
+    position: absolute;
 
     right: 0;
     grid-area: content content side;
@@ -800,20 +804,22 @@ export default {
   }
 
   #huvudmeny {
-
     display: flex;
-flex-wrap: nowrap;
-background-color: white;
-height: 6em;
-width: 100%;
-overflow-x: scroll;
-grid-column-start: 1;
 
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: 115px;
+    width: 100%;
+    overflow-x: scroll;
+
+}
+.random-button{
+  font-size: 8px;
 }
 
 .btn{
 height: 4em;
-display: inline-block;
+
 }
 
   #random-button2{
@@ -833,13 +839,6 @@ display: inline-block;
     height:7em;
 
   }
-
- #review{
-  font-size: 15px;
-}
-.ingredient {
-  font-size:14px;
-}
 
 }
 </style>
