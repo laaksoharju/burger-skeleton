@@ -16,7 +16,15 @@
       <button ref="Ordering" class="goToOrderingButton" style="text-decoration:none" v-on:click="startOrder()">{{ uiLabels.goToOrdering }}</button>
       <br>
       <button id = "start-random-button" class="goToOrderingButton" v-on:click="randBurg()">{{uiLabels.goToRandomMenu}}</button>
+      <br>
+
+        <div class="info"><img src="@/assets/info.png" height="30">
+            <span class = "infotext">{{uiLabels.information2}}
+            <br> <br> {{uiLabels.information}}</span>
+          </div>
+
     </div>
+
 
     <br>
     <div id = "hamburgerGif">
@@ -137,7 +145,40 @@ export default {
 .goToOrderingButton:hover{
   color: grey;
 }
-
+.extra-info {
+  display: none;
+  line-height: 30px;
+  font-size: 12px;
+	position: absolute;
+  top: 0;
+  left: 50px;
+}
+.info{
+  left:50%;
+  right:50%;
+  position: absolute;
+  display: inline-block;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.info .infotext{
+  visibility: hidden;
+  width: 30em;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  z-index:1;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -2.5em;
+}
+.info:hover .infotext{
+  visibility: visible;
+}
 
 .example-panel{
   position:fixed;
