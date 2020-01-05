@@ -767,7 +767,7 @@ export default {
     grid-gap: 2em;
     transition: all 0.5s;
     cursor: pointer;
-    position: relative;
+    position: absolute;
 
     right: 0;
     display: inline-block;
@@ -799,20 +799,22 @@ export default {
   }
 
   #huvudmeny {
-
     display: flex;
-flex-wrap: nowrap;
-background-color: white;
-height: 125px;
-width: 100%;
-overflow-x: scroll;
-
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: 115px;
+    width: 100%;
+    overflow-x: scroll;
 
 }
+.random-button{
+  font-size: 8px;
+}
 
-.btn{
+ .btn{
 height: 100px;
-display: inline-block;
+
+
 }
 
   #random-button2{
@@ -828,13 +830,6 @@ display: inline-block;
   .ingredient {
     font-size: 14px;
   }
-
- #review{
-  font-size: 15px;
-}
-.ingredient {
-  font-size:14px;
-}
 
 }
 </style>
