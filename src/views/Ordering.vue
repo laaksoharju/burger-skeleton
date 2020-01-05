@@ -92,7 +92,7 @@
       </h2>
       <div v-if="chosenIngredients.length>0">
         <button class="buttons" id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
-        <button class="random-button2" v-if="category == 7 && randomBurgerBool()==true" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
+        <button id = "random-button2" class="random-button" v-if="category == 7 && randomBurgerBool()==true" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
       </div>
       <div>
         <table id="order-summary" style="width:100%">
@@ -109,7 +109,7 @@
 
   </div>
   <div id="footer-buttons">
-    <button class="random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click="randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
+    <button id = "random-button" class="random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click="randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
     <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
@@ -443,7 +443,7 @@ export default {
 }
 
 #tablerow {
-  border-bottom: solid 1px black;
+  border-bottom: solid 0.08em black;
 }
 
 #editbtn {
@@ -546,50 +546,13 @@ export default {
   right: 0;
 }
 
-/*.random-button{
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.5em;
-  padding: 0.1em 1em;
-  background:url("../assets/randomBackground.png") repeat scroll left top;
-}
-.random-button:hover{
-  cursor:pointer;
-}*/
-
-.random-button2 {
-  color: #fff !important;
-  text-decoration: none;
-  background: #ed3330;
-  font-size: 1em;
-  padding: 0.5em;
-  border-radius: 0.5em;
-  display: inline-block;
-  border: none;
-  transition: all 0.3s ease 0s;
-  top: 0;
-  right: 0;
-  position: absolute;
-}
-
-.random-button2:hover {
-  cursor: pointer;
-  background: #434343;
-  letter-spacing: 1px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
-}
-
 .random-button {
   color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
   background: #ed3330;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 2em;
+  border-radius:  0.5em;
   display: inline-block;
   border: none;
   transition: all 0.3s ease 0s;
@@ -598,11 +561,11 @@ export default {
 .random-button:hover {
   cursor: pointer;
   background: #434343;
-  letter-spacing: 1px;
+  letter-spacing: 0.03em;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
+  transition: all 0.15s ease 0s;
 }
 
 .menuDisplay {
@@ -685,10 +648,6 @@ export default {
 }
 
 /*allt nedan gäller menyn "burgare bröd osv"*/
-ul {
-  margin: 50px 0 30px 0;
-  padding: 0;
-}
 
 #heady {
   grid-area: header;
@@ -751,6 +710,12 @@ ul {
   width: 100%;
   position: relative;
 }
+#random-button2 {
+
+  top: 0;
+  right: 0;
+  position: absolute;
+}
 
 @media (max-width: 600px) {
   .container {
@@ -765,7 +730,7 @@ ul {
       "footer footer footer";
 
     grid-template-columns: 1fr 150px;
-
+    align-content: start;
     grid-template-rows: auto auto auto auto auto;
     grid-gap: 1em;
     height: 85vh;
@@ -776,7 +741,7 @@ ul {
     grid-column-end: 5;
     display: grid;
     text-align: center;
-    font-size: 18px;
+    font-size: 1.15em;
     overflow-y: scroll;
   }
 
@@ -806,7 +771,6 @@ ul {
 
   #buttons {
     position: relative;
-
   }
 
   #price-summary {
@@ -822,30 +786,34 @@ ul {
   }
 
   #huvudmeny {
-    grid-area: nav;
-    position: relative;
-    display: grid;
-    grid-column-gap: 0em;
-    grid-row-gap: 0em;
-    grid-template-columns: repeat(auto-fill, 7.25em);
-    justify-content: start;
-  }
 
-  .random-button2 {
-    right: 0px;
-    position: relative;
+    display: flex;
+flex-wrap: nowrap;
+background-color: white;
+height: 125px;
+width: 100%;
+overflow-x: scroll;
+
+
+}
+
+.btn{
+height: 100px;
+display: inline-block;
+}
+
+  #random-button2{
+    top: 0;
+    right: 0;
+    position: absolute;
   }
 
   #review {
-    font-size: 16px;
+    font-size: 0.5em;
   }
 
   .ingredient {
     font-size: 14px;
   }
-
-
-
-
 }
 </style>
