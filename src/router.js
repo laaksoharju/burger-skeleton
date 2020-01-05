@@ -11,16 +11,17 @@ Vue.use(Router)
 
 let router = new Router({
   routes: [
-    /*{
-      path: '/',
-      meta: {
-        title: 'Burger Bidness',
-      },
-      name: 'startingpage',
-      component: Startingpage
-    },*/
+{
+  path: "/",
+  meta:{
+    title:"Burger bidness",
+  },
+  name: "ordering",
+  props:true,
+  component:Ordering
+},
 
-    {
+{
       path: '/ordering',
       meta: {
         title: 'Burger Bidness',
@@ -41,6 +42,7 @@ let router = new Router({
 
     {
       path: '/kitchen',
+
       meta: {
         title: 'Kitchen',
       },

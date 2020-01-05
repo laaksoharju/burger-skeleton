@@ -4,6 +4,7 @@
 <div v-if="category===0">
 
   <Startingpage ref="startingpage" v-on:randburg="randomBurger(ingredients)" v-on:bytsprak="switchLang()" v-on:gavidare="startOrdering()" :category="category" :ui-labels="uiLabels" :lang="lang">
+    
   </Startingpage>
 
 </div>
@@ -758,7 +759,7 @@ export default {
 height: 100px;
 display: inline-block;
 }
-  
+
 .random-button{
   font-size: 8px;
 }

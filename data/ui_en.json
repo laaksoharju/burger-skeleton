@@ -48,6 +48,8 @@
   "edit":"Edit",
   "alertAdd":"You cannot order nothing! Please add your order first.",
   "alertUnfinished":"You have unfinished business...",
-  "alertNoIngredients":"No ingredients"
+  "alertNoIngredients":"No ingredients",
+  "information": "Order a random menu - Randomizes the ingredients on the burger, random sides and a random drink",
+  "information2": "Create your burger - Create a burger menu from scratch"
 
 }
