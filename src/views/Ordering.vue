@@ -115,15 +115,18 @@
             <div v-for="(item,key2) in menu.ingredients" :key="key2">
               <td id="ing-display">{{item["ingredient_"+lang]}}</td>
             </div>
-            <td id="editbtn"><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
+            <td id="editbtn" ><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
           </tr>
         </table>
+          <button id="random-button3" class="random-button" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu3}}</button>
+          <br>
+          <button id="addanothermenubutton" class="buttons" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="redirect(1)">{{uiLabels.newMenu}}</button>
       </div>
-    </div>
-
+      </div>
   </div>
+
+
   <div id="footer-buttons">
-    <button id = "random-button" class="random-button" title:uiLabels.randomBurgerTitle v-if="category == 1" v-on:click="randomBurger(ingredients)">{{uiLabels.goToRandomMenu}}</button>
     <button class="previous-button" v-if="category!==1" v-on:click="previousCategory"><span>{{ uiLabels.previous }}</span></button>
     <button class="next-button" v-if="category!==7" v-on:click="nextCategory"><span>{{ uiLabels.next }}</span></button>
   </div>
@@ -261,7 +264,7 @@ export default {
         this.okToAdd = false
       } else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)) {
         this.okToAdd = false;
-        alert(this.eiLabels.alertNoIngredients)
+        alert(this.uiLabels.alertNoIngredients)
       } else {
         this.addToOrder(id);
       }
@@ -533,7 +536,7 @@ export default {
   text-transform: uppercase;
   text-decoration: none;
   background: #ed3330;
-  padding: 2em;
+  padding: 1em;
   border-radius:  0.5em;
   display: inline-block;
   border: none;
@@ -541,7 +544,7 @@ export default {
 }
 .random-button:hover {
   cursor: pointer;
-  background: #434343;
+  background: darkred;
   letter-spacing: 0.03em;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
@@ -622,11 +625,10 @@ export default {
 }
 #huvudmeny {
   grid-area: nav;
-  position: relative;
   display: grid;
   grid-column-gap: 0.5em;
-  grid-row-gap: 0.4em;
-  grid-template-columns: repeat(auto-fill, 10em);
+  grid-row-gap: 0.5em;
+  grid-template-columns: repeat(auto-fill, 11.2em);
   justify-content: center;
 }
 #price-summary {
@@ -640,15 +642,15 @@ export default {
   border: 0.2em dashed black;
 }
 .btn {
-  padding: 0.5em;
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 1.3em;
   border-radius: 0.1em;
   border: 0.12em solid;
-  margin: 0.2em;
+  margin: 0.4em;
   padding: 1em;
   width: 9em;
+  position: relative;
 }
 .sides-btn {
   background-color: #d9d9d9;
@@ -679,10 +681,36 @@ export default {
   position: relative;
 }
 #random-button2 {
-
   top: 0;
   right: 0;
   position: absolute;
+}
+#random-button3 {
+  bottom: 0;
+  left: 0;
+  position: relative;
+}
+#addanothermenubutton {
+  bottom: 0;
+  left: 0;
+  position: relative;
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: green;
+  padding: 1em;
+  border-radius:  0.5em;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+}
+#addanothermenubutton:hover{
+  cursor: pointer;
+  background: darkgreen;
+  letter-spacing: 0.03em;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.15s ease 0s;
 }
 
 @media (max-width: 600px) {

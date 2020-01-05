@@ -32,6 +32,7 @@
   "goToOrdering":"Create your burger",
   "goToRandomMenu": "Order a random menu",
   "goToRandomMenu2": "Not happy? Randomize again!",
+  "goToRandomMenu3": "Add another random menu",
   "randomBurgerTitle": "Press here to order a random menu with randomly chosen ingredients and sides!",
   "goToSides": "Order sides and drinks",
   "sides": "Sides",
@@ -48,7 +49,8 @@
   "edit":"Edit",
   "alertAdd":"You cannot order nothing! Please add your order first.",
   "alertUnfinished":"You have unfinished business...",
-  "alertNoIngredients":"No ingredients",
+  "alertNoIngredients":"Out of ingredient",
+  "newMenu":"Add another menu"
   "information": "Order a random menu - Randomizes the ingredients on the burger, random sides and a random drink",
   "information2": "Create your burger - Create a burger menu from scratch"
 
