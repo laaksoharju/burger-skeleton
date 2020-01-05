@@ -90,7 +90,7 @@ export default {
 <style scoped>
 @import 'https://fonts.googleapis.com/css?family=Questrial&display=swap';
 #orders {
-  font-size: 24pt;
+  font-size: 1.8em;
   font-family: 'Questrial', sans-serif;
 }
 
@@ -108,10 +108,10 @@ h3{
   text-decoration: underline;
 }
 .orderitems{
-	border: 5px outset lightcoral;
+	border: 0.15em outset lightcoral;
 	display: table;
-  margin: 2px;
-  border-radius: 5px;
+  margin: 0.2em;
+  border-radius: 0.2em;
   background-color: floralwhite;
 
 }
