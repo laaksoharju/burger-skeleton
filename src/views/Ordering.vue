@@ -1,12 +1,25 @@
 <template>
+
+<!-- STARTINGPAGE -->
+<div v-if="category===0">
+
+  <Startingpage ref="startingpage" v-on:randburg="randomBurger(ingredients)" v-on:bytsprak="switchLang()" v-on:gavidare="startOrdering()" :category="category" :ui-labels="uiLabels" :lang="lang">
+  </Startingpage>
+
+</div>
+
+<div v-else>
+
 <div id="ordering" class=container>
   <img class="example-panel" src="@/assets/kitchen2.jpeg">
+
   <div id="heady">
     <button class="buttons" id="switchlangbutton" v-on:click="switchLang()">
       {{ uiLabels.language }}
     </button>
+
     <div>
-      <router-link id="cancelbutton" tag="button" class="buttons" to="/">{{uiLabels.cancelOrder}}</router-link>
+      <button id="cancelbutton" class="buttons" v-on:click="cancelOrdering()">{{uiLabels.cancelOrder}}</button>
     </div>
   </div>
 
@@ -121,6 +134,7 @@
   </div>
 
 </div>
+</div>
 </template>
 <script>
 //import the components that are used in the template, the name that you
@@ -128,25 +142,26 @@
 //components
 import Ingredient from '@/components/Ingredient.vue'
 import OrderItem from '@/components/OrderItem.vue'
+import Startingpage from '@/components/Startingpage.vue'
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 /* instead of defining a Vue instance, export default allows the only
 necessary Vue instance (found in main.js) to import your data and methods */
 export default {
   name: 'Ordering',
-  props: ['lang'],
+  //props: ['lang'],
   components: {
     Ingredient,
     OrderItem,
+    Startingpage
   },
   mixins: [sharedVueStuff], // include stuff that is used in both
   // the ordering system and the kitchen
-
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
       price: 0,
-      category: 1,
+      category: 0,
       orderNumber: "",
       okToAdd: true,
       addedToMenu: false,
@@ -155,11 +170,8 @@ export default {
       currentOrder: {
         menus: []
       }
-
     }
-
   },
-
   computed: {
     chosenIngredientsSet: function() {
       return [...new Set(this.chosenIngredients)]
@@ -174,11 +186,9 @@ export default {
       return chosenIngredientTuples;
     }
   },
-
   created: function() {
     this.$store.state.socket.on('orderNumber', function(data) {
       this.orderNumber = data;
-
     }.bind(this));
   },
   methods: {
@@ -198,14 +208,12 @@ export default {
       }
       return counter;
     },
-
     addToOrder: function(id) {
       if (this.okToAdd) {
         this.chosenIngredients.push(this.getItemById(id));
         this.price += this.getItemById(id).selling_price;
       }
     },
-
     changeMenu: function(menu) {
       this.chosenIngredients = [];
       for (let i = 0; i < menu.ingredients.length; i += 1) {
@@ -213,11 +221,9 @@ export default {
       }
       this.currentOrder.menus.splice(this.currentOrder.menus.indexOf(menu), 1);
     },
-
     addMenu: function() {
       this.randomBurgerBoolean = false;
       this.addedToMenu = true;
-
       this.currentOrder.menus.push({
         ingredients: this.chosenIngredients.splice(0),
         price: this.price
@@ -227,9 +233,7 @@ export default {
         this.$refs.ingredient[i].resetCounter();
       }
     },
-
     IsOkToAdd: function(id) {
-
       var i;
       let chosen = 0;
       this.okToAdd = true;
@@ -262,7 +266,6 @@ export default {
       }
       return this.okToAdd;
     },
-
     maxIngredients: function() {
       let cat = this.category
       let max = 0;
@@ -279,9 +282,7 @@ export default {
         max = 2;
       }
       return max;
-
     },
-
     removeFromOrder: function(id) {
       for (let i = this.chosenIngredients.length - 1; i >= 0; --i) {
         if (this.chosenIngredients[i].ingredient_id === id) {
@@ -291,7 +292,6 @@ export default {
         }
       }
     },
-
     placeOrder: function() {
       if(this.addedToMenu == false ){
         alert(this.uiLabels.alertAdd)
@@ -300,7 +300,6 @@ export default {
         alert(this.uiLabels.alertUnfinished)
       }
       else if (confirm(this.uiLabels.instructions)) {
-
         /*
         for (i = 0; i < this.$refs.ingredient.length; i += 1) {
           this.$refs.ingredient[i].resetCounter();
@@ -309,12 +308,13 @@ export default {
         this.currentOrder = {
           menus: []
         };
-        this.category = 1;
+        this.category = 0;
         this.price = 0;
-        document.location = "/";
-      }
 
+      }
     },
+
+
     nextCategory: function() {
       this.category += 1;
       var btns = document.getElementsByClassName("btn");
@@ -333,16 +333,12 @@ export default {
           btns[i - 1].className += " active";
         }
     },
-
-
     randomBurger: function(ingredients) {
 
       for (let i = 0; i < this.chosenIngredients.length; i += 1) {
         this.price -= this.chosenIngredients[i].selling_price;
       }
       this.chosenIngredients = [];
-
-
       this.randomBurgerBoolean = true;
       let burgmax = 9;
       let toppingmax = 34;
@@ -350,31 +346,24 @@ export default {
       let breadmax = 52;
       let sidesmax = 55;
       let drinkmax = 60;
-
-
       for (let i = 0; i < 2; i++) {
         let randburg = Math.floor(Math.random() * (burgmax));
         this.IsOkToAdd(ingredients[randburg].ingredient_id)
       }
-
       let randbread = Math.floor(Math.random() * (breadmax - saucemax)) + saucemax;
       this.IsOkToAdd(ingredients[randbread].ingredient_id)
-
       for (let i = 0; i < 4; i++) {
         let randtopping = Math.floor(Math.random() * (toppingmax - burgmax)) + burgmax;
         this.IsOkToAdd(ingredients[randtopping].ingredient_id)
       }
-
       for (let i = 0; i < 2; i++) {
         let randsauce = Math.floor(Math.random() * (saucemax - toppingmax)) + toppingmax;
         this.IsOkToAdd(ingredients[randsauce].ingredient_id)
       }
-
       let randsides = Math.floor(Math.random() * (sidesmax - breadmax)) + breadmax;
       this.addToOrder(ingredients[randsides].ingredient_id)
       let randdrink = Math.floor(Math.random() * (drinkmax - sidesmax)) + sidesmax;
       this.addToOrder(ingredients[randdrink].ingredient_id)
-
       this.category = 7;
     },
     newRandomBurger: function(ingredients) {
@@ -384,8 +373,6 @@ export default {
       this.chosenIngredients = [];
       this.randomBurger(ingredients);
     },
-
-
     randomBurgerBool: function() {
       if (this.randomBurgerBoolean == true) {
         return true
@@ -393,8 +380,6 @@ export default {
         return false
       }
     },
-
-
     redirect: function(num) {
       //  var btns = document.getElementsByClassName('hide');
       //  for (var i = 0; i < btns.length; i++){
@@ -402,19 +387,28 @@ export default {
       //  }
       this.category = num;
     },
+    startOrdering: function() {
+      this.category = 1;
+    },
+    cancelOrdering: function() {
 
+      this.currentOrder = {
+        menus: []
+      };
+      this.category = 0;
+      this.price = 0;
+    }
   }
-
 }
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
-
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
+
+
 .container {
   font-family: 'Quicksand', sans-serif;
   display: grid;
-
   grid-template-areas:
     "header header"
     "nav nav"
@@ -422,50 +416,39 @@ export default {
     "content side"
     "buttons empty"
     "footer footer";
-
   grid-template-columns: 1fr 300px;
-
   grid-template-rows: 25px auto auto 1fr 5em;
   grid-gap: 1em;
   height: 100vh;
 }
-
 .limittext {
   grid-area: chooseMax;
   font-size: 1.4em;
   font-weight: bold;
 }
-
 #footer {
   grid-area: footer;
 }
-
 #menunr {
   font-weight: bold;
   vertical-align: top;
 }
-
 #order-summary {
   border-collapse: collapse;
 }
-
 #tablerow {
   border-bottom: solid 0.08em black;
 }
-
 #editbtn {
   text-align: right;
 }
-
 #price {
   text-align: right;
 }
-
 #footer-buttons {
   grid-area: buttons;
   position: relative;
 }
-
 .plusMinus {
   background-color: pink;
   border: none;
@@ -473,10 +456,10 @@ export default {
   font-size: 1.3em;
 }
 
+
 #addButton {
   color: green;
 }
-
 /*PREVIOUS BUTTON*/
 .previous-button {
   border: solid black;
@@ -489,14 +472,12 @@ export default {
   position: absolute;
   left: 0;
 }
-
 .previous-button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
-
 .previous-button span:after {
   content: '\00ab';
   position: absolute;
@@ -505,16 +486,13 @@ export default {
   left: 0;
   transition: 0.5s;
 }
-
 .previous-button:hover span {
   padding-left: 0.9em;
 }
-
 .previous-button:hover span:after {
   opacity: 1;
   left: 0;
 }
-
 /*NEXT BUTTON*/
 .next-button {
   border: solid black;
@@ -527,14 +505,12 @@ export default {
   position: absolute;
   right: 0;
 }
-
 .next-button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
-
 .next-button span:after {
   content: '\00bb';
   position: absolute;
@@ -543,11 +519,9 @@ export default {
   right: 0;
   transition: 0.5s;
 }
-
 .next-button:hover span {
   padding-right: 1.2em;
 }
-
 .next-button:hover span:after {
   opacity: 1;
   right: 0;
@@ -564,7 +538,6 @@ export default {
   border: none;
   transition: all 0.3s ease 0s;
 }
-
 .random-button:hover {
   cursor: pointer;
   background: #434343;
@@ -574,16 +547,13 @@ export default {
   box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.15s ease 0s;
 }
-
 .menuDisplay {
   grid-area: content;
   overflow-y: scroll;
 }
 /*.hide{
-
   display: none;
 }*/
-
 #ingredient-choice {
   display: grid;
   grid-column-gap: 0.5em;
@@ -593,36 +563,30 @@ export default {
   font-size: 1.1em;
   overflow-y: scroll;
 }
-
 #finalsummary {
   width: 100%;
   position: relative;
 }
-
 .buttons {
   padding: 0.5em;
   cursor: pointer;
   border-radius: 0.5em;
   text-align: center;
 }
-
 #donebutton {
   background-color: darkgreen;
   color: white;
   font-size: 1em;
 }
-
 #pobutton {
   background-color: darkgreen;
   color: white;
   font-size: 1.2em;
 }
-
 #checkoutbutton {
   background-color: #f1f1f1;
   font-size: 1.2em;
 }
-
 #cancelbutton {
   background-color: darkred;
   font-size: 0.9em;
@@ -631,14 +595,12 @@ export default {
   top: 0.5em;
   right: 0.5em;
 }
-
 #switchlangbutton {
   background-color: royalblue;
   color: gold;
   font-size: 0.9em;
   border: 0.15em solid crimson;
 }
-
 .example-panel {
   position: fixed;
   left: 0;
@@ -646,20 +608,17 @@ export default {
   z-index: -2;
   opacity: 0.2;
 }
-
 .ingredient {
   border: 0.2em solid black;
   padding: 0.3em;
   background-color: pink;
   color: black;
 }
-
 /*allt nedan gäller menyn "burgare bröd osv"*/
 
 #heady {
   grid-area: header;
 }
-
 #huvudmeny {
   grid-area: nav;
   position: relative;
@@ -669,7 +628,6 @@ export default {
   grid-template-columns: repeat(auto-fill, 10em);
   justify-content: center;
 }
-
 #price-summary {
   z-index: 1;
   width: inherit;
@@ -677,11 +635,9 @@ export default {
   bottom: 0.5em;
   right: 0.5em;
   padding: 1em;
-
   background-color: pink;
   border: 0.2em dashed black;
 }
-
 .btn {
   padding: 0.5em;
   background-color: #f1f1f1;
@@ -693,18 +649,15 @@ export default {
   padding: 1em;
   width: 9em;
 }
-
 .sides-btn {
   background-color: #d9d9d9;
 }
-
 /* Style the active class, and buttons on mouse-over */
 .active,
 .btn:hover {
   background-color: pink;
   /* denna hade vi: #bfbfbf*/
 }
-
 .btnc {
  padding: 0.5em;
  background-color: #f1f1f1;
@@ -713,8 +666,6 @@ export default {
  border-radius: 0.5em;
  text-align: center;
 }
-
-
 .orderSummary {
   grid-area: side;
   border: 0.2em solid black;
@@ -722,7 +673,6 @@ export default {
   padding: 1em;
   overflow-y: scroll;
 }
-
 #order-table {
   width: 100%;
   position: relative;
@@ -737,7 +687,6 @@ export default {
 @media (max-width: 600px) {
   .container {
     display: grid;
-
     grid-template-areas:
       "header header header"
       "nav nav nav"
@@ -745,14 +694,12 @@ export default {
       "content content side"
       "buttons buttons buttons"
       "footer footer footer";
-
     grid-template-columns: 1fr 150px;
     align-content: start;
     grid-template-rows: auto auto auto auto auto;
     grid-gap: 1em;
     height: 85vh;
   }
-
   #ingredient-choice {
     grid-column-start: 1;
     grid-column-end: 5;
@@ -761,7 +708,6 @@ export default {
     font-size: 1.15em;
     overflow-y: scroll;
   }
-
   .next-button {
     border: solid black;
     text-align: center;
@@ -771,13 +717,13 @@ export default {
     grid-gap: 2em;
     transition: all 0.5s;
     cursor: pointer;
+
     position: absolute;
 
     right: 0;
     grid-area: content content side;
     display: inline-block;
   }
-
   .previous-button {
     font-size: 1.1em;
     padding: 0.3em;
@@ -786,11 +732,9 @@ export default {
     display: inline-block;
     position: relative;
   }
-
   #buttons {
     position: relative;
   }
-
   #price-summary {
     z-index: 1;
     width: inherit;
@@ -798,11 +742,9 @@ export default {
     bottom: 0.25em;
     right: 0.25em;
     padding: 0em;
-
     background-color: pink;
     border: 0.2em dashed black;
   }
-
   #huvudmeny {
     display: flex;
 
@@ -811,8 +753,12 @@ export default {
     height: 115px;
     width: 100%;
     overflow-x: scroll;
-
 }
+.btn{
+height: 100px;
+display: inline-block;
+}
+  
 .random-button{
   font-size: 8px;
 }
@@ -821,6 +767,7 @@ export default {
 height: 4em;
 
 }
+
 
   #random-button2{
     top: 0;
@@ -839,6 +786,7 @@ height: 4em;
     height:7em;
 
   }
+
 
 }
 </style>
