@@ -42,8 +42,9 @@
   "dairyFree":"Mjölkfri",
   "glutenFree":"Glutenfri",
   "vegan":"Vegansk",
-  "done":"Klar",
+  "done":"Lägg till order",
   "edit":"Ändra",
-  "alertAdd":"Du kan inte beställa ingenting! Lägg till din order först, tack!",
-  "alertUnfinished":"Du är inte klar än.."
+  "alertAdd":"Du behöver lägga till ordern innan du kan beställa.",
+  "alertUnfinished":"Du är inte klar än..",
+  "alertNoIngredients":"Slut på ingredienser"
 }

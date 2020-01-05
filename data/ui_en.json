@@ -44,9 +44,10 @@
   "dairyFree":"Dairy free",
   "glutenFree":"Gluten free",
   "vegan":"Vegan",
-  "done":"Done",
+  "done":"Add order",
   "edit":"Edit",
   "alertAdd":"You cannot order nothing! Please add your order first.",
-  "alertUnfinished":"You have unfinished business..."
+  "alertUnfinished":"You have unfinished business...",
+  "alertNoIngredients":"No ingredients"
 
 }

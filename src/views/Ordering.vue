@@ -36,11 +36,11 @@
       <h2>{{ uiLabels.currentMenu }}</h2>
       <table style="width:100%">
         <tr v-for="item in countAllChosenIngredients" :key="countAllChosenIngredients.indexOf(item)">
-          <td> <button class="plusMinus" id="minusknapp" v-on:click="removeFromOrder(item.id)"> - </button></td>
+          <td> <button class="plusMinus" id="removeButton" v-on:click="removeFromOrder(item.id)"> - </button></td>
           <td>
             {{item.count}}
           </td>
-          <td> <button class="plusMinus" id="plusknapp" v-on:click="IsOkToAdd(item.id)"> + </button></td>
+          <td> <button class="plusMinus" id="addButton" v-on:click="IsOkToAdd(item.id)"> + </button></td>
           <td>{{getItemById(item.id)["ingredient_"+lang]}}</td>
           <td id="price">{{getItemById(item.id).selling_price * item.count}}:-</td>
         </tr>
@@ -256,7 +256,7 @@ export default {
         this.okToAdd = false
       } else if (this.getItemById(id).stock <= this.countNumberOfChosenIngredients(id)) {
         this.okToAdd = false;
-        alert("Slut på ingrediens")
+        alert(this.eiLabels.alertNoIngredients)
       } else {
         this.addToOrder(id);
       }
@@ -473,7 +473,7 @@ export default {
   font-size: 1.3em;
 }
 
-#plusknapp {
+#addButton {
   color: green;
 }
 
@@ -502,17 +502,17 @@ export default {
   position: absolute;
   opacity: 0;
   top: 0;
-  right: 0;
+  left: 0;
   transition: 0.5s;
 }
 
 .previous-button:hover span {
-  padding-right: 1.2em;
+  padding-left: 0.9em;
 }
 
 .previous-button:hover span:after {
   opacity: 1;
-  right: 0;
+  left: 0;
 }
 
 /*NEXT BUTTON*/
@@ -774,6 +774,7 @@ export default {
     position: absolute;
 
     right: 0;
+    grid-area: content content side;
     display: inline-block;
   }
 
@@ -804,6 +805,7 @@ export default {
 
   #huvudmeny {
     display: flex;
+
     flex-wrap: nowrap;
     justify-content: flex-start;
     height: 115px;
@@ -815,9 +817,8 @@ export default {
   font-size: 8px;
 }
 
- .btn{
-height: 100px;
-
+.btn{
+height: 4em;
 
 }
 
@@ -825,6 +826,7 @@ height: 100px;
     top: 0;
     right: 0;
     position: absolute;
+    grid-area:content;
   }
 
   #review {
@@ -832,7 +834,10 @@ height: 100px;
   }
 
   .ingredient {
-    font-size: 14px;
+    font-size: 1em;
+    grid-area:buttons buttons;
+    height:7em;
+
   }
 
 }
