@@ -387,9 +387,13 @@ export default {
     cancelOrdering: function() {
       if (confirm(this.uiLabels.cancelins)){
       this.chosenIngredients = [];
+
       this.currentOrder = {
         menus: []
       };
+      if (this.randomBurgerBool== true ){
+        this.randomBurgerBool= false;
+      }
       this.category = 0;
       this.price = 0;
     }
@@ -770,10 +774,6 @@ height: 1em;
 display: inline-block;
 }
 
-.random-button{
-  font-size: 0.3em;
-}
-
 .btn{
 height: 4em;
 
@@ -781,10 +781,11 @@ height: 4em;
 
 
   #random-button2{
-    grid-area: footer;
-    top : 0;
-    right: 0;
-    position: absolute;
+    font-size: 0.6em;
+    top: 0;
+    left: 0;
+    position: relative;
+    grid-area:buttons;
   }
 
   #review {
@@ -793,7 +794,7 @@ height: 4em;
 
   .ingredient {
     font-size: 1em;
-    grid-area:footer;
+    grid-area:buttons buttons;
     height:7em;
 
   }
