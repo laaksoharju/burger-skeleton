@@ -14,7 +14,7 @@ let router = new Router({
 {
   path: "/",
   meta:{
-    title:"Burger bidness",
+    title:"Burger Bidness",
   },
   name: "ordering",
   props:true,

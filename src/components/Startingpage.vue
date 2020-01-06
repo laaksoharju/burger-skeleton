@@ -8,11 +8,12 @@
     <button id="switchlangbutton" v-on:click="bytSprak()">{{ uiLabels.language }}</button>
   </div>
 
-  <h1 id = "dtext">{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
-  <br>
+  <div id = "dtext">
+    <h3>{{uiLabels.welcome}}:</h3>
+    <h2>{{uiLabels.name}} </h2>
+  </div>
 
   <div id="allStartingButtons">
-
       <button ref="Ordering" class="goToOrderingButton" style="text-decoration:none" v-on:click="startOrder()">{{ uiLabels.goToOrdering }}</button>
       <br>
       <button id = "start-random-button" class="goToOrderingButton" v-on:click="randBurg()">{{uiLabels.goToRandomMenu}}</button>
@@ -23,7 +24,6 @@
       <br>
       <br>
       <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif" width="150px">
-      
     </div>
 
     <br>
@@ -139,7 +139,6 @@ export default {
   box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.15s ease 0s;
 }
-
 
 
 .example-panel{
