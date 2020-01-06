@@ -8,31 +8,22 @@
     <button id="switchlangbutton" v-on:click="bytSprak()">{{ uiLabels.language }}</button>
   </div>
 
-  <h1 id = "dtext">{{uiLabels.welcome}}:<br>{{uiLabels.name}} </h1>
-  <br>
+  <div id = "dtext">
+    <h3>{{uiLabels.welcome}}:</h3>
+    <h2>{{uiLabels.name}} </h2>
+  </div>
 
   <div id="allStartingButtons">
-
       <button ref="Ordering" class="goToOrderingButton" style="text-decoration:none" v-on:click="startOrder()">{{ uiLabels.goToOrdering }}</button>
       <br>
       <button id = "start-random-button" class="goToOrderingButton" v-on:click="randBurg()">{{uiLabels.goToRandomMenu}}</button>
-      <br>
-
-        <div class="info"><img src="@/assets/info.png" height="30">
-            <span class = "infotext">{{uiLabels.information2}}
-            <br> <br> {{uiLabels.information}}</span>
-          </div>
-
     </div>
-
 
     <br>
     <div id = "hamburgerGif">
       <br>
       <br>
       <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif" width="150px">
-      <br>
-      <h4>*I am hungry / Jag är hungrig </h4>
     </div>
 
     <br>
@@ -45,18 +36,15 @@
 
 
 <script>
-//import methods and data that are shared between ordering and kitchen view
-/* instead of defining a Vue instance, export default allows the only
-necessary Vue instance (found in main.js) to import your data and methods */
+
 export default {
   name: 'Startingpage',
   props: {
     uiLabels: Object,
     lang: String,
-    //category: Number
   },
 
-  data: function() { //Not that data is a function!
+  data: function() {
     return {
     }
   },
@@ -150,6 +138,7 @@ export default {
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.15s ease 0s;
+<<<<<<< HEAD
 }
 .extra-info {
   display: none;
@@ -184,7 +173,10 @@ export default {
 }
 .info:hover .infotext{
   visibility: visible;
+=======
+>>>>>>> master
 }
+
 
 .example-panel{
   position:fixed;

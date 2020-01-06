@@ -1,6 +1,7 @@
 <template>
 
 <!-- STARTINGPAGE -->
+
 <div v-if="category===0">
 
   <Startingpage ref="startingpage" v-on:randburg="randomBurger(ingredients)" v-on:bytsprak="switchLang()" v-on:gavidare="startOrdering()" :category="category" :ui-labels="uiLabels" :lang="lang">
@@ -8,6 +9,8 @@
   </Startingpage>
 
 </div>
+
+<!-- ORDERINGPAGE -->
 
 <div v-else>
 
@@ -26,7 +29,6 @@
 
   <div id="huvudmeny">
 
-    <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
     <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
@@ -34,8 +36,6 @@
     <button id="btn5" :class="['sides-btn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" :class="['sides-btn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
-
-    <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
 
   </div>
 
@@ -86,8 +86,6 @@
       </Ingredient>
     </div>
 
-    <!-- reviewsidan på samma sätt som ordersummarysidan -->
-
     <div id="finalsummary" v-if="this.category == 7">
       <h1 id="review"> {{uiLabels.review}} </h1>
       <h2>
@@ -108,6 +106,7 @@
         <button class="buttons" id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
         <button id = "random-button2" class="random-button" v-if="category == 7 && randomBurgerBool()==true" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
       </div>
+      <br>
       <div>
         <table id="order-summary" style="width:100%">
           <tr id="tablerow" v-for="(menu,key) in currentOrder.menus" :key="key">
@@ -118,9 +117,9 @@
             <td id="editbtn" ><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
           </tr>
         </table>
+        <br>
+        <button id="addanothermenubutton" class="buttons" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="redirect(1)">{{uiLabels.newMenu}}</button>
           <button id="random-button3" class="random-button" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu3}}</button>
-          <br>
-          <button id="addanothermenubutton" class="buttons" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="redirect(1)">{{uiLabels.newMenu}}</button>
       </div>
       </div>
   </div>
@@ -140,28 +139,24 @@
 </div>
 </div>
 </template>
+
+
 <script>
-//import the components that are used in the template, the name that you
-//use for importing will be used in the template above and also below in
-//components
+
 import Ingredient from '@/components/Ingredient.vue'
 import OrderItem from '@/components/OrderItem.vue'
 import Startingpage from '@/components/Startingpage.vue'
-//import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
-/* instead of defining a Vue instance, export default allows the only
-necessary Vue instance (found in main.js) to import your data and methods */
+
 export default {
   name: 'Ordering',
-  //props: ['lang'],
   components: {
     Ingredient,
     OrderItem,
     Startingpage
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both
-  // the ordering system and the kitchen
-  data: function() { //Not that data is a function!
+  mixins: [sharedVueStuff],
+  data: function() {
     return {
       chosenIngredients: [],
       price: 0,
@@ -304,10 +299,8 @@ export default {
         alert(this.uiLabels.alertUnfinished)
       }
       else if (confirm(this.uiLabels.instructions)) {
-        /*
-        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-          this.$refs.ingredient[i].resetCounter();
-        }*/
+        alert(this.uiLabels.alertThankYou)
+
         this.$store.state.socket.emit('order', this.currentOrder);
         this.currentOrder = {
           menus: []
@@ -385,16 +378,14 @@ export default {
       }
     },
     redirect: function(num) {
-      //  var btns = document.getElementsByClassName('hide');
-      //  for (var i = 0; i < btns.length; i++){
-      //    btns[i].style.display = 'block';
-      //  }
+
       this.category = num;
     },
     startOrdering: function() {
       this.category = 1;
     },
     cancelOrdering: function() {
+      if (confirm(this.uiLabels.cancelins)){
       this.chosenIngredients = [];
       this.currentOrder = {
         menus: []
@@ -402,12 +393,12 @@ export default {
       this.category = 0;
       this.price = 0;
     }
+    }
   }
 }
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
-/* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 
 
 .container {
@@ -555,9 +546,7 @@ export default {
   grid-area: content;
   overflow-y: scroll;
 }
-/*.hide{
-  display: none;
-}*/
+
 #ingredient-choice {
   display: grid;
   grid-column-gap: 0.5em;
@@ -661,14 +650,7 @@ export default {
   background-color: pink;
   /* denna hade vi: #bfbfbf*/
 }
-.btnc {
- padding: 0.5em;
- background-color: #f1f1f1;
- cursor: pointer;
- font-size: 1.1em;
- border-radius: 0.5em;
- text-align: center;
-}
+
 .orderSummary {
   grid-area: side;
   border: 0.2em solid black;
@@ -779,20 +761,17 @@ export default {
 
     flex-wrap: nowrap;
     justify-content: flex-start;
-    height: 115px;
+    height: 6em;
     width: 100%;
     overflow-x: scroll;
 }
 .btn{
-height: 100px;
+height: 1em;
 display: inline-block;
 }
 
 .random-button{
-  grid-area: content;
-  top:0;
-  right: 0;
-  font-size: 0.5em;
+  font-size: 0.3em;
 }
 
 .btn{
@@ -809,7 +788,7 @@ height: 4em;
   }
 
   #review {
-    font-size: 0.5em;
+    font-size: 1em;
   }
 
   .ingredient {
