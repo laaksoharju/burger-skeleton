@@ -108,6 +108,7 @@
         <button class="buttons" id="donebutton" v-on:click="addMenu()">{{uiLabels.done}}</button>
         <button id = "random-button2" class="random-button" v-if="category == 7 && randomBurgerBool()==true" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu2}}</button>
       </div>
+      <br>
       <div>
         <table id="order-summary" style="width:100%">
           <tr id="tablerow" v-for="(menu,key) in currentOrder.menus" :key="key">
@@ -118,9 +119,9 @@
             <td id="editbtn" ><button v-on:click="changeMenu(menu)">{{uiLabels.edit}}</button> </td>
           </tr>
         </table>
+        <br>
+        <button id="addanothermenubutton" class="buttons" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="redirect(1)">{{uiLabels.newMenu}}</button>
           <button id="random-button3" class="random-button" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="newRandomBurger(ingredients)">{{uiLabels.goToRandomMenu3}}</button>
-          <br>
-          <button id="addanothermenubutton" class="buttons" v-if="category == 7 && chosenIngredients.length===0 && currentOrder.menus.length > 0" v-on:click="redirect(1)">{{uiLabels.newMenu}}</button>
       </div>
       </div>
   </div>
@@ -304,10 +305,7 @@ export default {
         alert(this.uiLabels.alertUnfinished)
       }
       else if (confirm(this.uiLabels.instructions)) {
-        /*
-        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-          this.$refs.ingredient[i].resetCounter();
-        }*/
+        alert(this.uiLabels.alertThankYou)
         this.$store.state.socket.emit('order', this.currentOrder);
         this.currentOrder = {
           menus: []
@@ -556,9 +554,7 @@ export default {
   grid-area: content;
   overflow-y: scroll;
 }
-/*.hide{
-  display: none;
-}*/
+
 #ingredient-choice {
   display: grid;
   grid-column-gap: 0.5em;
@@ -662,14 +658,7 @@ export default {
   background-color: pink;
   /* denna hade vi: #bfbfbf*/
 }
-.btnc {
- padding: 0.5em;
- background-color: #f1f1f1;
- cursor: pointer;
- font-size: 1.1em;
- border-radius: 0.5em;
- text-align: center;
-}
+
 .orderSummary {
   grid-area: side;
   border: 0.2em solid black;
