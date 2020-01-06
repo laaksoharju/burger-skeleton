@@ -395,13 +395,14 @@ export default {
       this.category = 1;
     },
     cancelOrdering: function() {
-
+      if (confirm(this.uiLabels.cancelins)){
       this.chosenIngredients = [];
       this.currentOrder = {
         menus: []
       };
       this.category = 0;
       this.price = 0;
+    }
     }
   }
 }
@@ -780,17 +781,17 @@ export default {
 
     flex-wrap: nowrap;
     justify-content: flex-start;
-    height: 115px;
+    height: 6em;
     width: 100%;
     overflow-x: scroll;
 }
 .btn{
-height: 100px;
+height: 1em;
 display: inline-block;
 }
 
 .random-button{
-  font-size: 8px;
+  font-size: 0.3em;
 }
 
 .btn{
