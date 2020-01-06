@@ -50,5 +50,6 @@
   "alertNoIngredients":"Slut på ingrediensen",
   "newMenu":"Lägg till en ny meny",
   "information": "Slumpa meny - Gör en slumpmässig meny med slumpmässiga ingredienser på hamburgaren samt slumpmässigt tillbehör och dryck",
-  "information2": "Skapa din burgare - Skapa en hamburgarmeny från grunden"
+  "information2": "Skapa din burgare - Skapa en hamburgarmeny från grunden",
+  "cancelins": "Är du säker på att du vill avbryta beställning? Din beställning kommer inte sparas"
 }
