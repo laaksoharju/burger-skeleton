@@ -143,7 +143,13 @@ export default {
 }
 
 .goToOrderingButton:hover{
-  color: grey;
+  background-color: #ed81a1;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.15s ease 0s;
 }
 .extra-info {
   display: none;
