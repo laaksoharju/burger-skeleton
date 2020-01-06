@@ -138,6 +138,43 @@ export default {
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.15s ease 0s;
+<<<<<<< HEAD
+}
+.extra-info {
+  display: none;
+  line-height: 30px;
+  font-size: 12px;
+	position: absolute;
+  top: 0;
+  left: 50px;
+}
+.info{
+  left:50%;
+  right:50%;
+  position: absolute;
+  display: inline-block;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.info .infotext{
+  visibility: hidden;
+  width: 30em;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  z-index:1;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -2.5em;
+}
+.info:hover .infotext{
+  visibility: visible;
+=======
+>>>>>>> master
 }
 
 

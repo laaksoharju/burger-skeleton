@@ -781,10 +781,10 @@ height: 4em;
 
 
   #random-button2{
-    top: 0;
+    grid-area: footer;
+    top : 0;
     right: 0;
     position: absolute;
-    grid-area:content;
   }
 
   #review {
@@ -793,7 +793,7 @@ height: 4em;
 
   .ingredient {
     font-size: 1em;
-    grid-area:buttons buttons;
+    grid-area:footer;
     height:7em;
 
   }
