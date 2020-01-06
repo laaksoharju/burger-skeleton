@@ -36,18 +36,15 @@
 
 
 <script>
-//import methods and data that are shared between ordering and kitchen view
-/* instead of defining a Vue instance, export default allows the only
-necessary Vue instance (found in main.js) to import your data and methods */
+
 export default {
   name: 'Startingpage',
   props: {
     uiLabels: Object,
     lang: String,
-    //category: Number
   },
 
-  data: function() { //Not that data is a function!
+  data: function() {
     return {
     }
   },

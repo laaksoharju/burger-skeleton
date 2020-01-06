@@ -53,6 +53,7 @@
   "alertThankYou":"Thank you for your order!",
   "newMenu":"Add another menu",
   "information": "Order a random menu - Randomizes the ingredients on the burger, random sides and a random drink",
-  "information2": "Create your burger - Create a burger menu from scratch"
+  "information2": "Create your burger - Create a burger menu from scratch",
+  "cancelins": "Are you sure you want to cancel order? Your order will not be saved."
 
 }
