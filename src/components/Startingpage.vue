@@ -23,8 +23,7 @@
       <br>
       <br>
       <img src= "https://media1.giphy.com/media/l0HlNBIgkD759kTPW/giphy.gif?cid=790b761183fc54539593a2dc2a32f4438d0e859ea99de333&rid=giphy.gif" width="150px">
-      <br>
-      <h4>*I am hungry / Jag är hungrig </h4>
+      
     </div>
 
     <br>
@@ -37,18 +36,15 @@
 
 
 <script>
-//import methods and data that are shared between ordering and kitchen view
-/* instead of defining a Vue instance, export default allows the only
-necessary Vue instance (found in main.js) to import your data and methods */
+
 export default {
   name: 'Startingpage',
   props: {
     uiLabels: Object,
     lang: String,
-    //category: Number
   },
 
-  data: function() { //Not that data is a function!
+  data: function() {
     return {
     }
   },

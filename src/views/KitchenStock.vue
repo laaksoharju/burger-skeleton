@@ -76,10 +76,8 @@
 import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
 import Ingredient from '@/components/Ingredient.vue'
-
-
-//import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
+
 export default {
   name: 'KitchenStock',
   components: {
@@ -87,10 +85,7 @@ export default {
     OrderItemToPrepare,
     Ingredient
   },
-
-
-  mixins: [sharedVueStuff], // include stuff that is used in both
-  //the ordering system and the kitchen
+  mixins: [sharedVueStuff],
   data: function() {
     return {
       chosenIngredients: [],
