@@ -34,8 +34,8 @@
 import OrderItem from '@/components/OrderItem.vue'
 import OrderItemToPrepare from '@/components/OrderItemToPrepare.vue'
 import OrderItemToBePickedUp from '@/components/OrderItemToBePickedUp.vue'
-//import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
+
 export default {
   name: 'Ordering',
   components: {
@@ -43,8 +43,7 @@ export default {
     OrderItemToPrepare,
     OrderItemToBePickedUp
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both
-                            //the ordering system and the kitchen
+  mixins: [sharedVueStuff],
   data: function(){
     return {
     }
@@ -97,12 +96,7 @@ export default {
 h1 {
   text-transform: uppercase;
   font-size: 2.0em;
-/*  border: 5px outset black;
-	width: 450px;
-  margin: 2px;
-  border-radius: 5px;
-  background-color: dimgray;
-  text-decoration: underline;*/
+
 }
 h3{
   text-decoration: underline;

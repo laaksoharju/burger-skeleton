@@ -1,6 +1,7 @@
 <template>
 
 <!-- STARTINGPAGE -->
+
 <div v-if="category===0">
 
   <Startingpage ref="startingpage" v-on:randburg="randomBurger(ingredients)" v-on:bytsprak="switchLang()" v-on:gavidare="startOrdering()" :category="category" :ui-labels="uiLabels" :lang="lang">
@@ -8,6 +9,8 @@
   </Startingpage>
 
 </div>
+
+<!-- ORDERINGPAGE -->
 
 <div v-else>
 
@@ -26,7 +29,6 @@
 
   <div id="huvudmeny">
 
-    <!--skapar en array med klasser,använder vue istället. btn är en sträng. googla conditional class vue -->
     <button id="btn1" :class="['btn', {'active': category===1}]" v-on:click="redirect(1)">{{uiLabels.burger}}</button>
     <button id="btn2" :class="['btn', {'active': category===2}]" v-on:click="redirect(2)">{{uiLabels.bread}}</button>
     <button id="btn3" :class="['btn', {'active': category===3}]" v-on:click="redirect(3)">{{uiLabels.topping}}</button>
@@ -34,8 +36,6 @@
     <button id="btn5" :class="['sides-btn','btn', {'active': category===5}]" v-on:click="redirect(5)">{{uiLabels.sideorders}}</button>
     <button id="btn6" :class="['sides-btn','btn', {'active': category===6}]" v-on:click="redirect(6)">{{uiLabels.drinks}}</button>
     <button id="btn7" :class="['btn', {'active': category===7}]" v-on:click="redirect(7)">{{uiLabels.checkout}}</button>
-
-    <!--  <button id="btn4" :class="['btn hide', {'active': category===4}]" v-on:click="redirect(4)">{{uiLabels.sauce}}</button>-->
 
   </div>
 
@@ -85,8 +85,6 @@
 
       </Ingredient>
     </div>
-
-    <!-- reviewsidan på samma sätt som ordersummarysidan -->
 
     <div id="finalsummary" v-if="this.category == 7">
       <h1 id="review"> {{uiLabels.review}} </h1>
@@ -140,28 +138,24 @@
 </div>
 </div>
 </template>
+
+
 <script>
-//import the components that are used in the template, the name that you
-//use for importing will be used in the template above and also below in
-//components
+
 import Ingredient from '@/components/Ingredient.vue'
 import OrderItem from '@/components/OrderItem.vue'
 import Startingpage from '@/components/Startingpage.vue'
-//import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
-/* instead of defining a Vue instance, export default allows the only
-necessary Vue instance (found in main.js) to import your data and methods */
+
 export default {
   name: 'Ordering',
-  //props: ['lang'],
   components: {
     Ingredient,
     OrderItem,
     Startingpage
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both
-  // the ordering system and the kitchen
-  data: function() { //Not that data is a function!
+  mixins: [sharedVueStuff],
+  data: function() {
     return {
       chosenIngredients: [],
       price: 0,
@@ -304,10 +298,6 @@ export default {
         alert(this.uiLabels.alertUnfinished)
       }
       else if (confirm(this.uiLabels.instructions)) {
-        /*
-        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-          this.$refs.ingredient[i].resetCounter();
-        }*/
         this.$store.state.socket.emit('order', this.currentOrder);
         this.currentOrder = {
           menus: []
@@ -385,10 +375,7 @@ export default {
       }
     },
     redirect: function(num) {
-      //  var btns = document.getElementsByClassName('hide');
-      //  for (var i = 0; i < btns.length; i++){
-      //    btns[i].style.display = 'block';
-      //  }
+
       this.category = num;
     },
     startOrdering: function() {
@@ -409,7 +396,6 @@ export default {
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Quicksand&display=swap";
-/* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 
 
 .container {
