@@ -387,17 +387,19 @@ export default {
     cancelOrdering: function() {
       if (confirm(this.uiLabels.cancelins)){
       this.chosenIngredients = [];
+      this.randomBurgerBoolean = false;
+
+      }
 
       this.currentOrder = {
         menus: []
       };
-      if (this.randomBurgerBool== true ){
-        this.randomBurgerBool= false;
-      }
+
+
       this.category = 0;
       this.price = 0;
     }
-    }
+    
   }
 }
 </script>
