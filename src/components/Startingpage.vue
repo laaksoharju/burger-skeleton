@@ -17,6 +17,9 @@
       <button ref="Ordering" class="goToOrderingButton" style="text-decoration:none" v-on:click="startOrder()">{{ uiLabels.goToOrdering }}</button>
       <br>
       <button id = "start-random-button" class="goToOrderingButton" v-on:click="randBurg()">{{uiLabels.goToRandomMenu}}</button>
+      <div class="info"><img src="@/assets/info.png" height="30">
+  <span class="infotext">{{uiLabels.information2}}<br>{{uiLabels.information}}</span>
+</div>
     </div>
 
     <br>

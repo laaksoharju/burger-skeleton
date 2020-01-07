@@ -388,7 +388,7 @@ export default {
       if (confirm(this.uiLabels.cancelins)){
       this.chosenIngredients = [];
       this.randomBurgerBoolean = false;
-
+    
       }
 
       this.currentOrder = {
@@ -399,7 +399,7 @@ export default {
       this.category = 0;
       this.price = 0;
     }
-    
+
   }
 }
 </script>
