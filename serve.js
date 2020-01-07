@@ -37,9 +37,11 @@ data.initializeData();
 
 io.on('connection', function (socket) {
   // Send list of orders and text labels when a client connects
+  // här ska det ändras för att slippa uppdatera sidan
   socket.emit('initialize', { orders: data.getAllOrders(),
                           uiLabels: data.getUILabels(),
                           ingredients: data.getIngredients() });
+
 
   // When someone orders something
   socket.on('order', function (order) {
@@ -69,10 +71,20 @@ io.on('connection', function (socket) {
     io.emit('currentQueue', {orders: data.getAllOrders() });
   });
 
+  socket.on('orderPickedUp', function (orderId) {
+    data.markOrderPickedUp(orderId);
+    io.emit('currentQueue', {orders: data.getAllOrders() });
+  });
+
   socket.on('updateStock', function (item, saldo) {
     data.changeStock(item, saldo);
     io.emit('currentQueue', {ingredients: data.getIngredients() });
   });
+  socket.on('fetchData', function() {
+   socket.emit('initialize', { orders: data.getAllOrders(),
+                           uiLabels: data.getUILabels(),
+                           ingredients: data.getIngredients() })
+ });
 });
 
 const port = 8080;

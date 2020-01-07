@@ -13,7 +13,7 @@ function Data() {
   this.currentOrderNumber = 0;
 }
 
-Data.prototype.getUILabels = function (lang) {
+Data.prototype.getUILabels = function(lang) {
   var ui = require("./data/ui_" + (lang || defaultLanguage) + ".json");
   return ui;
 };
@@ -23,10 +23,10 @@ Data.prototype.getUILabels = function (lang) {
   the CSV file, plus a calculated amount in stock, based on
   transactions.
 */
-Data.prototype.getIngredients = function () {
+Data.prototype.getIngredients = function() {
   var d = this.data;
-  return d[ingredientsDataName].map(function (obj) {
-    obj.stock = d[transactionsDataName].reduce(function (sum, trans) {
+  return d[ingredientsDataName].map(function(obj) {
+    obj.stock = d[transactionsDataName].reduce(function(sum, trans) {
       if (trans.ingredient_id === obj.ingredient_id) {
         return sum + trans.change;
       } else {
@@ -40,8 +40,10 @@ Data.prototype.getIngredients = function () {
 /*
   Function to load initial data from CSV files into the object
 */
-Data.prototype.initializeTable = function (table) {
-  csv({checkType: true})
+Data.prototype.initializeTable = function(table) {
+  csv({
+      checkType: true
+    })
     .fromFile("./data/" + table + ".csv")
     .then((jsonObj) => {
       //console.log("JSON object", jsonObj, "done");
@@ -62,55 +64,59 @@ Data.prototype.initializeData = function() {
   this is the right moment to do this.
 */
 
-Data.prototype.getOrderNumber = function () {
+Data.prototype.getOrderNumber = function() {
   this.currentOrderNumber += 1;
   return this.currentOrderNumber;
 }
 
-Data.prototype.addOrder = function (order) {
+Data.prototype.addOrder = function(order) {
   var orderId = this.getOrderNumber();
-  this.orders[orderId] = order.order;
+  this.orders[orderId] = order;
   this.orders[orderId].orderId = orderId;
   this.orders[orderId].status = "not-started";
-  var transactions = this.data[transactionsDataName],
-    //find out the currently highest transaction id
-    transId =  transactions[transactions.length - 1].transaction_id,
-    i = order.order.ingredients,
-    k;
-  for (k = 0; k < i.length; k += 1) {
-    transId += 1;
-    transactions.push({transaction_id: transId,
-                       ingredient_id: i[k].ingredient_id,
-                       change: - 2});
-  }
-    return orderId;
+  var transactions = this.data[transactionsDataName];
+    for (let j = 0; j < order.menus.length; j += 1) {
+      let transId = transactions[transactions.length - 1].transaction_id;
+      let i = order.menus[j].ingredients;
+      for (let k = 0; k < i.length; k += 1) {
+        transId += 1;
+        transactions.push({
+          transaction_id: transId,
+          ingredient_id: i[k].ingredient_id,
+          change: -1
+        });
+      }
+    }
+  return orderId;
 };
 
-Data.prototype.changeStock = function (item, saldo) {
+Data.prototype.changeStock = function(item, saldo) {
   var transactions = this.data[transactionsDataName]
   var transId = transactions[transactions.length - 1].transaction_id
-  transactions.push({transaction_id: transId,
-                     ingredient_id: item.ingredient.ingredient_id,
-                     change: saldo - item.ingredient.stock});
+  transactions.push({
+    transaction_id: transId,
+    ingredient_id: item.ingredient.ingredient_id,
+    change: saldo - item.ingredient.stock
+  });
 };
 
-Data.prototype.getAllOrders = function () {
+Data.prototype.getAllOrders = function() {
   return this.orders;
 };
 
-Data.prototype.markOrderDone = function (orderId) {
+Data.prototype.markOrderDone = function(orderId) {
   this.orders[orderId].status = "done";
 };
 
-Data.prototype.markOrderStarted = function (orderId) {
+Data.prototype.markOrderStarted = function(orderId) {
   this.orders[orderId].status = "started";
 };
 
-Data.prototype.markOrderNotStarted = function (orderId) {
+Data.prototype.markOrderNotStarted = function(orderId) {
   this.orders[orderId].status = "not-started";
+};
+Data.prototype.markOrderPickedUp = function(orderId) {
+  this.orders[orderId].status = "picked-up";
 };
 
 module.exports = Data;
-
-
-
