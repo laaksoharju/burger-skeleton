@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "csvtojson": "^2.0.8",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
